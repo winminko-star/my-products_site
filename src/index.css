@@ -1,0 +1,9 @@
+/* ✅ src/index.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Optional custom styles */
+body {
+  font-family: sans-serif;
+}
