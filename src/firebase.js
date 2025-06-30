@@ -1,17 +1,20 @@
 // ✅ src/firebase.js
 import { initializeApp } from "firebase/app";
-import { getFirestore } from "firebase/firestore";
+import { getDatabase } from "firebase/database";
 
+// Firebase config using environment variables
 const firebaseConfig = {
-  apiKey: "AIzaSyAlz2r4_ZeuVMIfO5kTZE4RyGOGQ-KWCsU",
-  authDomain: "restaurant-data-3c2b2.firebaseapp.com",
-  projectId: "restaurant-data-3c2b2",
-  storageBucket: "restaurant-data-3c2b2.appspot.com",
-  messagingSenderId: "776367819444",
-  appId: "1:776367819444:web:c88b697cb7b7ebad0425e1",
-  measurementId: "G-ZTEZRY3EFC"
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID,
+  measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID,
 };
 
-// Initialize Firebase
+// Initialize Firebase app and database
 const app = initializeApp(firebaseConfig);
-export const db = getFirestore(app);
+const database = getDatabase(app);
+
+export { app, database };
