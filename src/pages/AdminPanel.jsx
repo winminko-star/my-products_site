@@ -12,20 +12,16 @@ export default function AdminPanel() {
 
     for (let i = 1; i <= 30; i++) {
       const tableId = `table_${i}`;
-      const tableRef = ref(database, `orders/${tableId}`);
+      const orderRef = ref(database, `tables/${tableId}/order`);
 
-      onValue(tableRef, (snapshot) => {
+      onValue(orderRef, (snapshot) => {
         const data = snapshot.val() || {};
         const orders = Object.entries(data).map(([id, order]) => ({
           id,
-          ...order,
+          items: order,
         }));
 
-        allOrders[tableId] = orders.sort(
-          (a, b) => (b.created?.seconds || 0) - (a.created?.seconds || 0)
-        );
-
-        // Deep clone to trigger state update
+        allOrders[tableId] = orders;
         setOrdersByTable({ ...allOrders });
       });
     }
@@ -33,7 +29,7 @@ export default function AdminPanel() {
 
   const clearOrder = async (table, orderId) => {
     try {
-      const orderRef = ref(database, `orders/${table}/${orderId}`);
+      const orderRef = ref(database, `tables/${table}/order/${orderId}`);
       await remove(orderRef);
       toast.success("Order cleared");
     } catch (err) {
@@ -42,10 +38,13 @@ export default function AdminPanel() {
   };
 
   const drawWinner = () => {
-    const all = Object.values(ordersByTable).flat();
+    const all = Object.entries(ordersByTable)
+      .flatMap(([table, orders]) => orders.map((o) => ({ ...o, table })));
+
     if (all.length === 0) return toast.error("No orders to draw");
+
     const lucky = all[Math.floor(Math.random() * all.length)];
-    toast.success(`🎉 Lucky Draw Winner: Table ${lucky.table}`);
+    toast.success(`🎉 Lucky Draw Winner: ${lucky.table.toUpperCase()}`);
   };
 
   return (
@@ -62,22 +61,19 @@ export default function AdminPanel() {
       {Object.entries(ordersByTable).map(([table, orders]) => (
         <div key={table} className="mb-6">
           <h2 className="text-lg font-semibold mb-2">{table.toUpperCase()}</h2>
+
           {orders.map((order, idx) => (
             <div key={order.id} className="border p-3 mb-3 rounded shadow">
               <div className="font-bold mb-1">#{idx + 1}</div>
-              {order.note && (
-                <div className="text-sm italic text-gray-600 mb-1">
-                  Note: {order.note}
-                </div>
-              )}
+
               <ul className="text-sm">
                 {order.items.map((item, i) => (
                   <li key={i}>
-                    {item.name} x {item.qty} = ${item.price * item.qty}
+                    {item.name} x {item.quantity} = ${item.quantity * item.price}
                   </li>
                 ))}
               </ul>
-              <div className="font-semibold mt-2">Total: ${order.total}</div>
+
               <button
                 onClick={() => clearOrder(table, order.id)}
                 className="mt-2 px-3 py-1 bg-red-600 text-white rounded"
@@ -90,4 +86,4 @@ export default function AdminPanel() {
       ))}
     </div>
   );
-          }
+}
