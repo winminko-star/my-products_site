@@ -1,11 +1,13 @@
 // ✅ src/firebase.js
+
 import { initializeApp } from "firebase/app";
 import { getDatabase } from "firebase/database";
 
-// Firebase config using environment variables
+// ✅ Firebase config using environment variables
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
   authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  databaseURL: import.meta.env.VITE_FIREBASE_DATABASE_URL, // ✅ အသုံးပြုရန်အရေးကြီး
   projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
   storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
   messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
@@ -13,7 +15,7 @@ const firebaseConfig = {
   measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID,
 };
 
-// Initialize Firebase app and database
+// ✅ Initialize Firebase app and database
 const app = initializeApp(firebaseConfig);
 const database = getDatabase(app);
 
