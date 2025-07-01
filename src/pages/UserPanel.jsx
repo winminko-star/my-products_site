@@ -1,10 +1,9 @@
-// ✅ src/pages/UserPanel.jsx
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { products } from "../data/products";
 import { database } from "../firebase";
-import { ref, push, serverTimestamp } from "firebase/database";
+import { ref, push } from "firebase/database";
 
 const TABLE_ID = localStorage.getItem("assignedTable") || "1";
 
@@ -17,7 +16,9 @@ export default function UserPanel() {
     const exists = cart.find((i) => i.id === item.id);
     if (exists) {
       setCart(
-        cart.map((i) => (i.id === item.id ? { ...i, qty: i.qty + 1 } : i))
+        cart.map((i) =>
+          i.id === item.id ? { ...i, qty: i.qty + 1 } : i
+        )
       );
     } else {
       setCart([...cart, { ...item, qty: 1 }]);
@@ -26,44 +27,56 @@ export default function UserPanel() {
 
   const updateQty = (id, qty) => {
     if (qty < 1) return;
-    setCart(cart.map((i) => (i.id === id ? { ...i, qty } : i)));
+    setCart(
+      cart.map((i) =>
+        i.id === id ? { ...i, qty } : i
+      )
+    );
   };
 
   const total = cart.reduce((acc, item) => acc + item.price * item.qty, 0);
 
   const submitOrder = async () => {
-    if (cart.length === 0) return toast.error("Cart is empty!");
+    if (cart.length === 0) {
+      toast.error("Cart is empty!");
+      return;
+    }
 
     try {
-      const orderData = {
-        table: TABLE_ID,
-        note,
-        items: cart,
-        total,
-        created: serverTimestamp(),
-      };
+      const orderItems = cart.map((item) => ({
+        name: item.name,
+        quantity: item.qty,
+        price: item.price,
+        unit: item.unit || "",
+      }));
 
-      const orderRef = ref(database, `orders/table_${TABLE_ID}`);
-      await push(orderRef, orderData);
+      const orderRef = ref(database, `tables/${TABLE_ID}/order`);
+      await push(orderRef, orderItems);
+
+      if (note.trim()) {
+        const noteRef = ref(database, `tables/${TABLE_ID}/note`);
+        await push(noteRef, note.trim());
+      }
 
       localStorage.setItem("lastOrderNote", note);
       setCart([]);
       setNote("");
       navigate("/summary");
     } catch (err) {
-      console.error(err);
+      console.error("Order submit failed:", err);
       toast.error("Failed to submit order.");
     }
   };
 
   useEffect(() => {
-    const stored = localStorage.getItem("lastOrderNote");
-    if (stored) setNote(stored);
+    const storedNote = localStorage.getItem("lastOrderNote");
+    if (storedNote) setNote(storedNote);
   }, []);
 
   return (
     <div className="p-4">
       <h1 className="text-xl font-bold mb-2">Table {TABLE_ID} - Order</h1>
+
       <div className="mb-3">
         <label className="block text-sm">Note (e.g., takeaway):</label>
         <input
@@ -119,4 +132,4 @@ export default function UserPanel() {
       </button>
     </div>
   );
-               }
+}
