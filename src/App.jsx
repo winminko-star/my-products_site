@@ -1,4 +1,5 @@
-// ✅ src/App.jsx
+// src/App.jsx
+
 import React, { useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import UserPanel from "./pages/UserPanel";
@@ -21,19 +22,16 @@ export default function App() {
 
   if (!access) {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100 text-gray-800">
-        <h1 className="text-2xl font-bold mb-4">Enter App Password</h1>
+      <div style={{ minHeight: "100vh", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center" }}>
+        <h1>Enter App Password</h1>
         <input
           type="password"
-          className="border px-3 py-2 rounded mb-2 w-64 text-center"
           value={input}
           onChange={(e) => setInput(e.target.value)}
           placeholder="Enter password"
+          style={{ padding: "8px", margin: "10px", width: "200px", textAlign: "center" }}
         />
-        <button
-          className="bg-blue-600 text-white px-4 py-2 rounded"
-          onClick={checkPassword}
-        >
+        <button onClick={checkPassword} style={{ padding: "8px 16px", backgroundColor: "#2563eb", color: "white", borderRadius: "4px" }}>
           Unlock
         </button>
         <Toaster />
@@ -42,7 +40,7 @@ export default function App() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-100 text-gray-800">
+    <div style={{ minHeight: "100vh", backgroundColor: "#f3f4f6", color: "#1f2937" }}>
       <Router>
         <Routes>
           <Route path="/" element={<UserPanel />} />
@@ -54,4 +52,4 @@ export default function App() {
       <Toaster position="top-right" toastOptions={{ duration: 3000 }} />
     </div>
   );
-        }
+}
