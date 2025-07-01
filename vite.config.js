@@ -1,8 +1,8 @@
-// ✅ vite.config.js
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
+// vite.config.js
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
 
 export default defineConfig({
   plugins: [react()],
-  base: './', // Netlify မှာမှန်အောင် relative path သုံး
-})
+  base: '/', // ✅ ဒါမှ Netlify မှာမှန်တယ်
+});
