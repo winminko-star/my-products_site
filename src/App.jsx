@@ -1,72 +1,123 @@
 // src/App.jsx
 
 import React, { useState, useEffect } from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import UserPanel from "./pages/UserPanel";
 import AdminLogin from "./pages/AdminLogin";
 import AdminPanel from "./pages/AdminPanel";
 import SummaryPage from "./pages/SummaryPage";
+import OrderList from "./pages/OrderList";
 import { Toaster, toast } from "react-hot-toast";
 
 export default function App() {
-  const [access, setAccess] = useState(false);
-  const [input, setInput] = useState("");
+  const [appAccess, setAppAccess] = useState(false);
+  const [adminAccess, setAdminAccess] = useState(false);
+  const [appInput, setAppInput] = useState("");
+  const [adminInput, setAdminInput] = useState("");
 
-  // ✅ access ကို localStorage မှာ သိမ်းထား => refresh လုပ်လည်း access မပျက်
+  // ✅ LocalStorage ထဲမှာရှိရင် Refresh လုပ်လည်း မပျက်
   useEffect(() => {
-    const storedAccess = localStorage.getItem("access");
-    if (storedAccess === "true") {
-      setAccess(true);
+    const storedAppAccess = localStorage.getItem("appAccess");
+    if (storedAppAccess === "true") {
+      setAppAccess(true);
+    }
+
+    const storedAdminAccess = localStorage.getItem("adminAccess");
+    if (storedAdminAccess === "true") {
+      setAdminAccess(true);
     }
   }, []);
 
-  const checkPassword = () => {
-    if (input === "852022") {
-      setAccess(true);
-      localStorage.setItem("access", "true"); // ✅ added this line
+  // ✅ App Password Check
+  const checkAppPassword = () => {
+    if (appInput === "852022") {
+      localStorage.setItem("appAccess", "true");
+      setAppAccess(true);
     } else {
-      toast.error("Wrong password");
+      toast.error("Wrong App Password");
     }
   };
 
-  if (!access) {
+  // ✅ Admin Password Check
+  const checkAdminPassword = () => {
+    if (adminInput === "504119004") {
+      localStorage.setItem("adminAccess", "true");
+      setAdminAccess(true);
+    } else {
+      toast.error("Wrong Admin Password");
+    }
+  };
+
+  // ✅ Step 1: App Access မရသေးရင် App Password Box ပြ
+  if (!appAccess) {
     return (
-      <div
-        style={{
-          minHeight: "100vh",
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
+      <div style={centerStyle}>
         <h1>Enter App Password</h1>
         <input
           type="password"
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
+          value={appInput}
+          onChange={(e) => setAppInput(e.target.value)}
           placeholder="Enter password"
-          style={{ padding: "8px", fontSize: "16px" }}
+          style={inputStyle}
         />
-        <button
-          onClick={checkPassword}
-          style={{ padding: "10px 20px", marginTop: "10px" }}
-        >
+        <button onClick={checkAppPassword} style={buttonStyle}>
           Enter
         </button>
+        <Toaster />
       </div>
     );
   }
 
+  // ✅ Step 2: App Access ရပြီး Admin Panel ထဲမဝင်ခင်
   return (
-    <Router>
+    <>
+      <Toaster />
       <Routes>
         <Route path="/" element={<UserPanel />} />
-        <Route path="/admin" element={<AdminLogin />} />
-        <Route path="/admin-panel" element={<AdminPanel />} />
+        <Route
+          path="/admin"
+          element={
+            adminAccess ? (
+              <AdminPanel />
+            ) : (
+              <div style={centerStyle}>
+                <h1>Enter Admin Password</h1>
+                <input
+                  type="password"
+                  value={adminInput}
+                  onChange={(e) => setAdminInput(e.target.value)}
+                  placeholder="Admin password"
+                  style={inputStyle}
+                />
+                <button onClick={checkAdminPassword} style={buttonStyle}>
+                  Login
+                </button>
+              </div>
+            )
+          }
+        />
+        <Route path="/login" element={<AdminLogin />} />
         <Route path="/summary" element={<SummaryPage />} />
+        <Route path="/orders" element={<OrderList />} />
       </Routes>
-      <Toaster />
-    </Router>
+    </>
   );
 }
+
+// ✅ CSS Inline Styles
+const centerStyle = {
+  minHeight: "100vh",
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "center",
+  alignItems: "center",
+};
+
+const inputStyle = {
+  padding: "8px",
+  marginBottom: "10px",
+};
+
+const buttonStyle = {
+  padding: "8px 16px",
+};
