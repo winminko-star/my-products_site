@@ -21,7 +21,7 @@ export default function UserPanel() {
 
   // ✅ Reset logic
   const handleReset = () => {
-    if (resetInput === "007") {
+    if (resetInput === "WI489661") {
       localStorage.removeItem("assignedTable");
       navigate("/pick-table");
     } else {
