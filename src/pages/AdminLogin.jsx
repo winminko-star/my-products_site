@@ -1,39 +1,53 @@
-// ✅ src/pages/AdminLogin.jsx
+// src/pages/AdminLogin.jsx
 
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
 
 export default function AdminLogin() {
-  const [password, setPassword] = useState("");
   const navigate = useNavigate();
+  const [input, setInput] = useState("");
 
-  const checkPassword = () => {
-    if (password === "504119004") {
-      toast.success("Login successful");
-      localStorage.setItem("access", "true"); // ✅ browser storage ထဲသိမ်း
-      navigate("/admin-panel");
+  const handleLogin = () => {
+    if (input === "504119004") {
+      localStorage.setItem("adminAccess", "true");
+      navigate("/admin");
     } else {
-      toast.error("Wrong password");
+      toast.error("Wrong Admin Password");
     }
   };
 
   return (
-    <div style={{ padding: 20 }}>
-      <h2>Admin Login</h2>
+    <div style={centerStyle}>
+      <h1>Enter Admin Password</h1>
       <input
         type="password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-        placeholder="Enter Admin Password"
-        style={{ padding: 10, fontSize: 16 }}
+        value={input}
+        onChange={(e) => setInput(e.target.value)}
+        placeholder="Admin password"
+        style={inputStyle}
       />
-      <button
-        onClick={checkPassword}
-        style={{ padding: "10px 20px", marginTop: 10 }}
-      >
+      <button onClick={handleLogin} style={buttonStyle}>
         Login
       </button>
     </div>
   );
 }
+
+// Inline styles
+const centerStyle = {
+  minHeight: "100vh",
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "center",
+  alignItems: "center",
+  gap: "10px",
+};
+
+const inputStyle = {
+  padding: "8px",
+};
+
+const buttonStyle = {
+  padding: "8px 16px",
+};
