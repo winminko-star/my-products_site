@@ -3,10 +3,11 @@
 import React, { useState, useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 import UserPanel from "./pages/UserPanel";
-import AdminLogin from "./pages/AdminLogin";
 import AdminPanel from "./pages/AdminPanel";
+import AdminLogin from "./pages/AdminLogin";
 import SummaryPage from "./pages/SummaryPage";
 import OrderList from "./pages/OrderList";
+import TablePicker from "./pages/TablePicker";
 import { Toaster, toast } from "react-hot-toast";
 
 export default function App() {
@@ -15,7 +16,7 @@ export default function App() {
   const [appInput, setAppInput] = useState("");
   const [adminInput, setAdminInput] = useState("");
 
-  // ✅ LocalStorage ထဲမှာရှိရင် Refresh လုပ်လည်း မပျက်
+  // ✅ Reload Protection using localStorage
   useEffect(() => {
     const storedAppAccess = localStorage.getItem("appAccess");
     if (storedAppAccess === "true") {
@@ -48,7 +49,7 @@ export default function App() {
     }
   };
 
-  // ✅ Step 1: App Access မရသေးရင် App Password Box ပြ
+  // ✅ Step 1: App Password UI
   if (!appAccess) {
     return (
       <div style={centerStyle}>
@@ -68,12 +69,15 @@ export default function App() {
     );
   }
 
-  // ✅ Step 2: App Access ရပြီး Admin Panel ထဲမဝင်ခင်
+  // ✅ Main App with Routes
   return (
     <>
       <Toaster />
       <Routes>
         <Route path="/" element={<UserPanel />} />
+        <Route path="/pick-table" element={<TablePicker />} />
+        <Route path="/summary" element={<SummaryPage />} />
+        <Route path="/orders" element={<OrderList />} />
         <Route
           path="/admin"
           element={
@@ -97,25 +101,23 @@ export default function App() {
           }
         />
         <Route path="/login" element={<AdminLogin />} />
-        <Route path="/summary" element={<SummaryPage />} />
-        <Route path="/orders" element={<OrderList />} />
       </Routes>
     </>
   );
 }
 
-// ✅ CSS Inline Styles
+// ✅ Inline Styles
 const centerStyle = {
   minHeight: "100vh",
   display: "flex",
   flexDirection: "column",
   justifyContent: "center",
   alignItems: "center",
+  gap: "10px",
 };
 
 const inputStyle = {
   padding: "8px",
-  marginBottom: "10px",
 };
 
 const buttonStyle = {
