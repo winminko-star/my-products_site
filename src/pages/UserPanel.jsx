@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
-import { products } from "../data/products";
+import products from "../data/products";
 
 const TABLE_ID = localStorage.getItem("assignedTable") || "1";
 
