@@ -1,3 +1,5 @@
+import React from "react";
+import { useNavigate } from "react-router-dom"; // <<== import လုပ်ဖို့ မမေ့
 export default function SummaryPage() {
   const navigate = useNavigate();
   const table = localStorage.getItem("assignedTable") || "1";
