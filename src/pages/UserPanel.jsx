@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import products from "../data/products"; // မင်းမှာရှိတဲ့ products.js မှာထုတ်ထားတဲ့အရာ
+import products from "../data/products";
 
 export default function UserPanel() {
   const navigate = useNavigate();
@@ -10,6 +10,7 @@ export default function UserPanel() {
   const [showReset, setShowReset] = useState(false);
   const [resetInput, setResetInput] = useState("");
   const [cart, setCart] = useState([]);
+  const [flashItemId, setFlashItemId] = useState(null); // ✅ flash effect
 
   // ✅ Table မရှိရင် pick-table သို့ ပြန်ပို့
   useEffect(() => {
@@ -27,8 +28,8 @@ export default function UserPanel() {
       alert("Wrong password!");
     }
   };
-  const [flashItemId, setFlashItemId] = useState(null); // ထပ်ထည့်
-  // ✅ Add to Cart
+
+  // ✅ Add to Cart + Flash
   const addToCart = (item) => {
     const exists = cart.find((i) => i.id === item.id);
     if (exists) {
@@ -40,12 +41,12 @@ export default function UserPanel() {
     } else {
       setCart([...cart, { ...item, qty: 1 }]);
     }
+
+    // ✅ Flash effect for this item
+    setFlashItemId(item.id);
+    setTimeout(() => setFlashItemId(null), 500);
   };
 
-  // ✅ Add flash highlight effect
-  setFlashItemId(item.id);
-  setTimeout(() => setFlashItemId(null), 500); // 0.5 sec only
-};
   // ✅ Update Quantity
   const updateQty = (id, qty) => {
     if (qty < 1) {
@@ -101,13 +102,17 @@ export default function UserPanel() {
         </div>
       )}
 
-      {/* ✅ Product Menu */}
+      {/* ✅ Product Menu with Flash Effect */}
       <div className="grid grid-cols-2 gap-2 mb-4">
         {products.map((item) => (
           <button
             key={item.id}
             onClick={() => addToCart(item)}
-            className="p-2 border rounded"
+            className={`p-2 border rounded transition duration-300 ${
+              flashItemId === item.id
+                ? "bg-green-500 text-white scale-105"
+                : "hover:bg-gray-100"
+            }`}
           >
             {item.name} - ${item.price}
           </button>
@@ -150,4 +155,4 @@ export default function UserPanel() {
       )}
     </div>
   );
-                                           }
+}
