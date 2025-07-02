@@ -1,7 +1,7 @@
 // src/App.jsx
 
 import React, { useState, useEffect } from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import UserPanel from "./pages/UserPanel";
 import AdminPanel from "./pages/AdminPanel";
 import AdminLogin from "./pages/AdminLogin";
@@ -12,20 +12,13 @@ import { Toaster, toast } from "react-hot-toast";
 
 export default function App() {
   const [appAccess, setAppAccess] = useState(false);
-  const [adminAccess, setAdminAccess] = useState(false);
   const [appInput, setAppInput] = useState("");
-  const [adminInput, setAdminInput] = useState("");
 
-  // ✅ Reload Protection using localStorage
+  // ✅ App access check from localStorage
   useEffect(() => {
     const storedAppAccess = localStorage.getItem("appAccess");
     if (storedAppAccess === "true") {
       setAppAccess(true);
-    }
-
-    const storedAdminAccess = localStorage.getItem("adminAccess");
-    if (storedAdminAccess === "true") {
-      setAdminAccess(true);
     }
   }, []);
 
@@ -39,17 +32,7 @@ export default function App() {
     }
   };
 
-  // ✅ Admin Password Check
-  const checkAdminPassword = () => {
-    if (adminInput === "504119004") {
-      localStorage.setItem("adminAccess", "true");
-      setAdminAccess(true);
-    } else {
-      toast.error("Wrong Admin Password");
-    }
-  };
-
-  // ✅ Step 1: App Password UI
+  // ✅ Step 1: App Password Screen
   if (!appAccess) {
     return (
       <div style={centerStyle}>
@@ -69,7 +52,7 @@ export default function App() {
     );
   }
 
-  // ✅ Main App with Routes
+  // ✅ Step 2: Main App Routes
   return (
     <>
       <Toaster />
@@ -78,29 +61,20 @@ export default function App() {
         <Route path="/pick-table" element={<TablePicker />} />
         <Route path="/summary" element={<SummaryPage />} />
         <Route path="/orders" element={<OrderList />} />
+        <Route path="/admin-login" element={<AdminLogin />} />
         <Route
           path="/admin"
           element={
-            adminAccess ? (
+            localStorage.getItem("adminAccess") === "true" ? (
               <AdminPanel />
             ) : (
               <div style={centerStyle}>
-                <h1>Enter Admin Password</h1>
-                <input
-                  type="password"
-                  value={adminInput}
-                  onChange={(e) => setAdminInput(e.target.value)}
-                  placeholder="Admin password"
-                  style={inputStyle}
-                />
-                <button onClick={checkAdminPassword} style={buttonStyle}>
-                  Login
-                </button>
+                <h1>Access Denied</h1>
+                <p>You must login from /admin-login</p>
               </div>
             )
           }
         />
-        <Route path="/login" element={<AdminLogin />} />
       </Routes>
     </>
   );
@@ -114,6 +88,7 @@ const centerStyle = {
   justifyContent: "center",
   alignItems: "center",
   gap: "10px",
+  textAlign: "center",
 };
 
 const inputStyle = {
