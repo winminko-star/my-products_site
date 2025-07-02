@@ -27,7 +27,7 @@ export default function UserPanel() {
       alert("Wrong password!");
     }
   };
-
+  const [flashItemId, setFlashItemId] = useState(null); // ထပ်ထည့်
   // ✅ Add to Cart
   const addToCart = (item) => {
     const exists = cart.find((i) => i.id === item.id);
@@ -42,6 +42,10 @@ export default function UserPanel() {
     }
   };
 
+  // ✅ Add flash highlight effect
+  setFlashItemId(item.id);
+  setTimeout(() => setFlashItemId(null), 500); // 0.5 sec only
+};
   // ✅ Update Quantity
   const updateQty = (id, qty) => {
     if (qty < 1) {
