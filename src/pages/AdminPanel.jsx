@@ -1,36 +1,36 @@
-// ✅ src/pages/AdminPanel.jsx
 import React, { useEffect, useState } from "react";
-import { database } from "../firebase";
-import { ref, onValue, remove } from "firebase/database";
 import toast from "react-hot-toast";
 
 export default function AdminPanel() {
   const [ordersByTable, setOrdersByTable] = useState({});
 
   useEffect(() => {
-    const allOrders = {};
+    const raw = JSON.parse(localStorage.getItem("orders")) || {};
+    const processed = {};
 
-    for (let i = 1; i <= 30; i++) {
-      const tableId = `table_${i}`;
-      const orderRef = ref(database, `tables/${tableId}/order`);
+    Object.entries(raw).forEach(([tableId, orders]) => {
+      processed[tableId] = [...orders].sort(
+        (a, b) => (b.created || 0) - (a.created || 0)
+      );
+    });
 
-      onValue(orderRef, (snapshot) => {
-        const data = snapshot.val() || {};
-        const orders = Object.entries(data).map(([id, order]) => ({
-          id,
-          items: order,
-        }));
-
-        allOrders[tableId] = orders;
-        setOrdersByTable({ ...allOrders });
-      });
-    }
+    setOrdersByTable(processed);
   }, []);
 
-  const clearOrder = async (table, orderId) => {
+  const clearOrder = (table, index) => {
     try {
-      const orderRef = ref(database, `tables/${table}/order/${orderId}`);
-      await remove(orderRef);
+      const all = JSON.parse(localStorage.getItem("orders")) || {};
+      const updated = [...(all[table] || [])];
+      updated.splice(index, 1);
+
+      all[table] = updated;
+      localStorage.setItem("orders", JSON.stringify(all));
+
+      setOrdersByTable((prev) => ({
+        ...prev,
+        [table]: updated,
+      }));
+
       toast.success("Order cleared");
     } catch (err) {
       toast.error("Failed to clear");
@@ -38,13 +38,10 @@ export default function AdminPanel() {
   };
 
   const drawWinner = () => {
-    const all = Object.entries(ordersByTable)
-      .flatMap(([table, orders]) => orders.map((o) => ({ ...o, table })));
-
+    const all = Object.values(ordersByTable).flat();
     if (all.length === 0) return toast.error("No orders to draw");
-
     const lucky = all[Math.floor(Math.random() * all.length)];
-    toast.success(`🎉 Lucky Draw Winner: ${lucky.table.toUpperCase()}`);
+    toast.success(`🎉 Lucky Draw Winner: Table ${lucky.table}`);
   };
 
   return (
@@ -61,21 +58,24 @@ export default function AdminPanel() {
       {Object.entries(ordersByTable).map(([table, orders]) => (
         <div key={table} className="mb-6">
           <h2 className="text-lg font-semibold mb-2">{table.toUpperCase()}</h2>
-
           {orders.map((order, idx) => (
-            <div key={order.id} className="border p-3 mb-3 rounded shadow">
+            <div key={idx} className="border p-3 mb-3 rounded shadow">
               <div className="font-bold mb-1">#{idx + 1}</div>
-
+              {order.note && (
+                <div className="text-sm italic text-gray-600 mb-1">
+                  Note: {order.note}
+                </div>
+              )}
               <ul className="text-sm">
                 {order.items.map((item, i) => (
                   <li key={i}>
-                    {item.name} x {item.quantity} = ${item.quantity * item.price}
+                    {item.name} x {item.qty} = ${item.price * item.qty}
                   </li>
                 ))}
               </ul>
-
+              <div className="font-semibold mt-2">Total: ${order.total}</div>
               <button
-                onClick={() => clearOrder(table, order.id)}
+                onClick={() => clearOrder(table, idx)}
                 className="mt-2 px-3 py-1 bg-red-600 text-white rounded"
               >
                 Clear
