@@ -1,35 +1,36 @@
 // ✅ src/pages/AdminLogin.jsx
+
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import toast from "react-hot-toast";
-
-const ADMIN_PASSWORD = "504119004";
+import { toast } from "react-hot-toast";
 
 export default function AdminLogin() {
+  const [password, setPassword] = useState("");
   const navigate = useNavigate();
-  const [input, setInput] = useState("");
 
-  const handleLogin = () => {
-    if (input === ADMIN_PASSWORD) {
-      navigate("/admin/panel");
+  const checkPassword = () => {
+    if (password === "504119004") {
+      toast.success("Login successful");
+      localStorage.setItem("access", "true"); // ✅ browser storage ထဲသိမ်း
+      navigate("/admin-panel");
     } else {
-      toast.error("Incorrect password");
+      toast.error("Wrong password");
     }
   };
 
   return (
-    <div className="p-4 max-w-md mx-auto mt-20 text-center">
-      <h1 className="text-xl font-bold mb-4">Admin Login</h1>
+    <div style={{ padding: 20 }}>
+      <h2>Admin Login</h2>
       <input
         type="password"
-        placeholder="Enter password"
-        value={input}
-        onChange={(e) => setInput(e.target.value)}
-        className="border px-3 py-2 w-full mb-4"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+        placeholder="Enter Admin Password"
+        style={{ padding: 10, fontSize: 16 }}
       />
       <button
-        onClick={handleLogin}
-        className="bg-blue-600 text-white px-4 py-2 rounded"
+        onClick={checkPassword}
+        style={{ padding: "10px 20px", marginTop: 10 }}
       >
         Login
       </button>
