@@ -134,3 +134,32 @@ button {
   font-size: 16px;
   font-weight: bold;
   }
+.summary-page {
+  background-color: #fff0f5;
+  padding: 20px;
+  min-height: 100vh;
+}
+
+.summary-table-block {
+  background: white;
+  padding: 20px;
+  margin-bottom: 30px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.summary-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+.summary-table th,
+.summary-table td {
+  border: 1px solid #999;
+  padding: 10px;
+  text-align: center;
+  font-weight: bold;
+  color: #000;
+  }
+
