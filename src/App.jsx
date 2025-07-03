@@ -10,7 +10,7 @@ import OrderList from "./pages/OrderList";
 import TablePicker from "./pages/TablePicker";
 import { Toaster, toast } from "react-hot-toast";
 import AccessDenied from "./pages/AccessDenied";
-
+import EditOrder from "./pages/EditOrder";
 export default function App() {
   const [appAccess, setAppAccess] = useState(false);
   const [appInput, setAppInput] = useState("");
@@ -58,6 +58,7 @@ export default function App() {
     <>
       <Toaster />
       <Routes>
+        <Route path="/edit/:tableId/:orderIndex" element={<EditOrder />} />
         <Route path="/access-denied" element={<AccessDenied />} />
         <Route path="/" element={<TablePicker />} />                      
         <Route path="/user" element={<UserPanel />} />
