@@ -62,10 +62,8 @@ export default function AdminPanel() {
                 <ul>
                   {order.items.map((item, j) => (
                     <li key={j}>
-                      {item.name} - {item.qty} × {item.price.toLocaleString()} Ks
-{(item.qty * item.price).toLocaleString()} Ks
-                    </li>
-                  ))}
+  {item.name} - {item.qty} × {item.price.toLocaleString()} Ks = {(item.qty * item.price).toLocaleString()} Ks
+</li>           ))}
                 </ul>
                 {order.note && (
                   <p style={{ fontStyle: "italic", color: "#555" }}>
