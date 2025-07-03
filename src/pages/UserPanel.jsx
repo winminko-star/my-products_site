@@ -6,11 +6,18 @@ import "../index.css";
 
 export default function UserPanel() {
   const navigate = useNavigate();
-  const [tableId, setTableId] = useState("1"); // ✅ tableId as state
+  const [tableId, setTableId] = useState("1");
   const [cart, setCart] = useState([]);
   const [note, setNote] = useState("");
 
-  // ✅ Block access if no assignedTable
+  // ✅ Back key blocker handler
+  const handleBack = (e) => {
+    e.preventDefault();
+    toast("Back blocked. Please use Reset Table.");
+    window.history.pushState(null, "", window.location.pathname);
+  };
+
+  // ✅ Initial setup + back block
   useEffect(() => {
     const id = localStorage.getItem("assignedTable");
     if (!id) {
@@ -18,15 +25,17 @@ export default function UserPanel() {
     } else {
       setTableId(id);
     }
+
+    // push fake state
+    window.history.pushState(null, "", window.location.pathname);
+    window.addEventListener("popstate", handleBack);
+
+    return () => {
+      window.removeEventListener("popstate", handleBack);
+    };
   }, []);
- // push fake history state
-  window.history.pushState(null, "", window.location.pathname);
-  
-  return () => {
-    window.removeEventListener("popstate", handleBack);
-  };
-}, []);
-    const addToCart = (item) => {
+
+  const addToCart = (item) => {
     const exists = cart.find((i) => i.id === item.id);
     if (exists) {
       setCart(
@@ -78,7 +87,7 @@ export default function UserPanel() {
     const input = prompt("Enter reset password:");
     if (input === "007") {
       localStorage.removeItem("assignedTable");
-      navigate("/");
+      navigate("/pick-table", { replace: true });
     } else {
       toast.error("Wrong password");
     }
@@ -149,7 +158,7 @@ export default function UserPanel() {
                     style={{ width: "50px" }}
                   />
                 </td>
-                <td>{(item.qty * item.price).toLocaleString()} Ks</td> {/* Kyats format */}
+                <td>{(item.qty * item.price).toLocaleString()} Ks</td>
               </tr>
             ))}
           </tbody>
@@ -177,4 +186,4 @@ export default function UserPanel() {
       </div>
     </div>
   );
-                    }
+            }
