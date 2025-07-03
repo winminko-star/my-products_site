@@ -15,7 +15,7 @@ const TablePicker = () => {
 
   const handleSelect = (tableNumber) => {
     localStorage.setItem("assignedTable", tableNumber);
-    navigate("/user");
+    navigate("/user", { replace: true });
   };
 
   const handleAdmin = () => {
