@@ -7,8 +7,10 @@ import "../index.css";
 const [tableId, setTableId] = useState("1");
 
 useEffect(() => {
-  const id = localStorage.getItem("assignedTable") || "1";
-  setTableId(id);
+  const tableId = localStorage.getItem("assignedTable");
+  if (!tableId) {
+    navigate("/pick-table", { replace: true });
+  }
 }, []);
 
 export default function UserPanel() {
