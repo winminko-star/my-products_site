@@ -50,15 +50,15 @@ export default function SummaryPage() {
                 </tr>
               </thead>
               <tbody>
-                {order.items.map((item) => (
-                  <tr key={item.id}>
-                    <td>{item.name}</td>
-                    <td>{item.unit}</td>
-                    <td>{item.qty}</td>
-                    <td>{item.qty * item.price}</td>
-                  </tr>
-                ))}
-              </tbody>
+  {order.items.map((item) => (
+    <tr key={item.id}>
+      <td>{item.name}</td>
+      <td>{item.unit}</td>
+      <td>{item.qty}</td>
+      <td>{(item.qty * item.price).toLocaleString()} Ks</td>  {/* ✅ ပြောင်းလိုက် */}
+    </tr>
+  ))}
+</tbody>
             </table>
             <hr style={{ margin: "20px 0" }} />
           </div>
