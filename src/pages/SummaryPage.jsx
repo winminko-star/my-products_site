@@ -7,10 +7,9 @@ export default function SummaryPage() {
   const [orders, setOrders] = useState([]);
 
   useEffect(() => {
-    const data = JSON.parse(localStorage.getItem("orders")) || {};
-    if (data[TABLE_ID]) {
-      setOrders(data[TABLE_ID]);
-    }
+    const data =
+      JSON.parse(localStorage.getItem(`orders_table_${TABLE_ID}`)) || [];
+    setOrders(data);
   }, []);
 
   return (
@@ -25,7 +24,8 @@ export default function SummaryPage() {
         orders.map((order, index) => (
           <div key={index} className="summary-table-block">
             <p>
-              <strong>Time:</strong> {order.time}
+              <strong>Time:</strong>{" "}
+              {new Date(order.timestamp).toLocaleString()}
             </p>
             {order.note && (
               <p>
