@@ -36,23 +36,27 @@ export default function UserPanel() {
       return;
     }
 
-    const orderData = {
+    const newOrder = {
       table: TABLE_ID,
       items: cart,
       note: note.trim(),
-      time: new Date().toLocaleString(),
+      timestamp: new Date().toISOString(),
     };
 
-    const existingOrders = JSON.parse(localStorage.getItem("orders")) || {};
-    if (!existingOrders[TABLE_ID]) {
-      existingOrders[TABLE_ID] = [];
-    }
-    existingOrders[TABLE_ID].push(orderData);
+    const existingOrders =
+      JSON.parse(localStorage.getItem(`orders_table_${TABLE_ID}`)) || [];
 
-    localStorage.setItem("orders", JSON.stringify(existingOrders));
+    existingOrders.push(newOrder);
+
+    localStorage.setItem(
+      `orders_table_${TABLE_ID}`,
+      JSON.stringify(existingOrders)
+    );
+
     toast.success("Order placed!");
     setCart([]);
     setNote("");
+    navigate("/summary"); // SummaryPage ပြသဖို့
   };
 
   const handleResetTable = () => {
@@ -145,10 +149,17 @@ export default function UserPanel() {
         Place Order
       </button>
 
-      <div style={{ marginTop: "30px", display: "flex", justifyContent: "center", gap: "10px" }}>
+      <div
+        style={{
+          marginTop: "30px",
+          display: "flex",
+          justifyContent: "center",
+          gap: "10px",
+        }}
+      >
         <button onClick={handleResetTable}>Reset Table</button>
         <button onClick={goToAdmin}>Admin</button>
       </div>
     </div>
   );
-                }
+                          }
