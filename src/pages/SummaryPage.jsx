@@ -7,9 +7,9 @@ export default function SummaryPage() {
   const [orders, setOrders] = useState([]);
 
   useEffect(() => {
-    const data =
+    const orders =
       JSON.parse(localStorage.getItem(`orders_table_${TABLE_ID}`)) || [];
-    setOrders(data);
+    setOrders(orders);
   }, []);
 
   return (
