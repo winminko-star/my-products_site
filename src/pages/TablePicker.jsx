@@ -1,9 +1,17 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "../index.css";
 
 const TablePicker = () => {
   const navigate = useNavigate();
+
+  // ✅ Already assigned table? Prevent coming back
+  useEffect(() => {
+    const assigned = localStorage.getItem("assignedTable");
+    if (assigned) {
+      navigate("/user");
+    }
+  }, []);
 
   const handleSelect = (tableNumber) => {
     localStorage.setItem("assignedTable", tableNumber);
