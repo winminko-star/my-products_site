@@ -1,30 +1,46 @@
-// src/pages/TablePicker.jsx
-
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import "../index.css";
 
-export default function TablePicker() {
+const TablePicker = () => {
   const navigate = useNavigate();
 
-  const chooseTable = (tableNumber) => {
+  const handleSelect = (tableNumber) => {
     localStorage.setItem("assignedTable", tableNumber);
-    navigate("/"); // Go to main menu
+    navigate("/user");
   };
 
+  const handleAdmin = () => {
+    const pwd = prompt("Enter Admin Password");
+    if (pwd === "504119004") {
+      navigate("/admin-login");
+    } else {
+      alert("Incorrect password");
+    }
+  };
+
+  const tableButtons = [];
+  for (let i = 1; i <= 30; i++) {
+    tableButtons.push(
+      <button
+        key={i}
+        className="table-btn"
+        onClick={() => handleSelect(i)}
+      >
+        Table {i}
+      </button>
+    );
+  }
+
   return (
-    <div style={{ padding: 20, textAlign: "center" }}>
-      <h1 className="text-xl font-bold mb-4">Please select your table</h1>
-      <div className="flex flex-wrap justify-center gap-2">
-        {[...Array(30)].map((_, i) => (
-          <button
-            key={i}
-            onClick={() => chooseTable(i + 1)}
-            className="px-4 py-2 bg-gray-200 rounded hover:bg-blue-400"
-          >
-            Table {i + 1}
-          </button>
-        ))}
-      </div>
+    <div className="table-picker-container">
+      <h1 className="title">Select Your Table</h1>
+      <div className="table-grid">{tableButtons}</div>
+      <button className="admin-btn" onClick={handleAdmin}>
+        Admin
+      </button>
     </div>
   );
-    }
+};
+
+export default TablePicker;
