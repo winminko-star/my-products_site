@@ -4,19 +4,21 @@ import toast from "react-hot-toast";
 import products from "../data/products";
 import "../index.css";
 
-const [tableId, setTableId] = useState("1");
-
-useEffect(() => {
-  const tableId = localStorage.getItem("assignedTable");
-  if (!tableId) {
-    navigate("/pick-table", { replace: true });
-  }
-}, []);
-
 export default function UserPanel() {
   const navigate = useNavigate();
+  const [tableId, setTableId] = useState("1"); // ✅ tableId as state
   const [cart, setCart] = useState([]);
   const [note, setNote] = useState("");
+
+  // ✅ Block access if no assignedTable
+  useEffect(() => {
+    const id = localStorage.getItem("assignedTable");
+    if (!id) {
+      navigate("/pick-table", { replace: true });
+    } else {
+      setTableId(id);
+    }
+  }, []);
 
   const addToCart = (item) => {
     const exists = cart.find((i) => i.id === item.id);
@@ -63,7 +65,7 @@ export default function UserPanel() {
     toast.success("Order placed!");
     setCart([]);
     setNote("");
-    navigate("/summary"); // SummaryPage ပြသဖို့
+    navigate("/summary");
   };
 
   const handleResetTable = () => {
@@ -141,7 +143,7 @@ export default function UserPanel() {
                     style={{ width: "50px" }}
                   />
                 </td>
-                <td>{item.qty * item.price}</td>
+                <td>{(item.qty * item.price).toLocaleString()} Ks</td> {/* Kyats format */}
               </tr>
             ))}
           </tbody>
@@ -169,4 +171,4 @@ export default function UserPanel() {
       </div>
     </div>
   );
-                          }
+                    }
