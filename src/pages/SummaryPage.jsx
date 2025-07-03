@@ -1,21 +1,29 @@
 import React, { useEffect, useState } from "react";
 import "../index.css";
 
-const TABLE_ID = localStorage.getItem("assignedTable") || "1";
+const [tableId, setTableId] = useState("1");
+
+useEffect(() => {
+  const id = localStorage.getItem("assignedTable") || "1";
+  setTableId(id);
+
+  const orders = JSON.parse(localStorage.getItem(`orders_table_${id}`)) || [];
+  setOrders(orders);
+}, []);
 
 export default function SummaryPage() {
   const [orders, setOrders] = useState([]);
 
   useEffect(() => {
     const orders =
-      JSON.parse(localStorage.getItem(`orders_table_${TABLE_ID}`)) || [];
+      JSON.parse(localStorage.getItem(`orders_table_${tableId}`)) || [];
     setOrders(orders);
   }, []);
 
   return (
     <div className="summary-page">
       <h1 style={{ textAlign: "center", marginBottom: "20px" }}>
-        Your Orders (Table {TABLE_ID})
+        Your Orders (Table {tableId})
       </h1>
 
       {orders.length === 0 ? (
