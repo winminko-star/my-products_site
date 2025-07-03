@@ -10,14 +10,7 @@ export default function UserPanel() {
   const [cart, setCart] = useState([]);
   const [note, setNote] = useState("");
 
-  // ✅ Back key blocker handler
-  const handleBack = (e) => {
-    e.preventDefault();
-    toast("Back blocked. Please use Reset Table.");
-    window.history.pushState(null, "", window.location.pathname);
-  };
-
-  // ✅ Initial setup + back block
+  // ✅ Initial setup + block back button
   useEffect(() => {
     const id = localStorage.getItem("assignedTable");
     if (!id) {
@@ -26,14 +19,20 @@ export default function UserPanel() {
       setTableId(id);
     }
 
-    // push fake state
+    // ✅ Block browser back key
+    const handleBack = (e) => {
+      e.preventDefault();
+      toast("Back is blocked. Please use Reset Table.");
+      window.history.pushState(null, "", window.location.pathname);
+    };
+
     window.history.pushState(null, "", window.location.pathname);
     window.addEventListener("popstate", handleBack);
 
     return () => {
       window.removeEventListener("popstate", handleBack);
     };
-  }, []);
+  }, [navigate]);
 
   const addToCart = (item) => {
     const exists = cart.find((i) => i.id === item.id);
@@ -186,4 +185,4 @@ export default function UserPanel() {
       </div>
     </div>
   );
-            }
+      }
