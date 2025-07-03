@@ -2,21 +2,36 @@
 
 import React, { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 export default function AdminPanel() {
   const [ordersByTable, setOrdersByTable] = useState({});
+  const navigate = useNavigate();
 
   useEffect(() => {
-    const storedOrders = JSON.parse(localStorage.getItem("orders") || "{}");
-    setOrdersByTable(storedOrders);
+    loadAllOrders();
   }, []);
 
-  const clearTableOrders = (tableKey) => {
-    const updated = { ...ordersByTable };
-    delete updated[tableKey];
-    setOrdersByTable(updated);
-    localStorage.setItem("orders", JSON.stringify(updated));
-    toast.success(`Cleared orders for ${tableKey}`);
+  const loadAllOrders = () => {
+    const all = {};
+    for (let i = 1; i <= 30; i++) {
+      const key = `orders_table_${i}`;
+      const data = JSON.parse(localStorage.getItem(key)) || [];
+      if (data.length > 0) {
+        all[i] = data;
+      }
+    }
+    setOrdersByTable(all);
+  };
+
+  const clearTableOrders = (tableNum) => {
+    localStorage.removeItem(`orders_table_${tableNum}`);
+    toast.success(`Cleared orders for Table ${tableNum}`);
+    loadAllOrders(); // Refresh UI
+  };
+
+  const editOrder = (tableNum, orderIndex) => {
+    navigate(`/edit/${tableNum}/${orderIndex}`);
   };
 
   return (
@@ -26,7 +41,7 @@ export default function AdminPanel() {
       {Object.keys(ordersByTable).length === 0 ? (
         <p>No orders found.</p>
       ) : (
-        Object.entries(ordersByTable).map(([tableKey, orderList], index) => (
+        Object.entries(ordersByTable).map(([tableNum, orderList], index) => (
           <div
             key={index}
             style={{
@@ -36,14 +51,19 @@ export default function AdminPanel() {
               borderRadius: 5,
             }}
           >
-            <h3 className="font-bold mb-2">{tableKey.replace("table_", "Table ")}</h3>
+            <h3 className="font-bold mb-2">Table {tableNum}</h3>
 
             {orderList.map((order, i) => (
               <div key={i} style={{ marginBottom: 10 }}>
+                <p>
+                  <strong>Time:</strong>{" "}
+                  {new Date(order.timestamp).toLocaleString()}
+                </p>
                 <ul>
                   {order.items.map((item, j) => (
                     <li key={j}>
-                      {item.name} - {item.qty} × ${item.price} = ${item.qty * item.price}
+                      {item.name} - {item.qty} × ${item.price} = $
+                      {item.qty * item.price}
                     </li>
                   ))}
                 </ul>
@@ -52,15 +72,26 @@ export default function AdminPanel() {
                     Note: {order.note}
                   </p>
                 )}
-                <p>
-                  <b>Total:</b> ${order.total.toFixed(2)}
-                </p>
+                <button
+                  onClick={() => editOrder(tableNum, i)}
+                  style={{
+                    padding: "4px 10px",
+                    backgroundColor: "#3b82f6",
+                    color: "white",
+                    border: "none",
+                    borderRadius: 4,
+                    marginTop: 6,
+                    cursor: "pointer",
+                  }}
+                >
+                  ✏ Edit Order #{i + 1}
+                </button>
                 <hr style={{ margin: "10px 0" }} />
               </div>
             ))}
 
             <button
-              onClick={() => clearTableOrders(tableKey)}
+              onClick={() => clearTableOrders(tableNum)}
               style={{
                 padding: "6px 12px",
                 backgroundColor: "#e11d48",
@@ -70,11 +101,11 @@ export default function AdminPanel() {
                 cursor: "pointer",
               }}
             >
-              Clear Orders for {tableKey.replace("table_", "Table ")}
+              Clear Orders for Table {tableNum}
             </button>
           </div>
         ))
       )}
     </div>
   );
-                 }
+}
