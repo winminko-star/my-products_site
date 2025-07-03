@@ -19,8 +19,26 @@ export default function UserPanel() {
       setTableId(id);
     }
   }, []);
+  useEffect(() => {
+  const handleBack = (event) => {
+    event.preventDefault();
 
-  const addToCart = (item) => {
+    const confirm = window.prompt("Enter password to go back:");
+    if (confirm !== "007") {
+      // Cancel back navigation
+      window.history.pushState(null, "", window.location.pathname);
+    }
+  };
+
+  // push fake history state
+  window.history.pushState(null, "", window.location.pathname);
+  window.addEventListener("popstate", handleBack);
+
+  return () => {
+    window.removeEventListener("popstate", handleBack);
+  };
+}, []);
+    const addToCart = (item) => {
     const exists = cart.find((i) => i.id === item.id);
     if (exists) {
       setCart(
