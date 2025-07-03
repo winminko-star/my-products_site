@@ -21,8 +21,7 @@ export default function UserPanel() {
   }, []);
  // push fake history state
   window.history.pushState(null, "", window.location.pathname);
-  window.addEventListener("popstate", handleBack);
-
+  
   return () => {
     window.removeEventListener("popstate", handleBack);
   };
