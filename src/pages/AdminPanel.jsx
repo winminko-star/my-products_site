@@ -62,8 +62,8 @@ export default function AdminPanel() {
                 <ul>
                   {order.items.map((item, j) => (
                     <li key={j}>
-                      {item.name} - {item.qty} × ${item.price} = $
-                      {item.qty * item.price}
+                      {item.name} - {item.qty} × {item.price.toLocaleString()} Ks
+{(item.qty * item.price).toLocaleString()} Ks
                     </li>
                   ))}
                 </ul>
