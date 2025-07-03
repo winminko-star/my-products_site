@@ -57,7 +57,8 @@ export default function App() {
     <>
       <Toaster />
       <Routes>
-        <Route path="/" element={<UserPanel />} />
+        <Route path="/" element={<TablePicker />} />                      
+        <Route path="/user" element={<UserPanel />} />
         <Route path="/pick-table" element={<TablePicker />} />
         <Route path="/summary" element={<SummaryPage />} />
         <Route path="/orders" element={<OrderList />} />
