@@ -1,16 +1,17 @@
 // src/App.jsx
 
 import React, { useState, useEffect } from "react";
-import { Routes, Route, useNavigate } from "react-router-dom";
+import { Routes, Route, useNavigate, Navigate } from "react-router-dom";
 import UserPanel from "./pages/UserPanel";
 import AdminPanel from "./pages/AdminPanel";
 import AdminLogin from "./pages/AdminLogin";
 import SummaryPage from "./pages/SummaryPage";
 import OrderList from "./pages/OrderList";
 import TablePicker from "./pages/TablePicker";
-import { Toaster, toast } from "react-hot-toast";
 import AccessDenied from "./pages/AccessDenied";
 import EditOrder from "./pages/EditOrder";
+import { Toaster, toast } from "react-hot-toast";
+
 export default function App() {
   const [appAccess, setAppAccess] = useState(false);
   const [appInput, setAppInput] = useState("");
@@ -58,14 +59,18 @@ export default function App() {
     <>
       <Toaster />
       <Routes>
-        <Route path="/edit/:tableId/:orderIndex" element={<EditOrder />} />
-        <Route path="/access-denied" element={<AccessDenied />} />
-        <Route path="/" element={<TablePicker />} />                      
-        <Route path="/user" element={<UserPanel />} />
+        {/* ✅ Fix: Redirect "/" to /pick-table with replace */}
+        <Route path="/" element={<Navigate to="/pick-table" replace />} />
+        
         <Route path="/pick-table" element={<TablePicker />} />
+        <Route path="/user" element={<UserPanel />} />
         <Route path="/summary" element={<SummaryPage />} />
         <Route path="/orders" element={<OrderList />} />
         <Route path="/admin-login" element={<AdminLogin />} />
+        <Route path="/edit/:tableId/:orderIndex" element={<EditOrder />} />
+        <Route path="/access-denied" element={<AccessDenied />} />
+
+        {/* ✅ Admin auth check */}
         <Route
           path="/admin"
           element={
