@@ -43,8 +43,7 @@ export default function UserPanel() {
       time: new Date().toLocaleString(),
     };
 
-    const existingOrders =
-      JSON.parse(localStorage.getItem("orders")) || {};
+    const existingOrders = JSON.parse(localStorage.getItem("orders")) || {};
     if (!existingOrders[TABLE_ID]) {
       existingOrders[TABLE_ID] = [];
     }
@@ -54,6 +53,20 @@ export default function UserPanel() {
     toast.success("Order placed!");
     setCart([]);
     setNote("");
+  };
+
+  const handleResetTable = () => {
+    const input = prompt("Enter reset password:");
+    if (input === "007") {
+      localStorage.removeItem("assignedTable");
+      navigate("/");
+    } else {
+      toast.error("Wrong password");
+    }
+  };
+
+  const goToAdmin = () => {
+    navigate("/admin-login");
   };
 
   const categories = ["Food", "Soup", "Drink", "Others"];
@@ -131,6 +144,11 @@ export default function UserPanel() {
       >
         Place Order
       </button>
+
+      <div style={{ marginTop: "30px", display: "flex", justifyContent: "center", gap: "10px" }}>
+        <button onClick={handleResetTable}>Reset Table</button>
+        <button onClick={goToAdmin}>Admin</button>
+      </div>
     </div>
   );
-}
+                }
