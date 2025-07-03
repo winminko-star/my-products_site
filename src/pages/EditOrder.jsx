@@ -66,7 +66,11 @@ export default function EditOrder() {
 
       <h3>Items:</h3>
       <ul>
-        {items.map((item, i) => (
-          <li key={i} style={{ marginBottom: 6 }}>
-            {item.name} - {item.qty} × ${item.price} = ${item.qty * item.price}{" "}
-            <button onClick={() =>
+  {items.map((item, i) => (
+    <li key={i} style={{ marginBottom: 6 }}>
+      {item.name} - {item.qty} × {item.price.toLocaleString()} Ks = {(item.qty * item.price).toLocaleString()} Ks
+      <button onClick={() => updateQty(i, 1)}>➕</button>
+      <button onClick={() => updateQty(i, -1)}>➖</button>
+    </li>
+  ))}
+</ul>
