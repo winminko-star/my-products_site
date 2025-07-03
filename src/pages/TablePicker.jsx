@@ -7,12 +7,11 @@ const TablePicker = () => {
 
   // ✅ Already assigned table? Prevent coming back
   useEffect(() => {
-    const assigned = localStorage.getItem("assignedTable");
-    if (assigned) {
-      navigate("/user");
-    }
-  }, []);
-
+  const assigned = localStorage.getItem("assignedTable");
+  if (assigned) {
+    navigate("/user", { replace: true });  // ✅ THIS IS THE FIX
+  }
+}, []);
   const handleSelect = (tableNumber) => {
     localStorage.setItem("assignedTable", tableNumber);
     navigate("/user", { replace: true });
