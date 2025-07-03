@@ -1,12 +1,19 @@
 // src/pages/AdminLogin.jsx
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
 
 export default function AdminLogin() {
   const navigate = useNavigate();
   const [input, setInput] = useState("");
+
+  useEffect(() => {
+    // Already logged in admin, auto redirect
+    if (localStorage.getItem("adminAccess") === "true") {
+      navigate("/admin");
+    }
+  }, []);
 
   const handleLogin = () => {
     if (input === "504119004") {
