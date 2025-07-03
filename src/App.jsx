@@ -9,6 +9,7 @@ import SummaryPage from "./pages/SummaryPage";
 import OrderList from "./pages/OrderList";
 import TablePicker from "./pages/TablePicker";
 import { Toaster, toast } from "react-hot-toast";
+import AccessDenied from "./pages/AccessDenied";
 
 export default function App() {
   const [appAccess, setAppAccess] = useState(false);
@@ -57,6 +58,7 @@ export default function App() {
     <>
       <Toaster />
       <Routes>
+        <Route path="/access-denied" element={<AccessDenied />} />
         <Route path="/" element={<TablePicker />} />                      
         <Route path="/user" element={<UserPanel />} />
         <Route path="/pick-table" element={<TablePicker />} />
