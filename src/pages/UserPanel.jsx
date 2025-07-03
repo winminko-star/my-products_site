@@ -4,7 +4,12 @@ import toast from "react-hot-toast";
 import products from "../data/products";
 import "../index.css";
 
-const TABLE_ID = localStorage.getItem("assignedTable") || "1";
+const [tableId, setTableId] = useState("1");
+
+useEffect(() => {
+  const id = localStorage.getItem("assignedTable") || "1";
+  setTableId(id);
+}, []);
 
 export default function UserPanel() {
   const navigate = useNavigate();
@@ -37,19 +42,19 @@ export default function UserPanel() {
     }
 
     const newOrder = {
-      table: TABLE_ID,
+      table: tableId,
       items: cart,
       note: note.trim(),
       timestamp: new Date().toISOString(),
     };
 
     const existingOrders =
-      JSON.parse(localStorage.getItem(`orders_table_${TABLE_ID}`)) || [];
+      JSON.parse(localStorage.getItem(`orders_table_${tableId}`)) || [];
 
     existingOrders.push(newOrder);
 
     localStorage.setItem(
-      `orders_table_${TABLE_ID}`,
+      `orders_table_${tableId}`,
       JSON.stringify(existingOrders)
     );
 
@@ -78,7 +83,7 @@ export default function UserPanel() {
   return (
     <div className="user-panel-container">
       <h1 style={{ textAlign: "center", marginBottom: "10px" }}>
-        Table {TABLE_ID}
+        Table {tableId}
       </h1>
 
       {categories.map((cat) => (
