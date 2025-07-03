@@ -19,18 +19,7 @@ export default function UserPanel() {
       setTableId(id);
     }
   }, []);
-  useEffect(() => {
-  const handleBack = (event) => {
-    event.preventDefault();
-
-    const confirm = window.prompt("Enter password to go back:");
-    if (confirm !== "007") {
-      // Cancel back navigation
-      window.history.pushState(null, "", window.location.pathname);
-    }
-  };
-
-  // push fake history state
+ // push fake history state
   window.history.pushState(null, "", window.location.pathname);
   window.addEventListener("popstate", handleBack);
 
