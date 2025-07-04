@@ -77,7 +77,7 @@ export default function UserPanel() {
     toast.success("Order placed!");
     setCart([]);
     setNote("");
-    navigate("/summary");
+    navigate("/summary"); // ✅ Auto go to summary after placing order
   };
 
   const handleResetTable = () => {
@@ -231,6 +231,23 @@ export default function UserPanel() {
         Place Order
       </button>
 
+      {/* ✅ View My Orders Button */}
+      <div style={{ marginTop: "10px", textAlign: "center" }}>
+        <button
+          onClick={() => navigate("/summary")}
+          style={{
+            backgroundColor: "#4caf50",
+            color: "white",
+            padding: "8px 16px",
+            border: "none",
+            borderRadius: "8px",
+            cursor: "pointer",
+          }}
+        >
+          📄 View My Orders
+        </button>
+      </div>
+
       <div
         style={{
           marginTop: "30px",
@@ -244,4 +261,4 @@ export default function UserPanel() {
       </div>
     </div>
   );
-    }
+  }
