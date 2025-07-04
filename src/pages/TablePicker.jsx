@@ -7,14 +7,18 @@ const TablePicker = () => {
 
   // ✅ Already assigned table? Prevent coming back
   useEffect(() => {
-  const assigned = localStorage.getItem("assignedTable");
-  if (assigned) {
-    navigate("/user", { replace: true });  // ✅ THIS IS THE FIX
-  }
-}, []);
-  const handleSelect = (tableNumber) => {
-    localStorage.setItem("assignedTable", tableNumber);
-    navigate("/user", { replace: true });
+    const assigned = localStorage.getItem("assignedTable");
+    if (assigned) {
+      navigate("/user", { replace: true });  // ✅ THIS IS THE FIX
+    }
+  }, []);
+
+  // ✅ Updated handle function with delay
+  const handleTableSelect = (tableId) => {
+    localStorage.setItem("assignedTable", tableId);
+    setTimeout(() => {
+      navigate("/user", { replace: true });  // Optional: add { replace: true } to avoid back-stack
+    }, 100);
   };
 
   const handleAdmin = () => {
@@ -32,7 +36,7 @@ const TablePicker = () => {
       <button
         key={i}
         className="table-btn"
-        onClick={() => handleSelect(i)}
+        onClick={() => handleTableSelect(i)}
       >
         Table {i}
       </button>
