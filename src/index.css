@@ -73,12 +73,13 @@ button {
   padding: 20px;
 }
 
+/* ✅ 3D Category Title */
 .category-title {
   margin-top: 25px;
   font-size: 18px;
   font-weight: bold;
   color: #fff;
-  background: linear-gradient(to right, #8e2de2, #4a00e0); /* Purple gradient */
+  background: linear-gradient(to right, #8e2de2, #4a00e0);
   border-radius: 50px;
   padding: 10px 25px;
   text-align: center;
@@ -89,13 +90,25 @@ button {
   margin-right: auto;
 }
 
+/* ✅ Horizontal scroll for product list */
 .item-grid {
   display: flex;
-  flex-wrap: wrap;
+  overflow-x: auto;
   gap: 10px;
-  margin-bottom: 10px;
+  padding: 10px 0;
+  scroll-snap-type: x mandatory;
 }
 
+.item-grid::-webkit-scrollbar {
+  height: 6px;
+}
+
+.item-grid::-webkit-scrollbar-thumb {
+  background-color: #aaa;
+  border-radius: 4px;
+}
+
+/* ✅ Scrollable product button style */
 .product-btn {
   background-color: #800080; /* Purple */
   color: white;
@@ -103,6 +116,13 @@ button {
   padding: 10px 16px;
   border-radius: 10px;
   font-weight: bold;
+  min-width: 100px;
+  scroll-snap-align: start;
+  transition: transform 0.1s ease;
+}
+
+.product-btn:active {
+  transform: scale(0.96);
 }
 
 .note-area textarea {
@@ -211,8 +231,8 @@ button {
 .marquee-banner {
   width: 100%;
   overflow: hidden;
-  background-color: #000; /* Black background */
-  color: #fff;             /* White text */
+  background-color: #000;
+  color: #fff;
   font-weight: bold;
   white-space: nowrap;
   padding: 10px 0;
@@ -235,4 +255,4 @@ button {
   100% {
     transform: translateX(-100%);
   }
-  }
+                               }
