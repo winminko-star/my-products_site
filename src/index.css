@@ -196,3 +196,33 @@ button {
   font-weight: bold;
   color: #000;
 }
+
+/* 🔁 Back-and-forth scrolling welcome banner */
+.marquee-banner {
+  width: 100%;
+  overflow: hidden;
+  background-color: #000; /* Black background */
+  color: #fff;             /* White text */
+  font-weight: bold;
+  white-space: nowrap;
+  padding: 10px 0;
+  position: relative;
+  z-index: 10;
+}
+
+.marquee-banner p {
+  display: inline-block;
+  position: relative;
+  animation: scrollBounce 10s linear infinite alternate;
+  font-size: 16px;
+  padding: 0 100%;
+}
+
+@keyframes scrollBounce {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+  }
