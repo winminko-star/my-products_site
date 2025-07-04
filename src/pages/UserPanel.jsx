@@ -163,3 +163,107 @@ export default function UserPanel() {
       <div className="note-area">
         <textarea
           placeholder="Note (e.g., Take away)"
+          value={note}
+          onChange={(e) => setNote(e.target.value)}
+        />
+      </div>
+
+      <div className="cart-table">
+        <table>
+          <thead>
+            <tr>
+              <th>Item</th>
+              <th>Unit</th>
+              <th>Qty</th>
+              <th>Price</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {cart.map((item) => (
+              <tr key={item.id}>
+                <td>{item.name}</td>
+                <td>{item.unit}</td>
+                <td>
+                  <input
+                    type="number"
+                    min="1"
+                    value={item.qty}
+                    onChange={(e) =>
+                      updateQty(item.id, parseInt(e.target.value))
+                    }
+                    style={{ width: "50px" }}
+                  />
+                </td>
+                <td>{(item.qty * item.price).toLocaleString()} Ks</td>
+                <td>
+                  <button
+                    onClick={() => removeFromCart(item.id)}
+                    style={{
+                      background: "transparent",
+                      border: "none",
+                      color: "red",
+                      fontSize: "16px",
+                      cursor: "pointer",
+                    }}
+                    title="Remove"
+                  >
+                    ❌
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+
+        <div
+          style={{
+            textAlign: "right",
+            marginTop: "10px",
+            fontWeight: "bold",
+            fontSize: "18px",
+          }}
+        >
+          Total: {totalAmount.toLocaleString()} Ks
+        </div>
+      </div>
+
+      <button
+        onClick={placeOrder}
+        className="place-order-btn"
+        style={{ marginTop: "20px" }}
+      >
+        Place Order
+      </button>
+
+      {/* ✅ View My Orders Button */}
+      <div style={{ marginTop: "10px", textAlign: "center" }}>
+        <button
+          onClick={() => navigate("/summary")}
+          style={{
+            backgroundColor: "#4caf50",
+            color: "white",
+            padding: "8px 16px",
+            border: "none",
+            borderRadius: "8px",
+            cursor: "pointer",
+          }}
+        >
+          📄 View My Orders
+        </button>
+      </div>
+
+      <div
+        style={{
+          marginTop: "30px",
+          display: "flex",
+          justifyContent: "center",
+          gap: "10px",
+        }}
+      >
+        <button onClick={handleResetTable}>Reset Table</button>
+        <button onClick={goToAdmin}>Admin</button>
+      </div>
+    </div>
+  );
+                               }
