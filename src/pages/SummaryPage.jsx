@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom"; // ✅ Add this
 import "../index.css";
 
 export default function SummaryPage() {
   const [tableId, setTableId] = useState("1");
   const [orders, setOrders] = useState([]);
+  const navigate = useNavigate(); // ✅ Add this
 
   useEffect(() => {
     const id = localStorage.getItem("assignedTable") || "1";
@@ -58,6 +60,24 @@ export default function SummaryPage() {
           </div>
         ))
       )}
+
+      {/* ✅ Back to Table Button */}
+      <div style={{ textAlign: "center", marginTop: "30px" }}>
+        <button
+          onClick={() => navigate("/user")}
+          style={{
+            backgroundColor: "#6a0dad",
+            color: "white",
+            padding: "10px 20px",
+            fontWeight: "bold",
+            border: "none",
+            borderRadius: "10px",
+            cursor: "pointer",
+          }}
+        >
+          ⬅ Back to Table
+        </button>
+      </div>
     </div>
   );
-                }
+                    }
