@@ -1,5 +1,3 @@
-// src/pages/AdminLogin.jsx
-
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
@@ -11,14 +9,14 @@ export default function AdminLogin() {
   useEffect(() => {
     // Already logged in admin, auto redirect
     if (localStorage.getItem("adminAccess") === "true") {
-      navigate("/admin");
+      navigate("/admin", { replace: true }); // ✅ Fix here
     }
   }, []);
 
   const handleLogin = () => {
     if (input === "504119004") {
       localStorage.setItem("adminAccess", "true");
-      navigate("/admin");
+      navigate("/admin", { replace: true }); // ✅ Fix here
     } else {
       toast.error("Wrong Admin Password");
     }
