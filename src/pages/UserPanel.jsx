@@ -99,12 +99,34 @@ export default function UserPanel() {
   const categories = ["Food", "Soup", "Drink", "Others"];
 
   return (
-    <div className="user-panel-container">
-      <h1 style={{ textAlign: "center", marginBottom: "10px" }}>
-        Table {tableId}
+  <div className="user-panel-container">
+    {/* ✅ New logo + heading */}
+    <div
+      style={{
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        gap: "12px",
+        marginBottom: "20px",
+      }}
+    >
+      <img
+        src="/logo.png"
+        alt="Logo"
+        style={{ width: "36px", height: "36px", borderRadius: "50%" }}
+      />
+      <h1
+        style={{
+          fontWeight: "bold",
+          fontSize: "24px",
+          color: "#d32f2f",
+          margin: 0,
+        }}
+      >
+        Win Min Thuzar – Table {tableId}
       </h1>
-
-      {categories.map((cat) => (
+    </div>  
+    {categories.map((cat) => (
         <div key={cat}>
           <h2 className="category-title">{cat}</h2>
           <div className="item-grid">
