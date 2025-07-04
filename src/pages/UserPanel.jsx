@@ -10,6 +10,9 @@ export default function UserPanel() {
   const [cart, setCart] = useState([]);
   const [note, setNote] = useState("");
 
+  // ✅ Calculate total amount
+  const totalAmount = cart.reduce((sum, item) => sum + item.qty * item.price, 0);
+
   // ✅ Initial setup + block back button
   useEffect(() => {
     const id = localStorage.getItem("assignedTable");
@@ -19,7 +22,6 @@ export default function UserPanel() {
       setTableId(id);
     }
 
-    // ✅ Block browser back key
     const handleBack = (e) => {
       e.preventDefault();
       toast("Back is blocked. Please use Reset Table.");
@@ -37,9 +39,7 @@ export default function UserPanel() {
   const addToCart = (item) => {
     const exists = cart.find((i) => i.id === item.id);
     if (exists) {
-      setCart(
-        cart.map((i) => (i.id === item.id ? { ...i, qty: i.qty + 1 } : i))
-      );
+      setCart(cart.map((i) => (i.id === item.id ? { ...i, qty: i.qty + 1 } : i)));
     } else {
       setCart([...cart, { ...item, qty: 1 }]);
     }
@@ -70,11 +70,7 @@ export default function UserPanel() {
       JSON.parse(localStorage.getItem(`orders_table_${tableId}`)) || [];
 
     existingOrders.push(newOrder);
-
-    localStorage.setItem(
-      `orders_table_${tableId}`,
-      JSON.stringify(existingOrders)
-    );
+    localStorage.setItem(`orders_table_${tableId}`, JSON.stringify(existingOrders));
 
     toast.success("Order placed!");
     setCart([]);
@@ -99,34 +95,35 @@ export default function UserPanel() {
   const categories = ["Food", "Soup", "Drink", "Others"];
 
   return (
-  <div className="user-panel-container">
-    {/* ✅ New logo + heading */}
-    <div
-      style={{
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        gap: "12px",
-        marginBottom: "20px",
-      }}
-    >
-      <img
-        src="/logo.png"
-        alt="Logo"
-        style={{ width: "41px", height: "41px", borderRadius: "50%" }}
-      />
-      <h1
+    <div className="user-panel-container">
+      {/* ✅ Logo Header */}
+      <div
         style={{
-          fontWeight: "bold",
-          fontSize: "20px",
-          color: "#d32f2f",
-          margin: 0,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          gap: "12px",
+          marginBottom: "20px",
         }}
       >
-        Win Min Thuzar – Table {tableId}
-      </h1>
-    </div>  
-    {categories.map((cat) => (
+        <img
+          src="/logo.png"
+          alt="Logo"
+          style={{ width: "41px", height: "41px", borderRadius: "50%" }}
+        />
+        <h1
+          style={{
+            fontWeight: "bold",
+            fontSize: "20px",
+            color: "#d32f2f",
+            margin: 0,
+          }}
+        >
+          Win Min Thuzar – Table {tableId}
+        </h1>
+      </div>
+
+      {categories.map((cat) => (
         <div key={cat}>
           <h2 className="category-title">{cat}</h2>
           <div className="item-grid">
@@ -184,6 +181,18 @@ export default function UserPanel() {
             ))}
           </tbody>
         </table>
+
+        {/* ✅ Total Amount Display */}
+        <div
+          style={{
+            textAlign: "right",
+            marginTop: "10px",
+            fontWeight: "bold",
+            fontSize: "18px",
+          }}
+        >
+          Total: {totalAmount.toLocaleString()} Ks
+        </div>
       </div>
 
       <button
@@ -207,4 +216,4 @@ export default function UserPanel() {
       </div>
     </div>
   );
-      }
+        }
