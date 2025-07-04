@@ -1,22 +1,16 @@
 import React, { useEffect, useState } from "react";
 import "../index.css";
 
-const [tableId, setTableId] = useState("1");
-
-useEffect(() => {
-  const id = localStorage.getItem("assignedTable") || "1";
-  setTableId(id);
-
-  const orders = JSON.parse(localStorage.getItem(`orders_table_${id}`)) || [];
-  setOrders(orders);
-}, []);
-
 export default function SummaryPage() {
+  const [tableId, setTableId] = useState("1");
   const [orders, setOrders] = useState([]);
 
   useEffect(() => {
+    const id = localStorage.getItem("assignedTable") || "1";
+    setTableId(id);
+
     const orders =
-      JSON.parse(localStorage.getItem(`orders_table_${tableId}`)) || [];
+      JSON.parse(localStorage.getItem(`orders_table_${id}`)) || [];
     setOrders(orders);
   }, []);
 
@@ -50,15 +44,15 @@ export default function SummaryPage() {
                 </tr>
               </thead>
               <tbody>
-  {order.items.map((item) => (
-    <tr key={item.id}>
-      <td>{item.name}</td>
-      <td>{item.unit}</td>
-      <td>{item.qty}</td>
-      <td>{(item.qty * item.price).toLocaleString()} Ks</td>  {/* ✅ ပြောင်းလိုက် */}
-    </tr>
-  ))}
-</tbody>
+                {order.items.map((item) => (
+                  <tr key={item.id}>
+                    <td>{item.name}</td>
+                    <td>{item.unit}</td>
+                    <td>{item.qty}</td>
+                    <td>{(item.qty * item.price).toLocaleString()} Ks</td>
+                  </tr>
+                ))}
+              </tbody>
             </table>
             <hr style={{ margin: "20px 0" }} />
           </div>
@@ -66,4 +60,4 @@ export default function SummaryPage() {
       )}
     </div>
   );
-}
+                }
