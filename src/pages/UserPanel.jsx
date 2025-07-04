@@ -10,10 +10,8 @@ export default function UserPanel() {
   const [cart, setCart] = useState([]);
   const [note, setNote] = useState("");
 
-  // ✅ Calculate total amount
   const totalAmount = cart.reduce((sum, item) => sum + item.qty * item.price, 0);
 
-  // ✅ Initial setup + block back button
   useEffect(() => {
     const id = localStorage.getItem("assignedTable");
     if (!id) {
@@ -51,6 +49,10 @@ export default function UserPanel() {
     } else {
       setCart(cart.map((i) => (i.id === id ? { ...i, qty } : i)));
     }
+  };
+
+  const removeFromCart = (id) => {
+    setCart(cart.filter((item) => item.id !== id));
   };
 
   const placeOrder = () => {
@@ -158,6 +160,7 @@ export default function UserPanel() {
               <th>Unit</th>
               <th>Qty</th>
               <th>Price</th>
+              <th>Action</th> {/* ✅ Delete column */}
             </tr>
           </thead>
           <tbody>
@@ -177,12 +180,26 @@ export default function UserPanel() {
                   />
                 </td>
                 <td>{(item.qty * item.price).toLocaleString()} Ks</td>
+                <td>
+                  <button
+                    onClick={() => removeFromCart(item.id)}
+                    style={{
+                      background: "transparent",
+                      border: "none",
+                      color: "red",
+                      fontSize: "16px",
+                      cursor: "pointer",
+                    }}
+                    title="Remove"
+                  >
+                    ❌
+                  </button>
+                </td>
               </tr>
             ))}
           </tbody>
         </table>
 
-        {/* ✅ Total Amount Display */}
         <div
           style={{
             textAlign: "right",
@@ -216,4 +233,4 @@ export default function UserPanel() {
       </div>
     </div>
   );
-        }
+      }
