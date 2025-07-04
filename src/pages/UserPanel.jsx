@@ -100,7 +100,7 @@ export default function UserPanel() {
     <div className="user-panel-container">
       {/* ✅ Marquee Scrolling Banner */}
       <div className="marquee-banner">
-        <p>✨ Welcome to Win Min Thuzar Restaurant! ✨</p>
+        <p>အခုလိုလာရောက်အားပေးခြင်းကိုအထူးကျေးဇူးတင်ပါသည်။နောက်လ7.7.2027တွင် အထူးပရိုမိုးရှင်းပွဲရှိပါသဖြင့် ဆက်ဆက်လာရောက်ကြပါရန် ဖိတ်ခေါ်အပ်ပါသည်။</p>
       </div>
 
       {/* ✅ Logo Header */}
