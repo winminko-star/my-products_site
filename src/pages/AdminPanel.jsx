@@ -23,17 +23,33 @@ export default function AdminPanel() {
   };
 
   const clearTableOrders = (tableNum) => {
+    const pwd = prompt("Enter password to clear:");
+    if (pwd !== "007") {
+      toast.error("Wrong password");
+      return;
+    }
+
     localStorage.removeItem(`orders_table_${tableNum}`);
     toast.success(`Cleared orders for Table ${tableNum}`);
     loadAllOrders(); // Refresh UI
   };
 
   const editOrder = (tableNum, orderIndex) => {
+    const pwd = prompt("Enter password to edit:");
+    if (pwd !== "007") {
+      toast.error("Wrong password");
+      return;
+    }
+
     navigate(`/edit/${tableNum}/${orderIndex}`);
   };
 
   const handleBack = () => {
     navigate("/user");
+  };
+
+  const isReordered = (orderList) => {
+    return orderList.length > 1;
   };
 
   return (
@@ -66,9 +82,17 @@ export default function AdminPanel() {
               marginBottom: 15,
               padding: 10,
               borderRadius: 5,
+              backgroundColor: isReordered(orderList) ? "#ffe4e6" : "#f0fdf4",
             }}
           >
-            <h3 className="font-bold mb-2">Table {tableNum}</h3>
+            <h3 className="font-bold mb-2">
+              Table {tableNum}{" "}
+              {isReordered(orderList) && (
+                <span style={{ color: "#dc2626", marginLeft: "10px" }}>
+                  🔁 Re-ordered x{orderList.length}
+                </span>
+              )}
+            </h3>
 
             {orderList.map((order, i) => (
               <div key={i} style={{ marginBottom: 10 }}>
@@ -125,4 +149,4 @@ export default function AdminPanel() {
       )}
     </div>
   );
-                }
+                                           }
