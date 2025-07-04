@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom"; // ✅ Add this
+import { useNavigate } from "react-router-dom";
 import "../index.css";
 
 export default function SummaryPage() {
   const [tableId, setTableId] = useState("1");
   const [orders, setOrders] = useState([]);
-  const navigate = useNavigate(); // ✅ Add this
+  const navigate = useNavigate();
 
   useEffect(() => {
     const id = localStorage.getItem("assignedTable") || "1";
@@ -48,14 +48,14 @@ export default function SummaryPage() {
               <tbody>
                 {order.items.map((item) => (
                   <tr key={item.id}>
-                  <td style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-  <img
-    src={item.image || "/default.png"} // image field သတ်မှတ်ထားရမယ်
-    alt={item.name}
-    style={{ width: "32px", height: "32px", borderRadius: "50%" }}
-  />
-  {item.name}
-</td>
+                    <td style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                      <img
+                        src={item.image || "/default.png"}
+                        alt={item.name}
+                        style={{ width: "32px", height: "32px", borderRadius: "50%" }}
+                      />
+                      <span>{item.name}</span>
+                    </td>
                     <td>{item.unit}</td>
                     <td>{item.qty}</td>
                     <td>{(item.qty * item.price).toLocaleString()} Ks</td>
@@ -87,4 +87,4 @@ export default function SummaryPage() {
       </div>
     </div>
   );
-                    }
+}
