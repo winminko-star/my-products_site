@@ -48,7 +48,14 @@ export default function SummaryPage() {
               <tbody>
                 {order.items.map((item) => (
                   <tr key={item.id}>
-                    <td>{item.name}</td>
+                  <td style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+  <img
+    src={item.image || "/default.png"} // image field သတ်မှတ်ထားရမယ်
+    alt={item.name}
+    style={{ width: "32px", height: "32px", borderRadius: "50%" }}
+  />
+  {item.name}
+</td>
                     <td>{item.unit}</td>
                     <td>{item.qty}</td>
                     <td>{(item.qty * item.price).toLocaleString()} Ks</td>
