@@ -113,12 +113,12 @@ export default function UserPanel() {
       <img
         src="/logo.png"
         alt="Logo"
-        style={{ width: "36px", height: "36px", borderRadius: "50%" }}
+        style={{ width: "41px", height: "41px", borderRadius: "50%" }}
       />
       <h1
         style={{
           fontWeight: "bold",
-          fontSize: "24px",
+          fontSize: "20px",
           color: "#d32f2f",
           margin: 0,
         }}
