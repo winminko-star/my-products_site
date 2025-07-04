@@ -75,8 +75,18 @@ button {
 
 .category-title {
   margin-top: 25px;
-  font-size: 20px;
+  font-size: 18px;
   font-weight: bold;
+  color: #fff;
+  background: linear-gradient(to right, #8e2de2, #4a00e0); /* Purple gradient */
+  border-radius: 50px;
+  padding: 10px 25px;
+  text-align: center;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+  border: 3px solid #fff;
+  width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .item-grid {
