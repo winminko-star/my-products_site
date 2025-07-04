@@ -74,3 +74,21 @@ export default function EditOrder() {
     </li>
   ))}
 </ul>
+
+      <button
+        onClick={handleSave}
+        style={{
+          padding: "8px 16px",
+          backgroundColor: "#22c55e",
+          color: "white",
+          border: "none",
+          borderRadius: 4,
+          marginTop: 20,
+          cursor: "pointer",
+        }}
+      >
+        💾 Save Order
+      </button>
+    </div>
+  );
+}
