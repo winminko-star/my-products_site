@@ -213,7 +213,7 @@ button {
 .marquee-banner p {
   display: inline-block;
   position: relative;
-  animation: scrollBounce 10s linear infinite alternate;
+  animation: scrollBounce 5s linear infinite alternate;
   font-size: 16px;
   padding: 0 100%;
 }
