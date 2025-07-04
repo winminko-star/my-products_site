@@ -130,28 +130,32 @@ export default function UserPanel() {
           <h2 className="category-title">{cat}</h2>
           <div className="item-grid">
             {products
-  .filter((item) => item.category === cat)
-  .map((item) => (
-    <button
-      key={item.id}
-      className="product-btn"
-      onClick={() => addToCart(item)}
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
-        padding: "10px",
-        fontSize: "16px",
-      }}
-    >
-      <span>{item.name}</span>
-      <span style={{ fontSize: "14px", color: "#888" }}>
-        {item.price.toLocaleString()} Ks
-      </span>
-    </button>
-  ))}    
-    <div className="note-area">
+              .filter((item) => item.category === cat)
+              .map((item) => (
+                <button
+                  key={item.id}
+                  className="product-btn"
+                  onClick={() => addToCart(item)}
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    padding: "10px",
+                    fontSize: "16px",
+                  }}
+                >
+                  <span>{item.name}</span>
+                  <span style={{ fontSize: "14px", color: "#888" }}>
+                    {item.price.toLocaleString()} Ks
+                  </span>
+                </button>
+              ))}
+          </div>
+        </div>
+      ))}
+
+      <div className="note-area">
         <textarea
           placeholder="Note (e.g., Take away)"
           value={note}
@@ -167,7 +171,7 @@ export default function UserPanel() {
               <th>Unit</th>
               <th>Qty</th>
               <th>Price</th>
-              <th>Action</th> {/* ✅ Delete column */}
+              <th>Action</th>
             </tr>
           </thead>
           <tbody>
@@ -240,4 +244,4 @@ export default function UserPanel() {
       </div>
     </div>
   );
-      }
+    }
