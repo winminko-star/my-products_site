@@ -1,5 +1,3 @@
-// src/pages/AdminPanel.jsx
-
 import React, { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
@@ -34,9 +32,28 @@ export default function AdminPanel() {
     navigate(`/edit/${tableNum}/${orderIndex}`);
   };
 
+  const handleBack = () => {
+    navigate("/user");
+  };
+
   return (
     <div style={{ padding: 20 }}>
       <h2 className="text-2xl font-bold mb-4">Admin Panel</h2>
+
+      <button
+        onClick={handleBack}
+        style={{
+          padding: "6px 12px",
+          backgroundColor: "#6b7280",
+          color: "white",
+          border: "none",
+          borderRadius: 4,
+          cursor: "pointer",
+          marginBottom: 20,
+        }}
+      >
+        ⬅ Back to User Panel
+      </button>
 
       {Object.keys(ordersByTable).length === 0 ? (
         <p>No orders found.</p>
@@ -62,8 +79,10 @@ export default function AdminPanel() {
                 <ul>
                   {order.items.map((item, j) => (
                     <li key={j}>
-  {item.name} - {item.qty} × {item.price.toLocaleString()} Ks = {(item.qty * item.price).toLocaleString()} Ks
-</li>           ))}
+                      {item.name} - {item.qty} × {item.price.toLocaleString()} Ks ={" "}
+                      {(item.qty * item.price).toLocaleString()} Ks
+                    </li>
+                  ))}
                 </ul>
                 {order.note && (
                   <p style={{ fontStyle: "italic", color: "#555" }}>
@@ -106,4 +125,4 @@ export default function AdminPanel() {
       )}
     </div>
   );
-}
+                }
