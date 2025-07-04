@@ -26,7 +26,7 @@ export default function App() {
 
   // ✅ App Password Check
   const checkAppPassword = () => {
-    if (appInput === "852022") {
+    if (appInput === "WI489661@") {
       localStorage.setItem("appAccess", "true");
       setAppAccess(true);
     } else {
