@@ -68,9 +68,7 @@ export default function UserPanel() {
       timestamp: new Date().toISOString(),
     };
 
-    const existingOrders =
-      JSON.parse(localStorage.getItem(`orders_table_${tableId}`)) || [];
-
+    const existingOrders = JSON.parse(localStorage.getItem(`orders_table_${tableId}`)) || [];
     existingOrders.push(newOrder);
     localStorage.setItem(`orders_table_${tableId}`, JSON.stringify(existingOrders));
 
@@ -98,34 +96,15 @@ export default function UserPanel() {
 
   return (
     <div className="user-panel-container">
-      {/* ✅ Marquee Scrolling Banner */}
+      {/* ✅ Scrolling Banner */}
       <div className="marquee-banner">
-        <p>အခုလိုလာရောက်အားပေးခြင်းကိုအထူးကျေးဇူးတင်ပါသည်။နောက်လ7.7.2027တွင် အထူးပရိုမိုးရှင်းပွဲရှိပါသဖြင့် ဆက်ဆက်လာရောက်ကြပါရန် ဖိတ်ခေါ်အပ်ပါသည်။</p>
+        <p>အခုလိုလာရောက်အားပေးခြင်းကိုအထူးကျေးဇူးတင်ပါသည်။ 7.7.2027 တွင် အထူးပရိုမိုးရှင်းပွဲရှိပါသည်။</p>
       </div>
 
       {/* ✅ Logo Header */}
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          gap: "12px",
-          margin: "20px 0",
-        }}
-      >
-        <img
-          src="/logo.png"
-          alt="Logo"
-          style={{ width: "41px", height: "41px", borderRadius: "50%" }}
-        />
-        <h1
-          style={{
-            fontWeight: "bold",
-            fontSize: "20px",
-            color: "#d32f2f",
-            margin: 0,
-          }}
-        >
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "12px", margin: "20px 0" }}>
+        <img src="/logo.png" alt="Logo" style={{ width: "41px", height: "41px", borderRadius: "50%" }} />
+        <h1 style={{ fontWeight: "bold", fontSize: "20px", color: "#d32f2f", margin: 0 }}>
           Win Min Thuzar – Table {tableId}
         </h1>
       </div>
@@ -150,6 +129,11 @@ export default function UserPanel() {
                     fontSize: "16px",
                   }}
                 >
+                  <img
+                    src={item.image || "/default.png"}
+                    alt={item.name}
+                    style={{ width: "40px", height: "40px", borderRadius: "50%", marginBottom: "6px" }}
+                  />
                   <span>{item.name}</span>
                   <span style={{ fontSize: "14px", color: "#888" }}>
                     {item.price.toLocaleString()} Ks
@@ -182,16 +166,21 @@ export default function UserPanel() {
           <tbody>
             {cart.map((item) => (
               <tr key={item.id}>
-                <td>{item.name}</td>
+                <td style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                  <img
+                    src={item.image || "/default.png"}
+                    alt={item.name}
+                    style={{ width: "32px", height: "32px", borderRadius: "50%" }}
+                  />
+                  {item.name}
+                </td>
                 <td>{item.unit}</td>
                 <td>
                   <input
                     type="number"
                     min="1"
                     value={item.qty}
-                    onChange={(e) =>
-                      updateQty(item.id, parseInt(e.target.value))
-                    }
+                    onChange={(e) => updateQty(item.id, parseInt(e.target.value))}
                     style={{ width: "50px" }}
                   />
                 </td>
@@ -199,13 +188,7 @@ export default function UserPanel() {
                 <td>
                   <button
                     onClick={() => removeFromCart(item.id)}
-                    style={{
-                      background: "transparent",
-                      border: "none",
-                      color: "red",
-                      fontSize: "16px",
-                      cursor: "pointer",
-                    }}
+                    style={{ background: "transparent", border: "none", color: "red", fontSize: "16px", cursor: "pointer" }}
                     title="Remove"
                   >
                     ❌
@@ -216,14 +199,7 @@ export default function UserPanel() {
           </tbody>
         </table>
 
-        <div
-          style={{
-            textAlign: "right",
-            marginTop: "10px",
-            fontWeight: "bold",
-            fontSize: "18px",
-          }}
-        >
+        <div style={{ textAlign: "right", marginTop: "10px", fontWeight: "bold", fontSize: "18px" }}>
           Total: {totalAmount.toLocaleString()} Ks
         </div>
       </div>
@@ -236,7 +212,6 @@ export default function UserPanel() {
         Place Order
       </button>
 
-      {/* ✅ View My Orders Button */}
       <div style={{ marginTop: "10px", textAlign: "center" }}>
         <button
           onClick={() => navigate("/summary")}
@@ -253,17 +228,10 @@ export default function UserPanel() {
         </button>
       </div>
 
-      <div
-        style={{
-          marginTop: "30px",
-          display: "flex",
-          justifyContent: "center",
-          gap: "10px",
-        }}
-      >
+      <div style={{ marginTop: "30px", display: "flex", justifyContent: "center", gap: "10px" }}>
         <button onClick={handleResetTable}>Reset Table</button>
         <button onClick={goToAdmin}>Admin</button>
       </div>
     </div>
   );
-                               }
+    }
