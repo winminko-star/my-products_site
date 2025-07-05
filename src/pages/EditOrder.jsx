@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { getDatabase, ref, get, set } from "firebase/database";
-import app from "../firebase";
+import app,db from "../firebase";
 
 export default function EditOrder() {
   const { tableId, orderIndex } = useParams();
