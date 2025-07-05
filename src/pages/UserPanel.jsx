@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"; import { useNavigate } from "react-router-dom"; import toast from "react-hot-toast"; import products from "../data/products"; import "../index.css";
+import React, { useState, useEffect } from "react"; import { useNavigate } from "react-router-dom"; import toast from "react-hot-toast"; import { getDatabase, ref, push } from "firebase/database"; import products from "../data/products"; import "../index.css"; import "../firebase";
 
 export default function UserPanel() { const navigate = useNavigate(); const [tableId, setTableId] = useState("1"); const [cart, setCart] = useState([]); const [note, setNote] = useState("");
 
@@ -27,7 +27,10 @@ const updateQty = (id, qty) => { if (qty < 1) { setCart(cart.filter((i) => i.id 
 
 const removeFromCart = (id) => { setCart(cart.filter((item) => item.id !== id)); };
 
-const placeOrder = () => { if (cart.length === 0) { toast.error("Cart is empty"); return; }
+const placeOrder = async () => { if (cart.length === 0) { toast.error("Cart is empty"); return; }
+
+const db = getDatabase();
+const orderRef = ref(db, `orders/table_${tableId}`);
 
 const newOrder = {
   table: tableId,
@@ -36,14 +39,16 @@ const newOrder = {
   timestamp: new Date().toISOString(),
 };
 
-const existingOrders = JSON.parse(localStorage.getItem(`orders_table_${tableId}`)) || [];
-existingOrders.push(newOrder);
-localStorage.setItem(`orders_table_${tableId}`, JSON.stringify(existingOrders));
-
-toast.success("Order placed!");
-setCart([]);
-setNote("");
-navigate("/summary");
+try {
+  await push(orderRef, newOrder);
+  toast.success("Order placed!");
+  setCart([]);
+  setNote("");
+  navigate("/summary");
+} catch (error) {
+  toast.error("Failed to place order");
+  console.error("Firebase Error:", error);
+}
 
 };
 
@@ -53,11 +58,7 @@ const goToAdmin = () => { navigate("/admin-login"); };
 
 const categories = ["Food", "Soup", "Drink", "Others"];
 
-return ( <div className="user-panel-container"> {/* ✅ 3D Box Scrolling Banner */}
-  <div className="marquee-banner-box"> 
-  <div className="marquee-banner"> 
-    <p> အခုလိုလာရောက်အားပေးခြင်းကိုအထူးကျေးဇူးတင်ပါသည်။ 7.7.2027 တွင် အထူးပရိုမိုးရှင်းပွဲရှိပါသည်။ </p> 
-  </div> <img src="/images/teddy_bear.png" alt="Teddy" className="teddy-bear" /> </div>
+return ( <div className="user-panel-container"> {/* ✅ 3D Box Scrolling Banner */} <div className="marquee-banner-box"> <div className="marquee-banner"> <p>အခုလိုလာရောက်အားပေးခြင်းကိုအထူးကျေးဇူးတင်ပါသည်။ 7.7.2027 တွင် အထူးပရိုမိုးရှင်းပွဲရှိပါသည်။</p> </div> <img src="/images/teddy_bear.png" alt="Teddy" className="teddy-bear" /> </div>
 
 {/* ✅ Logo Header with Rainbow Text */}
   <div className="rainbow-header">
@@ -179,4 +180,4 @@ return ( <div className="user-panel-container"> {/* ✅ 3D Box Scrolling Banner 
 
 ); }
 
-    
+  
