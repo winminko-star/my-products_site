@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { getDatabase, ref, get } from "firebase/database";
+import app from "../firebase";
 import "../index.css";
 
 export default function SummaryPage() {
@@ -11,9 +13,23 @@ export default function SummaryPage() {
     const id = localStorage.getItem("assignedTable") || "1";
     setTableId(id);
 
-    const orders =
-      JSON.parse(localStorage.getItem(`orders_table_${id}`)) || [];
-    setOrders(orders);
+    const fetchOrders = async () => {
+      try {
+        const db = getDatabase(app);
+        const snap = await get(ref(db, `orders/table_${id}`));
+        if (snap.exists()) {
+          const raw = snap.val();
+          const allOrders = Object.values(raw); // Convert object to array
+          setOrders(allOrders);
+        } else {
+          setOrders([]);
+        }
+      } catch (error) {
+        console.error("Failed to fetch orders:", error);
+      }
+    };
+
+    fetchOrders();
   }, []);
 
   return (
@@ -46,13 +62,17 @@ export default function SummaryPage() {
                 </tr>
               </thead>
               <tbody>
-                {order.items.map((item) => (
-                  <tr key={item.id}>
+                {order.items.map((item, i) => (
+                  <tr key={i}>
                     <td style={{ display: "flex", alignItems: "center", gap: "8px" }}>
                       <img
                         src={item.image || "/default.png"}
                         alt={item.name}
-                        style={{ width: "32px", height: "32px", borderRadius: "50%" }}
+                        style={{
+                          width: "32px",
+                          height: "32px",
+                          borderRadius: "50%",
+                        }}
                       />
                       <span>{item.name}</span>
                     </td>
@@ -87,4 +107,4 @@ export default function SummaryPage() {
       </div>
     </div>
   );
-}
+            }
