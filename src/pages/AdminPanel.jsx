@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { getDatabase, ref, get, remove } from "firebase/database";
-import { app } from "../firebase"; // ✅ Make sure firebase.js exports 'app'
+import { app,db } from "../firebase"; // ✅ Make sure firebase.js exports 'app'
 
 export default function AdminPanel() {
   const [ordersByTable, setOrdersByTable] = useState({});
