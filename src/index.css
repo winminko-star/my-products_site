@@ -243,7 +243,7 @@ button {
   padding: 0; /* ✅ Padding ကိုဖျော့လိုက် */
   white-space: nowrap;
   font-size: 0; /* ✅ ထဲမှာပါတဲ့ <p> ရဲ့ font-size ကို override မဖြစ်အောင် zero လုပ် */
-  height: 45px; /* ✅ Box height ကို fix လုပ် */
+  height: 50px; /* ✅ Box height ကို fix လုပ် */
   display: flex;
   align-items: center;
   justify-content: center;
