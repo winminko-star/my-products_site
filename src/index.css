@@ -240,9 +240,13 @@ button {
 .marquee-banner {
   width: 100%;
   overflow: hidden;
-  padding: 10px 0;
+  padding: 0; /* ✅ Padding ကိုဖျော့လိုက် */
   white-space: nowrap;
-  font-size: 20px;
+  font-size: 0; /* ✅ ထဲမှာပါတဲ့ <p> ရဲ့ font-size ကို override မဖြစ်အောင် zero လုပ် */
+  height: 40px; /* ✅ Box height ကို fix လုပ် */
+  display: flex;
+  align-items: center;
+  justify-content: center;
   z-index: 2;
 }
 
