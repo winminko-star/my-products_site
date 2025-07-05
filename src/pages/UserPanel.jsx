@@ -145,9 +145,11 @@ export default function UserPanel() {
                       marginBottom: "6px",
                     }}
                   />
-                  <span>{item.name}</span>
-                  <span style={{ fontSize: "14px", color: "#888" }}>
-                    {item.price.toLocaleString()} Ks
+                  <span style={{ display: "block" }}
+                  >{item.name}</span>
+                  <span style={{ display: "block", 
+                  fontSize: "14px", color: "#888" }>
+                  {item.price.toLocaleString()} Ks
                   </span>
                 </button>
               ))}
