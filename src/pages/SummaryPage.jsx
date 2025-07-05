@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getDatabase, ref, get } from "firebase/database";
-import app from "../firebase";
+import app,db from "../firebase";
 import "../index.css";
 
 export default function SummaryPage() {
