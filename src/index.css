@@ -250,6 +250,7 @@ button {
   display: inline-block;
   animation: scrollLeftOnce 12s linear infinite;
   font-weight: bold;
+  font-size: 26px;
   background: linear-gradient(90deg, #ff8a00, #e52e71, #9b00ff);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
