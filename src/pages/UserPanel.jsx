@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { getDatabase, ref, push } from "firebase/database";
-import { app } from "../firebase"; // ✅ Correct import
+import { db } from "../firebase"; // ✅ Correct import
 import products from "../data/products";
 import "../index.css";
 
