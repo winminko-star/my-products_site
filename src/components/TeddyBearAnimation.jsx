@@ -1,20 +1,49 @@
-import React from "react"; import { motion, useAnimation } from "framer-motion"; import { useEffect } from "react";
+import React from "react";
+import { motion } from "framer-motion";
+import "../index.css";
 
-export default function TeddyBearAnimation() { const controls = useAnimation();
+export default function TeddyAnimation() {
+  return (
+    <div className="teddy-container">
+      <motion.div
+        className="teddy-wrapper"
+        initial={{ opacity: 0, y: -50 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: -50 }}
+        transition={{ duration: 1 }}
+      >
+        {/* 🧸 Teddy bear image */}
+        <motion.img
+          src="/images/cute_teddy.png" // 📝 သင်ပုံတင်ထားတဲ့နာမည်နဲ့အတူ
+          alt="Teddy Bear"
+          className="teddy-img"
+          animate={{
+            rotate: [0, -2, 2, -2, 0], // ✅ Head tilt
+            y: [0, 2, -2, 2, 0],       // ✅ Swing
+          }}
+          transition={{
+            repeat: Infinity,
+            duration: 3,
+            ease: "easeInOut",
+          }}
+        />
 
-useEffect(() => { const sequence = async () => { // Start: fade-in + slight zoom await controls.start({ opacity: 1, scale: 1, transition: { duration: 1.5, ease: "easeOut" }, });
-
-// Loop: swing + head tilt + blink
-  while (true) {
-    await controls.start({ rotate: -5, transition: { duration: 0.8 } });
-    await controls.start({ rotate: 5, transition: { duration: 0.8 } });
-  }
-};
-
-sequence();
-
-}, [controls]);
-
-return ( <div style={{ width: "100%", display: "flex", justifyContent: "center", alignItems: "center", margin: "30px 0", }} > <motion.img src="/images/fried_rice.png" // ✅ Replace with teddy image path alt="Teddy Bear" initial={{ opacity: 0, scale: 0.9 }} animate={controls} style={{ width: "140px", height: "auto", borderRadius: "20px", }} /> </div> ); }
-
-  
+        {/* 👋 Paw wave */}
+        <motion.div
+          className="teddy-paw"
+          animate={{
+            rotate: [0, 20, -20, 20, 0],
+          }}
+          transition={{
+            repeat: Infinity,
+            repeatDelay: 4,
+            duration: 2,
+            ease: "easeInOut",
+          }}
+        >
+          👋
+        </motion.div>
+      </motion.div>
+    </div>
+  );
+            }
