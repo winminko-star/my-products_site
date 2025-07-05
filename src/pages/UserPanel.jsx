@@ -53,7 +53,11 @@ const goToAdmin = () => { navigate("/admin-login"); };
 
 const categories = ["Food", "Soup", "Drink", "Others"];
 
-return ( <div className="user-panel-container"> {/* ✅ 3D Box Scrolling Banner */} <div className="marquee-banner-box"> <div className="marquee-banner"> <p> အခုလိုလာရောက်အားပေးခြင်းကိုအထူးကျေးဇူးတင်ပါသည်။ 7.7.2027 တွင် အထူးပရိုမိုးရှင်းပွဲရှိပါသည်။ </p> </div> <img src="/images/teddy_bear.png" alt="Teddy" className="teddy-bear" /> </div>
+return ( <div className="user-panel-container"> {/* ✅ 3D Box Scrolling Banner */}
+  <div className="marquee-banner-box"> 
+  <div className="marquee-banner"> 
+    <p> အခုလိုလာရောက်အားပေးခြင်းကိုအထူးကျေးဇူးတင်ပါသည်။ 7.7.2027 တွင် အထူးပရိုမိုးရှင်းပွဲရှိပါသည်။ </p> 
+  </div> <img src="/images/teddy_bear.png" alt="Teddy" className="teddy-bear" /> </div>
 
 {/* ✅ Logo Header with Rainbow Text */}
   <div className="rainbow-header">
