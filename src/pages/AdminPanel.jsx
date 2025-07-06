@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
-import { getDatabase, ref, get, remove } from "firebase/database";
-import { app,db } from "../firebase"; // ✅ Make sure firebase.js exports 'app'
+import { ref, get, remove } from "firebase/database";
+import { db } from "../firebase"; // ✅ Correct import from firebase.js
 
 export default function AdminPanel() {
   const [ordersByTable, setOrdersByTable] = useState({});
   const navigate = useNavigate();
-  const db = getDatabase(app);
 
   useEffect(() => {
     loadAllOrders();
@@ -16,10 +15,14 @@ export default function AdminPanel() {
   const loadAllOrders = async () => {
     const all = {};
     for (let i = 1; i <= 30; i++) {
-      const tableKey = `table_${i}`; // ✅ backticks
-      const snapshot = await get(ref(db, `orders/${tableKey}`)); // ✅ fix path
-      if (snapshot.exists()) {
-        all[i] = Object.values(snapshot.val());
+      const tableKey = `table_${i}`;
+      try {
+        const snapshot = await get(ref(db, `orders/${tableKey}`));
+        if (snapshot.exists()) {
+          all[i] = Object.values(snapshot.val());
+        }
+      } catch (error) {
+        console.error(`Error loading table ${i}:`, error);
       }
     }
     setOrdersByTable(all);
@@ -51,9 +54,7 @@ export default function AdminPanel() {
     navigate("/user");
   };
 
-  const isReordered = (orderList) => {
-    return orderList.length > 1;
-  };
+  const isReordered = (orderList) => orderList.length > 1;
 
   return (
     <div style={{ padding: 20 }}>
@@ -77,9 +78,9 @@ export default function AdminPanel() {
       {Object.keys(ordersByTable).length === 0 ? (
         <p>No orders found.</p>
       ) : (
-        Object.entries(ordersByTable).map(([tableNum, orderList], index) => (
+        Object.entries(ordersByTable).map(([tableNum, orderList]) => (
           <div
-            key={index}
+            key={tableNum}
             style={{
               border: "1px solid #ccc",
               marginBottom: 15,
@@ -147,11 +148,11 @@ export default function AdminPanel() {
                 cursor: "pointer",
               }}
             >
-              Clear Orders for Table {tableNum}
+              ❌ Clear Orders for Table {tableNum}
             </button>
           </div>
         ))
       )}
     </div>
   );
-        }
+    }
