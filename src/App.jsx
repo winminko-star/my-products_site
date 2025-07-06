@@ -1,7 +1,7 @@
 // src/App.jsx
 
 import React, { useState, useEffect } from "react";
-import { Routes, Route, useNavigate, Navigate } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import UserPanel from "./pages/UserPanel";
 import AdminPanel from "./pages/AdminPanel";
 import AdminLogin from "./pages/AdminLogin";
@@ -16,7 +16,6 @@ export default function App() {
   const [appAccess, setAppAccess] = useState(false);
   const [appInput, setAppInput] = useState("");
 
-  // ✅ App access check from localStorage
   useEffect(() => {
     const storedAppAccess = localStorage.getItem("appAccess");
     if (storedAppAccess === "true") {
@@ -24,7 +23,6 @@ export default function App() {
     }
   }, []);
 
-  // ✅ App Password Check
   const checkAppPassword = () => {
     if (appInput === "WI489661@") {
       localStorage.setItem("appAccess", "true");
@@ -34,7 +32,6 @@ export default function App() {
     }
   };
 
-  // ✅ Step 1: App Password Screen
   if (!appAccess) {
     return (
       <div style={centerStyle}>
@@ -54,14 +51,11 @@ export default function App() {
     );
   }
 
-  // ✅ Step 2: Main App Routes
   return (
     <>
       <Toaster />
       <Routes>
-        {/* ✅ Fix: Redirect "/" to /pick-table with replace */}
         <Route path="/" element={<Navigate to="/pick-table" replace />} />
-        
         <Route path="/pick-table" element={<TablePicker />} />
         <Route path="/user" element={<UserPanel />} />
         <Route path="/summary" element={<SummaryPage />} />
@@ -69,27 +63,13 @@ export default function App() {
         <Route path="/admin-login" element={<AdminLogin />} />
         <Route path="/edit/:tableId/:orderIndex" element={<EditOrder />} />
         <Route path="/access-denied" element={<AccessDenied />} />
-
-        {/* ✅ Admin auth check */}
-        <Route
-          path="/admin"
-          element={
-            localStorage.getItem("adminAccess") === "true" ? (
-              <AdminPanel />
-            ) : (
-              <div style={centerStyle}>
-                <h1>Access Denied</h1>
-                <p>You must login from /admin-login</p>
-              </div>
-            )
-          }
-        />
+        {/* ✅ Admin access check is now only inside AdminPanel */}
+        <Route path="/admin" element={<AdminPanel />} />
       </Routes>
     </>
   );
 }
 
-// ✅ Inline Styles
 const centerStyle = {
   minHeight: "100vh",
   display: "flex",
