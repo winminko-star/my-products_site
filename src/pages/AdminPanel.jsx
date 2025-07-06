@@ -6,24 +6,11 @@ import { app } from "../firebase";
 
 export default function AdminPanel() {
   const [ordersByTable, setOrdersByTable] = useState({});
-  const [allowed, setAllowed] = useState(false);
   const navigate = useNavigate();
   const db = getDatabase(app);
 
-  // ✅ Check admin access
-  useEffect(() => {
-    const access = localStorage.getItem("adminAccess") === "true";
-    if (!access) {
-      navigate("/admin-login", { replace: true });
-    } else {
-      setAllowed(true);
-    }
-  }, [navigate]);
-
   // ✅ Auto-sync Firebase orders
   useEffect(() => {
-    if (!allowed) return;
-
     const tableRefs = [];
 
     for (let i = 1; i <= 30; i++) {
@@ -47,9 +34,8 @@ export default function AdminPanel() {
     return () => {
       tableRefs.forEach((ref) => off(ref));
     };
-  }, [allowed]);
+  }, []);
 
-  // ✅ Clear Orders
   const clearTableOrders = async (tableNum) => {
     const pwd = prompt("Enter password to clear:");
     if (pwd !== "007") {
@@ -61,7 +47,6 @@ export default function AdminPanel() {
     toast.success(`Cleared orders for Table ${tableNum}`);
   };
 
-  // ✅ Edit Order
   const editOrder = (tableNum, orderIndex) => {
     const pwd = prompt("Enter password to edit:");
     if (pwd !== "007") {
@@ -76,8 +61,6 @@ export default function AdminPanel() {
   };
 
   const isReordered = (list) => list.length > 1;
-
-  if (!allowed) return null;
 
   return (
     <div style={{ padding: 20 }}>
@@ -176,4 +159,4 @@ export default function AdminPanel() {
       )}
     </div>
   );
-  }
+          }
