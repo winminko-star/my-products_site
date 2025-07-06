@@ -34,9 +34,9 @@ export default function AdminPanel() {
         setOrdersByTable((prev) => {
           const updated = { ...prev };
           if (snapshot.exists()) {
-            updated[i] = Object.values(snapshot.val());
+            updated[tableKey] = Object.values(snapshot.val());
           } else {
-            delete updated[i];
+            delete updated[tableKey];
           }
           return updated;
         });
@@ -179,4 +179,4 @@ export default function AdminPanel() {
       )}
     </div>
   );
-         }
+            }
