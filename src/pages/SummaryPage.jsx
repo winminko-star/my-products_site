@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { getDatabase, ref, get } from "firebase/database";
-import {app,db} from "../firebase";
+import { get, ref } from "firebase/database";
+import { db } from "../firebase";
 import "../index.css";
 
 export default function SummaryPage() {
@@ -15,17 +15,17 @@ export default function SummaryPage() {
 
     const fetchOrders = async () => {
       try {
-        const db = getDatabase(app);
         const snap = await get(ref(db, `orders/table_${id}`));
         if (snap.exists()) {
           const raw = snap.val();
-          const allOrders = Object.values(raw); // Convert object to array
+          const allOrders = Object.values(raw); // Object to Array
           setOrders(allOrders);
         } else {
           setOrders([]);
         }
       } catch (error) {
         console.error("Failed to fetch orders:", error);
+        setOrders([]);
       }
     };
 
@@ -39,7 +39,9 @@ export default function SummaryPage() {
       </h1>
 
       {orders.length === 0 ? (
-        <p style={{ textAlign: "center" }}>No orders yet.</p>
+        <p style={{ textAlign: "center", fontWeight: "bold", color: "#999" }}>
+          No orders yet.
+        </p>
       ) : (
         orders.map((order, index) => (
           <div key={index} className="summary-table-block">
@@ -47,11 +49,13 @@ export default function SummaryPage() {
               <strong>Time:</strong>{" "}
               {new Date(order.timestamp).toLocaleString()}
             </p>
+
             {order.note && (
-              <p>
+              <p style={{ fontStyle: "italic", color: "#555" }}>
                 <strong>Note:</strong> {order.note}
               </p>
             )}
+
             <table className="summary-table">
               <thead>
                 <tr>
@@ -83,6 +87,7 @@ export default function SummaryPage() {
                 ))}
               </tbody>
             </table>
+
             <hr style={{ margin: "20px 0" }} />
           </div>
         ))
@@ -107,4 +112,4 @@ export default function SummaryPage() {
       </div>
     </div>
   );
-            }
+                                 }
