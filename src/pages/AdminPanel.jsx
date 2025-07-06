@@ -6,21 +6,19 @@ import { app } from "../firebase";
 
 export default function AdminPanel() {
   const [ordersByTable, setOrdersByTable] = useState({});
-  const [allowed, setAllowed] = useState(null); // null = not yet known
+  const [allowed, setAllowed] = useState(null);
   const navigate = useNavigate();
   const db = getDatabase(app);
 
-  // ✅ Check admin access only once
   useEffect(() => {
     const access = localStorage.getItem("adminAccess") === "true";
     if (!access) {
       navigate("/admin-login", { replace: true });
     } else {
-      setAllowed(true); // ✅ only after confirmed
+      setAllowed(true);
     }
   }, [navigate]);
 
-  // ✅ Sync orders when allowed
   useEffect(() => {
     if (!allowed) return;
 
@@ -48,23 +46,25 @@ export default function AdminPanel() {
     };
   }, [allowed]);
 
-  const clearTableOrders = async (tableNum) => {
+  const clearTableOrders = async (tableKey) => {
     const pwd = prompt("Enter password to clear:");
     if (pwd !== "007") {
       toast.error("Wrong password");
       return;
     }
 
-    await remove(ref(db, `orders/table_${tableNum}`));
-    toast.success(`Cleared orders for Table ${tableNum}`);
+    await remove(ref(db, `orders/${tableKey}`));
+    toast.success(`Cleared orders for ${tableKey}`);
   };
 
-  const editOrder = (tableNum, orderIndex) => {
+  const editOrder = (tableKey, orderIndex) => {
     const pwd = prompt("Enter password to edit:");
     if (pwd !== "007") {
       toast.error("Wrong password");
       return;
     }
+
+    const tableNum = tableKey.replace("table_", "");
     navigate(`/edit/${tableNum}/${orderIndex}`);
   };
 
@@ -104,7 +104,7 @@ export default function AdminPanel() {
       {Object.keys(ordersByTable).length === 0 ? (
         <p>No orders found.</p>
       ) : (
-        Object.entries(ordersByTable).map(([tableNum, orders], index) => (
+        Object.entries(ordersByTable).map(([tableKey, orders], index) => (
           <div
             key={index}
             style={{
@@ -116,7 +116,7 @@ export default function AdminPanel() {
             }}
           >
             <h3 className="font-bold mb-2">
-              Table {tableNum}{" "}
+              Table {tableKey.replace("table_", "")}{" "}
               {isReordered(orders) && (
                 <span style={{ color: "#dc2626", marginLeft: "10px" }}>
                   🔁 Re-ordered x{orders.length}
@@ -144,7 +144,7 @@ export default function AdminPanel() {
                   </p>
                 )}
                 <button
-                  onClick={() => editOrder(tableNum, i)}
+                  onClick={() => editOrder(tableKey, i)}
                   style={{
                     padding: "4px 10px",
                     backgroundColor: "#3b82f6",
@@ -162,7 +162,7 @@ export default function AdminPanel() {
             ))}
 
             <button
-              onClick={() => clearTableOrders(tableNum)}
+              onClick={() => clearTableOrders(tableKey)}
               style={{
                 padding: "6px 12px",
                 backgroundColor: "#e11d48",
@@ -172,7 +172,7 @@ export default function AdminPanel() {
                 cursor: "pointer",
               }}
             >
-              Clear Orders for Table {tableNum}
+              Clear Orders for {tableKey.replace("table_", "")}
             </button>
           </div>
         ))
