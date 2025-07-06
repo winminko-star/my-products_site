@@ -9,6 +9,14 @@ export default function AdminPanel() {
   const navigate = useNavigate();
   const db = getDatabase(app);
 
+  // ✅ Check admin login access
+  useEffect(() => {
+    const fromLogin = sessionStorage.getItem("admin_logged_in");
+    if (fromLogin !== "true") {
+      navigate("/admin-login");
+    }
+  }, [navigate]);
+
   useEffect(() => {
     const tableRefs = [];
 
@@ -30,7 +38,6 @@ export default function AdminPanel() {
       });
     }
 
-    // ✅ cleanup function
     return () => {
       tableRefs.forEach((r) => off(r));
     };
