@@ -6,18 +6,22 @@ import { app } from "../firebase";
 
 export default function AdminPanel() {
   const [ordersByTable, setOrdersByTable] = useState({});
+  const [allowed, setAllowed] = useState(false);
   const navigate = useNavigate();
   const db = getDatabase(app);
 
-  // ✅ Check admin login access
   useEffect(() => {
-    const fromLogin = sessionStorage.getItem("admin_logged_in");
-    if (fromLogin !== "true") {
-      navigate("/admin-login");
+    const access = localStorage.getItem("adminAccess") === "true";
+    if (!access) {
+      navigate("/admin-login", { replace: true });
+    } else {
+      setAllowed(true);
     }
   }, [navigate]);
 
   useEffect(() => {
+    if (!allowed) return;
+
     const tableRefs = [];
 
     for (let i = 1; i <= 30; i++) {
@@ -39,9 +43,9 @@ export default function AdminPanel() {
     }
 
     return () => {
-      tableRefs.forEach((r) => off(r));
+      tableRefs.forEach((ref) => off(ref));
     };
-  }, [db]);
+  }, [allowed, db]);
 
   const clearTableOrders = async (tableNum) => {
     const pwd = prompt("Enter password to clear:");
@@ -68,6 +72,8 @@ export default function AdminPanel() {
   };
 
   const isReordered = (list) => list.length > 1;
+
+  if (!allowed) return null;
 
   return (
     <div style={{ padding: 20 }}>
@@ -166,4 +172,4 @@ export default function AdminPanel() {
       )}
     </div>
   );
-}
+    }
