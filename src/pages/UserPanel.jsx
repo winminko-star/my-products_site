@@ -145,13 +145,30 @@ export default function UserPanel() {
                       marginBottom: "6px",
                     }}
                   />
-                  <span style={{ display: "block" }}
-                  >{item.name}</span>
-                  <span style={{ display: "block", 
-                  fontSize: "14px", color: "#888" }>
-                  {item.price.toLocaleString()} Ks
-                  </span>
-                </button>
+                  {/* ✅ Replace this part */}
+  <span style={{
+    display: "block",
+    fontWeight: "bold",
+    fontSize: "15px",
+    color: "white",
+    marginBottom: "4px",
+    textAlign: "center",
+    whiteSpace: "nowrap"
+  }}>
+    {item.name}
+  </span>
+
+  <span style={{
+    display: "block",
+    fontSize: "14px",
+    color: "#ffeb3b",
+    fontWeight: "bold",
+    textAlign: "center",
+    whiteSpace: "nowrap"
+  }}>
+    {item.price.toLocaleString()} Ks
+  </span>
+</button>
               ))}
           </div>
         </div>
