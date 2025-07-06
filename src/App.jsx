@@ -1,5 +1,3 @@
-// src/App.jsx
-
 import React, { useState, useEffect } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import UserPanel from "./pages/UserPanel";
@@ -10,6 +8,7 @@ import OrderList from "./pages/OrderList";
 import TablePicker from "./pages/TablePicker";
 import AccessDenied from "./pages/AccessDenied";
 import EditOrder from "./pages/EditOrder";
+import RequireAdmin from "./components/RequireAdmin"; // ✅ added
 import { Toaster, toast } from "react-hot-toast";
 
 export default function App() {
@@ -63,8 +62,16 @@ export default function App() {
         <Route path="/admin-login" element={<AdminLogin />} />
         <Route path="/edit/:tableId/:orderIndex" element={<EditOrder />} />
         <Route path="/access-denied" element={<AccessDenied />} />
-        {/* ✅ Admin access check is now only inside AdminPanel */}
-        <Route path="/admin" element={<AdminPanel />} />
+
+        {/* ✅ Protect Admin Panel */}
+        <Route
+          path="/admin"
+          element={
+            <RequireAdmin>
+              <AdminPanel />
+            </RequireAdmin>
+          }
+        />
       </Routes>
     </>
   );
