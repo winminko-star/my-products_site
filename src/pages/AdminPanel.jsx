@@ -6,13 +6,25 @@ import { app } from "../firebase";
 
 export default function AdminPanel() {
   const [ordersByTable, setOrdersByTable] = useState({});
+  const [allowed, setAllowed] = useState(null); // null = not yet known
   const navigate = useNavigate();
   const db = getDatabase(app);
 
-  // ✅ Auto-sync Firebase orders
+  // ✅ Check admin access only once
   useEffect(() => {
-    const tableRefs = [];
+    const access = localStorage.getItem("adminAccess") === "true";
+    if (!access) {
+      navigate("/admin-login", { replace: true });
+    } else {
+      setAllowed(true); // ✅ only after confirmed
+    }
+  }, [navigate]);
 
+  // ✅ Sync orders when allowed
+  useEffect(() => {
+    if (!allowed) return;
+
+    const tableRefs = [];
     for (let i = 1; i <= 30; i++) {
       const tableKey = `table_${i}`;
       const tableRef = ref(db, `orders/${tableKey}`);
@@ -34,7 +46,7 @@ export default function AdminPanel() {
     return () => {
       tableRefs.forEach((ref) => off(ref));
     };
-  }, []);
+  }, [allowed]);
 
   const clearTableOrders = async (tableNum) => {
     const pwd = prompt("Enter password to clear:");
@@ -61,6 +73,14 @@ export default function AdminPanel() {
   };
 
   const isReordered = (list) => list.length > 1;
+
+  if (allowed === null) {
+    return (
+      <div style={{ textAlign: "center", padding: 50 }}>
+        <h2>Checking admin access...</h2>
+      </div>
+    );
+  }
 
   return (
     <div style={{ padding: 20 }}>
@@ -159,4 +179,4 @@ export default function AdminPanel() {
       )}
     </div>
   );
-          }
+         }
