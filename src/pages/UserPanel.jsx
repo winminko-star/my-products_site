@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
-import { getDatabase, ref, push } from "firebase/database";
+import { ref, push } from "firebase/database";
 import { db } from "../firebase"; // ✅ Correct import
 import products from "../data/products";
 import "../index.css";
@@ -63,9 +63,7 @@ export default function UserPanel() {
       return;
     }
 
-    const db = getDatabase(app); // ✅ with app
     const orderRef = ref(db, `orders/table_${tableId}`);
-
     const newOrder = {
       table: tableId,
       items: cart,
@@ -103,7 +101,6 @@ export default function UserPanel() {
 
   return (
     <div className="user-panel-container">
-      {/* ✅ Marquee banner box with teddy */}
       <div className="marquee-banner-box">
         <div className="marquee-banner">
           <p>
@@ -113,7 +110,6 @@ export default function UserPanel() {
         <img src="/images/teddy_bear.png" alt="Teddy" className="teddy-bear" />
       </div>
 
-      {/* ✅ Rainbow Header */}
       <div className="rainbow-header">
         <img
           src="/logo.png"
@@ -134,6 +130,16 @@ export default function UserPanel() {
                   key={item.id}
                   className="product-btn"
                   onClick={() => addToCart(item)}
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    padding: "10px",
+                    fontSize: "16px",
+                    width: "120px",
+                    overflow: "hidden",
+                  }}
                 >
                   <img
                     src={item.image || "/default.png"}
@@ -145,30 +151,33 @@ export default function UserPanel() {
                       marginBottom: "6px",
                     }}
                   />
-                  {/* ✅ Replace this part */}
-  <span style={{
-    display: "block",
-    fontWeight: "bold",
-    fontSize: "15px",
-    color: "white",
-    marginBottom: "4px",
-    textAlign: "center",
-    whiteSpace: "nowrap"
-  }}>
-    {item.name}
-  </span>
-
-  <span style={{
-    display: "block",
-    fontSize: "14px",
-    color: "#ffeb3b",
-    fontWeight: "bold",
-    textAlign: "center",
-    whiteSpace: "nowrap"
-  }}>
-    {item.price.toLocaleString()} Ks
-  </span>
-</button>
+                  <span
+                    style={{
+                      display: "block",
+                      fontWeight: "bold",
+                      fontSize: "15px",
+                      color: "white",
+                      marginBottom: "4px",
+                      textAlign: "center",
+                      whiteSpace: "normal",
+                      wordBreak: "break-word",
+                      lineHeight: "1.2",
+                    }}
+                  >
+                    {item.name}
+                  </span>
+                  <span
+                    style={{
+                      fontSize: "14px",
+                      color: "#ffeb3b",
+                      fontWeight: "bold",
+                      textAlign: "center",
+                      whiteSpace: "nowrap",
+                    }}
+                  >
+                    {item.price.toLocaleString()} Ks
+                  </span>
+                </button>
               ))}
           </div>
         </div>
@@ -235,7 +244,14 @@ export default function UserPanel() {
           </tbody>
         </table>
 
-        <div style={{ textAlign: "right", marginTop: "10px", fontWeight: "bold", fontSize: "18px" }}>
+        <div
+          style={{
+            textAlign: "right",
+            marginTop: "10px",
+            fontWeight: "bold",
+            fontSize: "18px",
+          }}
+        >
           Total: {totalAmount.toLocaleString()} Ks
         </div>
       </div>
@@ -266,4 +282,4 @@ export default function UserPanel() {
       </div>
     </div>
   );
-                     }
+      }
