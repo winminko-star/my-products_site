@@ -17,8 +17,7 @@ export default function SummaryPage() {
       try {
         const snap = await get(ref(db, `orders/table_${id}`));
         if (snap.exists()) {
-          const raw = snap.val();
-          const allOrders = Object.values(raw); // Object to Array
+          const allOrders = Object.values(snap.val());
           setOrders(allOrders);
         } else {
           setOrders([]);
@@ -30,7 +29,7 @@ export default function SummaryPage() {
     };
 
     fetchOrders();
-  }, []);
+  }, [tableId]); // ✅ track tableId
 
   return (
     <div className="summary-page">
@@ -46,8 +45,7 @@ export default function SummaryPage() {
         orders.map((order, index) => (
           <div key={index} className="summary-table-block">
             <p>
-              <strong>Time:</strong>{" "}
-              {new Date(order.timestamp).toLocaleString()}
+              <strong>Time:</strong> {new Date(order.timestamp).toLocaleString()}
             </p>
 
             {order.note && (
@@ -66,25 +64,26 @@ export default function SummaryPage() {
                 </tr>
               </thead>
               <tbody>
-                {order.items.map((item, i) => (
-                  <tr key={i}>
-                    <td style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-                      <img
-                        src={item.image || "/default.png"}
-                        alt={item.name}
-                        style={{
-                          width: "32px",
-                          height: "32px",
-                          borderRadius: "50%",
-                        }}
-                      />
-                      <span>{item.name}</span>
-                    </td>
-                    <td>{item.unit}</td>
-                    <td>{item.qty}</td>
-                    <td>{(item.qty * item.price).toLocaleString()} Ks</td>
-                  </tr>
-                ))}
+                {Array.isArray(order.items) &&
+                  order.items.map((item, i) => (
+                    <tr key={i}>
+                      <td style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                        <img
+                          src={item.image || "/default.png"}
+                          alt={item.name}
+                          style={{
+                            width: "32px",
+                            height: "32px",
+                            borderRadius: "50%",
+                          }}
+                        />
+                        <span>{item.name}</span>
+                      </td>
+                      <td>{item.unit}</td>
+                      <td>{item.qty}</td>
+                      <td>{(item.qty * item.price).toLocaleString()} Ks</td>
+                    </tr>
+                  ))}
               </tbody>
             </table>
 
@@ -93,7 +92,6 @@ export default function SummaryPage() {
         ))
       )}
 
-      {/* ✅ Back to Table Button */}
       <div style={{ textAlign: "center", marginTop: "30px" }}>
         <button
           onClick={() => navigate("/user")}
@@ -112,4 +110,4 @@ export default function SummaryPage() {
       </div>
     </div>
   );
-                                 }
+            }
