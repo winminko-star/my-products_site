@@ -10,6 +10,7 @@ export default function AdminPanel() {
   const navigate = useNavigate();
   const db = getDatabase(app);
 
+  // ✅ Check admin access
   useEffect(() => {
     const access = localStorage.getItem("adminAccess") === "true";
     if (!access) {
@@ -19,6 +20,7 @@ export default function AdminPanel() {
     }
   }, [navigate]);
 
+  // ✅ Auto-sync Firebase orders
   useEffect(() => {
     if (!allowed) return;
 
@@ -45,8 +47,9 @@ export default function AdminPanel() {
     return () => {
       tableRefs.forEach((ref) => off(ref));
     };
-  }, [allowed, db]);
+  }, [allowed]);
 
+  // ✅ Clear Orders
   const clearTableOrders = async (tableNum) => {
     const pwd = prompt("Enter password to clear:");
     if (pwd !== "007") {
@@ -58,6 +61,7 @@ export default function AdminPanel() {
     toast.success(`Cleared orders for Table ${tableNum}`);
   };
 
+  // ✅ Edit Order
   const editOrder = (tableNum, orderIndex) => {
     const pwd = prompt("Enter password to edit:");
     if (pwd !== "007") {
@@ -172,4 +176,4 @@ export default function AdminPanel() {
       )}
     </div>
   );
-    }
+  }
