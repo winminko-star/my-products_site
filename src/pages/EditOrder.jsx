@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
-import { getDatabase, ref, get, set } from "firebase/database";
-import {app,db} from "../firebase";
+import { get, set, ref } from "firebase/database";
+import { db } from "../firebase"; // ✅ Correct db import
 
 export default function EditOrder() {
   const { tableId, orderIndex } = useParams();
@@ -14,7 +14,6 @@ export default function EditOrder() {
   useEffect(() => {
     const fetchOrder = async () => {
       try {
-        const db = getDatabase(app);
         const snapshot = await get(ref(db, `orders/table_${tableId}`));
         if (snapshot.exists()) {
           const data = snapshot.val();
@@ -63,11 +62,7 @@ export default function EditOrder() {
     };
 
     try {
-      const db = getDatabase(app);
-      await set(
-        ref(db, `orders/table_${tableId}/${order.firebaseKey}`),
-        updatedOrder
-      );
+      await set(ref(db, `orders/table_${tableId}/${order.firebaseKey}`), updatedOrder);
       toast.success("Order updated!");
       navigate("/admin");
     } catch (error) {
@@ -120,4 +115,4 @@ export default function EditOrder() {
       </button>
     </div>
   );
-}
+        }
