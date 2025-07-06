@@ -9,14 +9,14 @@ export default function AdminLogin() {
   useEffect(() => {
     // Already logged in admin, auto redirect
     if (localStorage.getItem("adminAccess") === "true") {
-      navigate("/admin", { replace: true }); // ✅ Fix here
+      navigate("/admin", { replace: true });
     }
-  }, []);
+  }, [navigate]); // ✅ best practice
 
   const handleLogin = () => {
     if (input === "504119004") {
       localStorage.setItem("adminAccess", "true");
-      navigate("/admin", { replace: true }); // ✅ Fix here
+      navigate("/admin", { replace: true });
     } else {
       toast.error("Wrong Admin Password");
     }
@@ -31,6 +31,9 @@ export default function AdminLogin() {
         onChange={(e) => setInput(e.target.value)}
         placeholder="Admin password"
         style={inputStyle}
+        onKeyDown={(e) => {
+          if (e.key === "Enter") handleLogin(); // ✅ enter key login
+        }}
       />
       <button onClick={handleLogin} style={buttonStyle}>
         Login
@@ -51,8 +54,11 @@ const centerStyle = {
 
 const inputStyle = {
   padding: "8px",
+  fontSize: "16px",
 };
 
 const buttonStyle = {
   padding: "8px 16px",
+  fontSize: "16px",
+  cursor: "pointer",
 };
