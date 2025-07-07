@@ -10,11 +10,7 @@ export default function AdminPanel() {
 
   useEffect(() => {
     loadOrders();
-
-    const interval = setInterval(() => {
-      loadOrders();
-    }, 60000); // Refresh every 1 minute
-
+    const interval = setInterval(() => loadOrders(), 60000);
     return () => clearInterval(interval);
   }, []);
 
@@ -58,7 +54,6 @@ export default function AdminPanel() {
     <div className="admin-container">
       <h1 className="rainbow-title">Admin Panel</h1>
       <p className="updated-text">Last updated: {formatTime(lastUpdated)}</p>
-
       <div className="table-grid">
         {[...Array(30)].map((_, i) => {
           const tableId = i + 1;
@@ -89,6 +84,7 @@ export default function AdminPanel() {
                         <strong>Note:</strong> {order.note}
                       </p>
                     )}
+                    <p><strong>Total:</strong> {order.items.reduce((sum, i) => sum + i.qty * i.price, 0).toLocaleString()} Ks</p>
                     <button
                       className="order-btn"
                       onClick={() => handleEdit(tableId, index)}
@@ -109,4 +105,4 @@ export default function AdminPanel() {
       </div>
     </div>
   );
-    }
+}
