@@ -11,13 +11,11 @@ export default function AdminPanel() {
 
   useEffect(() => {
     loadOrders();
-
     const interval = setInterval(() => {
       if (!localStorage.getItem("editLock")) {
         loadOrders();
       }
     }, 60000);
-
     return () => clearInterval(interval);
   }, []);
 
@@ -62,6 +60,22 @@ export default function AdminPanel() {
     <div className="admin-container">
       <h1 className="rainbow-title">Admin Panel</h1>
       <p className="updated-text">Last updated: {formatTime(lastUpdated)}</p>
+
+      <button
+        onClick={() => navigate("/pick-table")}
+        style={{
+          marginBottom: "20px",
+          padding: "8px 16px",
+          backgroundColor: "#2196f3",
+          color: "white",
+          border: "none",
+          borderRadius: "8px",
+          cursor: "pointer"
+        }}
+      >
+        ← Go to Table Picker
+      </button>
+
       <div className="table-grid">
         {[...Array(30)].map((_, i) => {
           const tableId = i + 1;
@@ -83,7 +97,7 @@ export default function AdminPanel() {
                     <ul>
                       {order.items.map((item, idx) => (
                         <li key={idx}>
-                          {item.name} x {item.qty}
+                          {item.name} ({item.unit}) x {item.qty} = {(item.qty * item.price).toLocaleString()} Ks
                         </li>
                       ))}
                     </ul>
@@ -113,4 +127,5 @@ export default function AdminPanel() {
       </div>
     </div>
   );
-}
+  }
+  
