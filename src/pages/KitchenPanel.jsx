@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../index.css";
@@ -16,7 +17,7 @@ export default function KitchenPanel() {
     loadOrders();
     const interval = setInterval(() => {
       loadOrders();
-    }, 30000); // 30 seconds
+    }, 30000);
 
     return () => clearInterval(interval);
   }, [navigate]);
@@ -73,11 +74,10 @@ export default function KitchenPanel() {
                       ))}
                     </ul>
                     {order.note && (
-                      <p style={{ fontStyle: "italic" }}>
+                      <p style={{ fontStyle: "italic", color: "#fff", fontSize: "13px" }}>
                         <strong>Note:</strong> {order.note}
                       </p>
                     )}
-                    <p><strong>Total:</strong> {order.items.reduce((sum, i) => sum + i.qty * i.price, 0).toLocaleString()} Ks</p>
                   </div>
                 ))}
             </div>
@@ -86,5 +86,5 @@ export default function KitchenPanel() {
       </div>
     </div>
   );
-        }
-                                                                   
+            }
+        
