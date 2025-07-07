@@ -29,13 +29,11 @@ export default function AdminPanel() {
       tableRefs.push(tableRef);
 
       onValue(tableRef, (snapshot) => {
+        console.log("🔥", tableKey, snapshot.val()); // optional for debugging
+
         setOrdersByTable((prev) => {
           const updated = { ...prev };
-          if (snapshot.exists()) {
-            updated[tableKey] = Object.values(snapshot.val());
-          } else {
-            delete updated[tableKey];
-          }
+          updated[tableKey] = snapshot.exists() ? Object.values(snapshot.val()) : [];
           return updated;
         });
       });
@@ -179,4 +177,4 @@ export default function AdminPanel() {
       )}
     </div>
   );
-            }
+      }
