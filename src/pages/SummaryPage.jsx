@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { get, ref } from "firebase/database";
-import { db } from "../firebase";
 import "../index.css";
 
 export default function SummaryPage() {
@@ -13,23 +11,10 @@ export default function SummaryPage() {
     const id = localStorage.getItem("assignedTable") || "1";
     setTableId(id);
 
-    const fetchOrders = async () => {
-      try {
-        const snap = await get(ref(db, `orders/table_${id}`));
-        if (snap.exists()) {
-          const allOrders = Object.values(snap.val());
-          setOrders(allOrders);
-        } else {
-          setOrders([]);
-        }
-      } catch (error) {
-        console.error("Failed to fetch orders:", error);
-        setOrders([]);
-      }
-    };
-
-    fetchOrders();
-  }, [tableId]); // ✅ track tableId
+    const orders =
+      JSON.parse(localStorage.getItem(`orders_table_${id}`)) || [];
+    setOrders(orders);
+  }, []);
 
   return (
     <div className="summary-page">
@@ -38,22 +23,19 @@ export default function SummaryPage() {
       </h1>
 
       {orders.length === 0 ? (
-        <p style={{ textAlign: "center", fontWeight: "bold", color: "#999" }}>
-          No orders yet.
-        </p>
+        <p style={{ textAlign: "center" }}>No orders yet.</p>
       ) : (
         orders.map((order, index) => (
           <div key={index} className="summary-table-block">
             <p>
-              <strong>Time:</strong> {new Date(order.timestamp).toLocaleString()}
+              <strong>Time:</strong>{" "}
+              {new Date(order.timestamp).toLocaleString()}
             </p>
-
             {order.note && (
-              <p style={{ fontStyle: "italic", color: "#555" }}>
+              <p>
                 <strong>Note:</strong> {order.note}
               </p>
             )}
-
             <table className="summary-table">
               <thead>
                 <tr>
@@ -64,34 +46,29 @@ export default function SummaryPage() {
                 </tr>
               </thead>
               <tbody>
-                {Array.isArray(order.items) &&
-                  order.items.map((item, i) => (
-                    <tr key={i}>
-                      <td style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-                        <img
-                          src={item.image || "/default.png"}
-                          alt={item.name}
-                          style={{
-                            width: "32px",
-                            height: "32px",
-                            borderRadius: "50%",
-                          }}
-                        />
-                        <span>{item.name}</span>
-                      </td>
-                      <td>{item.unit}</td>
-                      <td>{item.qty}</td>
-                      <td>{(item.qty * item.price).toLocaleString()} Ks</td>
-                    </tr>
-                  ))}
+                {order.items.map((item) => (
+                  <tr key={item.id}>
+                    <td style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                      <img
+                        src={item.image || "/default.png"}
+                        alt={item.name}
+                        style={{ width: "32px", height: "32px", borderRadius: "50%" }}
+                      />
+                      <span>{item.name}</span>
+                    </td>
+                    <td>{item.unit}</td>
+                    <td>{item.qty}</td>
+                    <td>{(item.qty * item.price).toLocaleString()} Ks</td>
+                  </tr>
+                ))}
               </tbody>
             </table>
-
             <hr style={{ margin: "20px 0" }} />
           </div>
         ))
       )}
 
+      {/* ✅ Back to Table Button */}
       <div style={{ textAlign: "center", marginTop: "30px" }}>
         <button
           onClick={() => navigate("/user")}
@@ -110,4 +87,5 @@ export default function SummaryPage() {
       </div>
     </div>
   );
-            }
+      }
+                
