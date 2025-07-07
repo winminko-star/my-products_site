@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
@@ -10,7 +11,13 @@ export default function AdminPanel() {
 
   useEffect(() => {
     loadOrders();
-    const interval = setInterval(() => loadOrders(), 60000);
+
+    const interval = setInterval(() => {
+      if (!localStorage.getItem("editLock")) {
+        loadOrders();
+      }
+    }, 60000);
+
     return () => clearInterval(interval);
   }, []);
 
@@ -28,6 +35,7 @@ export default function AdminPanel() {
   };
 
   const handleEdit = (tableId, index) => {
+    localStorage.setItem("editLock", "true");
     navigate(`/edit/${tableId}/${index}`);
   };
 
