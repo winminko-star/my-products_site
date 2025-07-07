@@ -1,8 +1,8 @@
+// src/pages/EditOrder.jsx
+
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
-import { get, set, ref } from "firebase/database";
-import { db } from "../firebase"; // ✅ Correct db import
 
 export default function EditOrder() {
   const { tableId, orderIndex } = useParams();
@@ -12,36 +12,16 @@ export default function EditOrder() {
   const [items, setItems] = useState([]);
 
   useEffect(() => {
-    const fetchOrder = async () => {
-      try {
-        const snapshot = await get(ref(db, `orders/table_${tableId}`));
-        if (snapshot.exists()) {
-          const data = snapshot.val();
-          const keys = Object.keys(data);
-          const values = Object.values(data);
-          const key = keys[orderIndex];
-          const targetOrder = values[orderIndex];
-
-          if (!targetOrder) {
-            toast.error("Order not found");
-            navigate("/admin");
-            return;
-          }
-
-          setOrder({ ...targetOrder, firebaseKey: key });
-          setNote(targetOrder.note || "");
-          setItems(targetOrder.items || []);
-        } else {
-          toast.error("No orders found");
-          navigate("/admin");
-        }
-      } catch (err) {
-        console.error("Fetch error:", err);
-        toast.error("Failed to load order");
-      }
-    };
-
-    fetchOrder();
+    const orders = JSON.parse(localStorage.getItem(`orders_table_${tableId}`)) || [];
+    const targetOrder = orders[orderIndex];
+    if (!targetOrder) {
+      toast.error("Order not found");
+      navigate("/admin");
+      return;
+    }
+    setOrder(targetOrder);
+    setNote(targetOrder.note || "");
+    setItems(targetOrder.items || []);
   }, [tableId, orderIndex, navigate]);
 
   const updateQty = (i, delta) => {
@@ -53,7 +33,7 @@ export default function EditOrder() {
     setItems(updated);
   };
 
-  const handleSave = async () => {
+  const handleSave = () => {
     const updatedOrder = {
       ...order,
       note: note.trim(),
@@ -61,14 +41,11 @@ export default function EditOrder() {
       timestamp: new Date().toISOString(),
     };
 
-    try {
-      await set(ref(db, `orders/table_${tableId}/${order.firebaseKey}`), updatedOrder);
-      toast.success("Order updated!");
-      navigate("/admin");
-    } catch (error) {
-      console.error("Update error:", error);
-      toast.error("Failed to update order");
-    }
+    const allOrders = JSON.parse(localStorage.getItem(`orders_table_${tableId}`)) || [];
+    allOrders[orderIndex] = updatedOrder;
+    localStorage.setItem(`orders_table_${tableId}`, JSON.stringify(allOrders));
+    toast.success("Order updated!");
+    navigate("/admin");
   };
 
   if (!order) return null;
@@ -89,15 +66,14 @@ export default function EditOrder() {
 
       <h3>Items:</h3>
       <ul>
-        {items.map((item, i) => (
-          <li key={i} style={{ marginBottom: 6 }}>
-            {item.name} - {item.qty} × {item.price.toLocaleString()} Ks ={" "}
-            {(item.qty * item.price).toLocaleString()} Ks{" "}
-            <button onClick={() => updateQty(i, 1)}>➕</button>{" "}
-            <button onClick={() => updateQty(i, -1)}>➖</button>
-          </li>
-        ))}
-      </ul>
+  {items.map((item, i) => (
+    <li key={i} style={{ marginBottom: 6 }}>
+      {item.name} - {item.qty} × {item.price.toLocaleString()} Ks = {(item.qty * item.price).toLocaleString()} Ks
+      <button onClick={() => updateQty(i, 1)}>➕</button>
+      <button onClick={() => updateQty(i, -1)}>➖</button>
+    </li>
+  ))}
+</ul>
 
       <button
         onClick={handleSave}
@@ -115,4 +91,5 @@ export default function EditOrder() {
       </button>
     </div>
   );
-        }
+  }
+
