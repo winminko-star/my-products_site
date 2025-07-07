@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
@@ -28,10 +29,7 @@ export default function UserPanel() {
 
     window.history.pushState(null, "", window.location.pathname);
     window.addEventListener("popstate", handleBack);
-
-    return () => {
-      window.removeEventListener("popstate", handleBack);
-    };
+    return () => window.removeEventListener("popstate", handleBack);
   }, [navigate]);
 
   const addToCart = (item) => {
@@ -97,8 +95,6 @@ export default function UserPanel() {
   return (
     <div className="user-panel-container">
       <div className="user-panel-inner">
-
-        {/* ✅ Marquee Box with Teddy */}
         <div className="marquee-banner-box">
           <div className="marquee-banner">
             <p>အခုလိုလာရောက်အားပေးခြင်းကိုအထူးကျေးဇူးတင်ပါသည်။ 7.7.2027 တွင် အထူးပရိုမိုးရှင်းပွဲရှိပါသည်။</p>
@@ -106,13 +102,11 @@ export default function UserPanel() {
           <img src="/images/teddy_bear.png" alt="Teddy" className="teddy-bear" />
         </div>
 
-        {/* ✅ Logo Header */}
         <div className="rainbow-header">
           <img src="/logo.png" alt="Logo" style={{ width: "41px", height: "41px", borderRadius: "50%" }} />
           <h1>Win Min Thuzar – Table {tableId}</h1>
         </div>
 
-        {/* ✅ Categories */}
         {categories.map((cat) => (
           <div key={cat}>
             <h2 className="category-title">{cat}</h2>
@@ -124,21 +118,30 @@ export default function UserPanel() {
                     key={item.id}
                     className="product-btn"
                     onClick={() => addToCart(item)}
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      padding: "10px",
+                      fontSize: "16px",
+                    }}
                   >
                     <img
                       src={item.image || "/default.png"}
                       alt={item.name}
-                      style={{ width: "40px", height: "40px", borderRadius: "50%", marginBottom: "6px" }}
+                      style={{ width: "50px", height: "50px", borderRadius: "50%", objectFit: "cover", marginBottom: "6px" }}
                     />
-                    <span>{item.name}</span>
-                    <span style={{ fontSize: "14px", color: "#888" }}>{item.price.toLocaleString()} Ks</span>
+                    <span style={{ fontWeight: "bold", textAlign: "center" }}>{item.name}</span>
+                    <span style={{ fontSize: "14px", color: "#eee", textAlign: "center" }}>
+                      {item.price.toLocaleString()} Ks
+                    </span>
                   </button>
                 ))}
             </div>
           </div>
         ))}
 
-        {/* ✅ Note */}
         <div className="note-area">
           <textarea
             placeholder="Note (e.g., Take away)"
@@ -147,7 +150,6 @@ export default function UserPanel() {
           />
         </div>
 
-        {/* ✅ Cart Table */}
         <div className="cart-table">
           <table>
             <thead>
@@ -200,7 +202,6 @@ export default function UserPanel() {
           </div>
         </div>
 
-        {/* ✅ Place Order Button */}
         <button onClick={placeOrder} className="place-order-btn" style={{ marginTop: "20px" }}>
           Place Order
         </button>
@@ -214,7 +215,6 @@ export default function UserPanel() {
           </button>
         </div>
 
-        {/* ✅ Reset + Admin */}
         <div className="bottom-buttons">
           <button onClick={handleResetTable}>Reset Table</button>
           <button onClick={goToAdmin}>Admin</button>
@@ -222,4 +222,5 @@ export default function UserPanel() {
       </div>
     </div>
   );
-    }
+        }
+      
