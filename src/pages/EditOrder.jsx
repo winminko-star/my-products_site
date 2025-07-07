@@ -1,4 +1,3 @@
-// src/pages/EditOrder.jsx
 
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
@@ -12,6 +11,8 @@ export default function EditOrder() {
   const [items, setItems] = useState([]);
 
   useEffect(() => {
+    localStorage.setItem("editLock", "true"); // 🔒 Lock auto refresh
+
     const orders = JSON.parse(localStorage.getItem(`orders_table_${tableId}`)) || [];
     const targetOrder = orders[orderIndex];
     if (!targetOrder) {
@@ -22,6 +23,10 @@ export default function EditOrder() {
     setOrder(targetOrder);
     setNote(targetOrder.note || "");
     setItems(targetOrder.items || []);
+
+    return () => {
+      localStorage.removeItem("editLock"); // 🔓 Unlock on leave
+    };
   }, [tableId, orderIndex, navigate]);
 
   const updateQty = (i, delta) => {
@@ -66,14 +71,14 @@ export default function EditOrder() {
 
       <h3>Items:</h3>
       <ul>
-  {items.map((item, i) => (
-    <li key={i} style={{ marginBottom: 6 }}>
-      {item.name} - {item.qty} × {item.price.toLocaleString()} Ks = {(item.qty * item.price).toLocaleString()} Ks
-      <button onClick={() => updateQty(i, 1)}>➕</button>
-      <button onClick={() => updateQty(i, -1)}>➖</button>
-    </li>
-  ))}
-</ul>
+        {items.map((item, i) => (
+          <li key={i} style={{ marginBottom: 6 }}>
+            {item.name} - {item.qty} × {item.price.toLocaleString()} Ks = {(item.qty * item.price).toLocaleString()} Ks
+            <button onClick={() => updateQty(i, 1)}>➕</button>
+            <button onClick={() => updateQty(i, -1)}>➖</button>
+          </li>
+        ))}
+      </ul>
 
       <button
         onClick={handleSave}
@@ -91,5 +96,4 @@ export default function EditOrder() {
       </button>
     </div>
   );
-  }
-
+}
