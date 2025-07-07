@@ -22,25 +22,27 @@ export default function AdminPanel() {
   useEffect(() => {
     if (!allowed) return;
 
-    const tableRefs = [];
+    const listeners = [];
+
     for (let i = 1; i <= 30; i++) {
       const tableKey = `table_${i}`;
       const tableRef = ref(db, `orders/${tableKey}`);
-      tableRefs.push(tableRef);
 
-      onValue(tableRef, (snapshot) => {
-        console.log("🔥", tableKey, snapshot.val()); // optional for debugging
-
+      const listener = onValue(tableRef, (snapshot) => {
         setOrdersByTable((prev) => {
           const updated = { ...prev };
-          updated[tableKey] = snapshot.exists() ? Object.values(snapshot.val()) : [];
+          updated[tableKey] = snapshot.exists()
+            ? Object.values(snapshot.val())
+            : [];
           return updated;
         });
       });
+
+      listeners.push({ ref: tableRef, listener });
     }
 
     return () => {
-      tableRefs.forEach((ref) => off(ref));
+      listeners.forEach(({ ref }) => off(ref));
     };
   }, [allowed]);
 
@@ -50,7 +52,6 @@ export default function AdminPanel() {
       toast.error("Wrong password");
       return;
     }
-
     await remove(ref(db, `orders/${tableKey}`));
     toast.success(`Cleared orders for ${tableKey}`);
   };
@@ -61,7 +62,6 @@ export default function AdminPanel() {
       toast.error("Wrong password");
       return;
     }
-
     const tableNum = tableKey.replace("table_", "");
     navigate(`/edit/${tableNum}/${orderIndex}`);
   };
@@ -177,4 +177,4 @@ export default function AdminPanel() {
       )}
     </div>
   );
-      }
+            }
