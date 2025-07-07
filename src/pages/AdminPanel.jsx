@@ -1,68 +1,46 @@
 import React, { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
-import { getDatabase, ref, onValue, off, remove } from "firebase/database";
-import { app } from "../firebase";
 
 export default function AdminPanel() {
   const [ordersByTable, setOrdersByTable] = useState({});
-  const [allowed, setAllowed] = useState(null);
   const navigate = useNavigate();
-  const db = getDatabase(app);
 
   useEffect(() => {
-    const access = localStorage.getItem("adminAccess") === "true";
-    if (!access) {
-      navigate("/admin-login", { replace: true });
-    } else {
-      setAllowed(true);
-    }
-  }, [navigate]);
+    loadAllOrders();
+  }, []);
 
-  useEffect(() => {
-    if (!allowed) return;
-
-    const listeners = [];
-
+  const loadAllOrders = () => {
+    const all = {};
     for (let i = 1; i <= 30; i++) {
-      const tableKey = `table_${i}`;
-      const tableRef = ref(db, `orders/${tableKey}`);
-
-      const listener = onValue(tableRef, (snapshot) => {
-        setOrdersByTable((prev) => {
-          const updated = { ...prev };
-          updated[tableKey] = snapshot.exists()
-            ? Object.values(snapshot.val())
-            : [];
-          return updated;
-        });
-      });
-
-      listeners.push({ ref: tableRef, listener });
+      const key = `orders_table_${i}`;
+      const data = JSON.parse(localStorage.getItem(key)) || [];
+      if (data.length > 0) {
+        all[i] = data;
+      }
     }
+    setOrdersByTable(all);
+  };
 
-    return () => {
-      listeners.forEach(({ ref }) => off(ref));
-    };
-  }, [allowed]);
-
-  const clearTableOrders = async (tableKey) => {
+  const clearTableOrders = (tableNum) => {
     const pwd = prompt("Enter password to clear:");
     if (pwd !== "007") {
       toast.error("Wrong password");
       return;
     }
-    await remove(ref(db, `orders/${tableKey}`));
-    toast.success(`Cleared orders for ${tableKey}`);
+
+    localStorage.removeItem(`orders_table_${tableNum}`);
+    toast.success(`Cleared orders for Table ${tableNum}`);
+    loadAllOrders(); // Refresh UI
   };
 
-  const editOrder = (tableKey, orderIndex) => {
+  const editOrder = (tableNum, orderIndex) => {
     const pwd = prompt("Enter password to edit:");
     if (pwd !== "007") {
       toast.error("Wrong password");
       return;
     }
-    const tableNum = tableKey.replace("table_", "");
+
     navigate(`/edit/${tableNum}/${orderIndex}`);
   };
 
@@ -70,15 +48,9 @@ export default function AdminPanel() {
     navigate("/user");
   };
 
-  const isReordered = (list) => list.length > 1;
-
-  if (allowed === null) {
-    return (
-      <div style={{ textAlign: "center", padding: 50 }}>
-        <h2>Checking admin access...</h2>
-      </div>
-    );
-  }
+  const isReordered = (orderList) => {
+    return orderList.length > 1;
+  };
 
   return (
     <div style={{ padding: 20 }}>
@@ -102,7 +74,7 @@ export default function AdminPanel() {
       {Object.keys(ordersByTable).length === 0 ? (
         <p>No orders found.</p>
       ) : (
-        Object.entries(ordersByTable).map(([tableKey, orders], index) => (
+        Object.entries(ordersByTable).map(([tableNum, orderList], index) => (
           <div
             key={index}
             style={{
@@ -110,19 +82,19 @@ export default function AdminPanel() {
               marginBottom: 15,
               padding: 10,
               borderRadius: 5,
-              backgroundColor: isReordered(orders) ? "#ffe4e6" : "#f0fdf4",
+              backgroundColor: isReordered(orderList) ? "#ffe4e6" : "#f0fdf4",
             }}
           >
             <h3 className="font-bold mb-2">
-              Table {tableKey.replace("table_", "")}{" "}
-              {isReordered(orders) && (
+              Table {tableNum}{" "}
+              {isReordered(orderList) && (
                 <span style={{ color: "#dc2626", marginLeft: "10px" }}>
-                  🔁 Re-ordered x{orders.length}
+                  🔁 Re-ordered x{orderList.length}
                 </span>
               )}
             </h3>
 
-            {orders.map((order, i) => (
+            {orderList.map((order, i) => (
               <div key={i} style={{ marginBottom: 10 }}>
                 <p>
                   <strong>Time:</strong>{" "}
@@ -142,7 +114,7 @@ export default function AdminPanel() {
                   </p>
                 )}
                 <button
-                  onClick={() => editOrder(tableKey, i)}
+                  onClick={() => editOrder(tableNum, i)}
                   style={{
                     padding: "4px 10px",
                     backgroundColor: "#3b82f6",
@@ -160,7 +132,7 @@ export default function AdminPanel() {
             ))}
 
             <button
-              onClick={() => clearTableOrders(tableKey)}
+              onClick={() => clearTableOrders(tableNum)}
               style={{
                 padding: "6px 12px",
                 backgroundColor: "#e11d48",
@@ -170,11 +142,12 @@ export default function AdminPanel() {
                 cursor: "pointer",
               }}
             >
-              Clear Orders for {tableKey.replace("table_", "")}
+              Clear Orders for Table {tableNum}
             </button>
           </div>
         ))
       )}
     </div>
   );
-        }
+  }
+                
