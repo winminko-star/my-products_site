@@ -69,7 +69,8 @@ export default function App() {
         <Route path="/admin-login" element={<AdminLogin />} />
         <Route path="/edit/:tableId/:orderIndex" element={<EditOrder />} />
         <Route path="/access-denied" element={<AccessDenied />} />
-
+        <Route path="/kitchen-login" element={<KitchenLogin />} />
+        <Route path="/kitchen-panel" element={<KitchenPanel />} />
         {/* ✅ Admin auth check */}
         <Route
           path="/admin"
