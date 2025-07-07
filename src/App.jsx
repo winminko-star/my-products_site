@@ -1,7 +1,6 @@
-// src/App.jsx
 
 import React, { useState, useEffect } from "react";
-import { Routes, Route, useNavigate, Navigate } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import UserPanel from "./pages/UserPanel";
 import AdminPanel from "./pages/AdminPanel";
 import AdminLogin from "./pages/AdminLogin";
@@ -10,13 +9,14 @@ import OrderList from "./pages/OrderList";
 import TablePicker from "./pages/TablePicker";
 import AccessDenied from "./pages/AccessDenied";
 import EditOrder from "./pages/EditOrder";
+import KitchenLogin from "./pages/KitchenLogin";
+import KitchenPanel from "./pages/KitchenPanel";
 import { Toaster, toast } from "react-hot-toast";
 
 export default function App() {
   const [appAccess, setAppAccess] = useState(false);
   const [appInput, setAppInput] = useState("");
 
-  // ✅ App access check from localStorage
   useEffect(() => {
     const storedAppAccess = localStorage.getItem("appAccess");
     if (storedAppAccess === "true") {
@@ -24,7 +24,6 @@ export default function App() {
     }
   }, []);
 
-  // ✅ App Password Check
   const checkAppPassword = () => {
     if (appInput === "WI489661@") {
       localStorage.setItem("appAccess", "true");
@@ -34,7 +33,6 @@ export default function App() {
     }
   };
 
-  // ✅ Step 1: App Password Screen
   if (!appAccess) {
     return (
       <div style={centerStyle}>
@@ -54,14 +52,11 @@ export default function App() {
     );
   }
 
-  // ✅ Step 2: Main App Routes
   return (
     <>
       <Toaster />
       <Routes>
-        {/* ✅ Fix: Redirect "/" to /pick-table with replace */}
         <Route path="/" element={<Navigate to="/pick-table" replace />} />
-        
         <Route path="/pick-table" element={<TablePicker />} />
         <Route path="/user" element={<UserPanel />} />
         <Route path="/summary" element={<SummaryPage />} />
@@ -71,7 +66,6 @@ export default function App() {
         <Route path="/access-denied" element={<AccessDenied />} />
         <Route path="/kitchen-login" element={<KitchenLogin />} />
         <Route path="/kitchen-panel" element={<KitchenPanel />} />
-        {/* ✅ Admin auth check */}
         <Route
           path="/admin"
           element={
@@ -90,7 +84,6 @@ export default function App() {
   );
 }
 
-// ✅ Inline Styles
 const centerStyle = {
   minHeight: "100vh",
   display: "flex",
@@ -108,4 +101,4 @@ const inputStyle = {
 const buttonStyle = {
   padding: "8px 16px",
 };
-    
+                                                            
