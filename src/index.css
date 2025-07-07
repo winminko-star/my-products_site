@@ -1,14 +1,13 @@
+
 /* === General Styles === */
 body {
   margin: 0;
   font-family: sans-serif;
   background-color: #f5f5f5;
 }
-
 input, button {
   outline: none;
 }
-
 button {
   cursor: pointer;
 }
@@ -23,13 +22,11 @@ button {
   justify-content: center;
   padding: 20px;
 }
-
 .title {
   font-size: 32px;
   font-weight: bold;
   margin-bottom: 20px;
 }
-
 .table-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
@@ -37,7 +34,6 @@ button {
   width: 100%;
   max-width: 600px;
 }
-
 .table-btn {
   background: linear-gradient(145deg, #a64ca6, #7b3c7b);
   color: white;
@@ -49,11 +45,9 @@ button {
   box-shadow: 5px 5px 10px #663366, -5px -5px 10px #993399;
   transition: transform 0.1s ease-in-out;
 }
-
 .table-btn:active {
   transform: scale(0.95);
 }
-
 .admin-btn {
   margin-top: 30px;
   padding: 12px 24px;
@@ -71,8 +65,15 @@ button {
   background-color: #ffc0cb;
   min-height: 100vh;
   padding: 20px;
+  overflow-x: hidden;
+  display: flex;
+  justify-content: center;
 }
-
+.user-panel-inner {
+  width: 100%;
+  max-width: 500px;
+  box-sizing: border-box;
+}
 .category-title {
   margin-top: 25px;
   font-size: 18px;
@@ -88,7 +89,6 @@ button {
   margin-left: auto;
   margin-right: auto;
 }
-
 .item-grid {
   display: flex;
   overflow-x: auto;
@@ -96,16 +96,13 @@ button {
   padding: 10px 0;
   scroll-snap-type: x mandatory;
 }
-
 .item-grid::-webkit-scrollbar {
   height: 6px;
 }
-
 .item-grid::-webkit-scrollbar-thumb {
   background-color: #aaa;
   border-radius: 4px;
 }
-
 .product-btn {
   background-color: #800080;
   color: white;
@@ -117,11 +114,9 @@ button {
   scroll-snap-align: start;
   transition: transform 0.1s ease;
 }
-
 .product-btn:active {
   transform: scale(0.96);
 }
-
 .note-area textarea {
   width: 100%;
   height: 60px;
@@ -132,19 +127,15 @@ button {
   margin-bottom: 20px;
   resize: vertical;
 }
-
-/* === Cart Table === */
 .cart-table {
   overflow-x: auto;
 }
-
 .cart-table table {
   width: 100%;
   border-collapse: collapse;
   background-color: white;
   box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
 }
-
 .cart-table th,
 .cart-table td {
   border: 1px solid #999;
@@ -153,7 +144,6 @@ button {
   font-weight: bold;
   color: #000;
 }
-
 .cart-table input[type="number"] {
   width: 60px;
   padding: 5px;
@@ -161,7 +151,6 @@ button {
   border: 1px solid #aaa;
   text-align: center;
 }
-
 .place-order-btn {
   background-color: #6a0dad;
   color: white;
@@ -171,14 +160,12 @@ button {
   font-size: 16px;
   font-weight: bold;
 }
-
 .bottom-buttons {
   margin-top: 30px;
   display: flex;
   justify-content: center;
   gap: 10px;
 }
-
 .bottom-buttons button {
   padding: 10px 18px;
   font-size: 15px;
@@ -188,9 +175,82 @@ button {
   font-weight: bold;
   transition: background-color 0.2s ease;
 }
-
 .bottom-buttons button:hover {
   background-color: #bbb;
+}
+
+/* === Marquee & Teddy === */
+.marquee-banner-box {
+  background-color: #ccc;
+  padding: 20px;
+  margin-bottom: 15px;
+  border-radius: 20px;
+  box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.2), 0 4px 6px rgba(0, 0, 0, 0.1);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.marquee-banner {
+  width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  font-size: 0;
+  height: 55px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+}
+.marquee-banner p {
+  display: inline-block;
+  animation: scrollLeftOnce 12s linear infinite;
+  font-weight: bold;
+  font-size: 26px;
+  background: linear-gradient(90deg, #ff8a00, #e52e71, #9b00ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 6px rgba(255, 255, 255, 0.3);
+  padding-left: 100%;
+}
+@keyframes scrollLeftOnce {
+  0% { transform: translateX(100%); opacity: 0; }
+  10% { opacity: 1; }
+  90% { transform: translateX(-100%); opacity: 1; }
+  100% { opacity: 0; }
+}
+.teddy-bear {
+  position: absolute;
+  bottom: -12px;
+  right: 10px;
+  width: 70px;
+  max-width: 30vw;
+  height: auto;
+  z-index: 1;
+  animation: bounceZoom 5s ease-in-out infinite;
+}
+@keyframes bounceZoom {
+  0%, 100% { transform: translateY(0) scale(1); }
+  25% { transform: translateY(-5px) scale(1.08) rotate(2deg); }
+  50% { transform: translateY(-10px) scale(1.12); }
+  75% { transform: translateY(-5px) scale(1.08) rotate(-2deg); }
+}
+.rainbow-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin: 20px 0;
+}
+.rainbow-header h1 {
+  font-size: 22px;
+  font-weight: bold;
+  background: linear-gradient(90deg, red, orange, yellow, green, blue, indigo, violet);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+  margin: 0;
 }
 
 /* === Summary Page === */
@@ -199,7 +259,6 @@ button {
   padding: 20px;
   min-height: 100vh;
 }
-
 .summary-table-block {
   background: white;
   padding: 20px;
@@ -207,13 +266,11 @@ button {
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
-
 .summary-table {
   width: 100%;
   border-collapse: collapse;
   margin-top: 10px;
 }
-
 .summary-table th,
 .summary-table td {
   border: 1px solid #999;
@@ -231,13 +288,11 @@ button {
   background-size: 600% 600%;
   animation: rainbowBG 20s ease infinite;
 }
-
 @keyframes rainbowBG {
   0% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
   100% { background-position: 0% 50%; }
 }
-
 .rainbow-title {
   font-size: 48px;
   font-weight: bold;
@@ -248,20 +303,17 @@ button {
   color: transparent;
   margin-bottom: 30px;
 }
-
 .updated-text {
   text-align: center;
   font-style: italic;
   color: #444;
   margin-bottom: 20px;
 }
-
 .table-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 20px;
 }
-
 .table-box {
   border-radius: 15px;
   padding: 15px;
@@ -279,7 +331,6 @@ button {
 .table-box.blue { background-color: #2196f3; }
 .table-box.red { background-color: #f44336; }
 .table-box.green { background-color: #4caf50; }
-
 .order-count {
   position: absolute;
   top: 10px;
@@ -290,14 +341,12 @@ button {
   padding: 4px 8px;
   border-radius: 12px;
 }
-
 .order-box {
   background: rgba(255, 255, 255, 0.15);
   margin-top: 10px;
   padding: 10px;
   border-radius: 10px;
 }
-
 .order-btn {
   margin-top: 5px;
   margin-right: 5px;
