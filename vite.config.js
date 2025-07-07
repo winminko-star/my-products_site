@@ -4,5 +4,5 @@ import react from '@vitejs/plugin-react';
 
 export default defineConfig({
   plugins: [react()],
-  base: '', // ✅ ← ဒါက Netlify တာဝန်ပေးထားတဲ့ asset path တွေအတွက်လိုအပ်တယ်
+  base: './', // ✅ fix for Netlify blank screen
 });
