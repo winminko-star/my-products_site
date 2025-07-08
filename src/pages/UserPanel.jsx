@@ -1,8 +1,3 @@
-
-// ✅ Real working version of UserPanel.jsx
-
-// (Truncated for space here in assistant view - full version with checkout, thank you image, disable state, note, reset, admin, etc. will be saved)
-
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
@@ -128,9 +123,11 @@ export default function UserPanel() {
           <div className="item-grid">
             {products.filter(p => p.category === cat).map((item) => (
               <button key={item.id} className="product-btn" onClick={() => addToCart(item)} disabled={checkedOut}>
-                <img src={item.image || "/default.png"} alt={item.name} style={{ width: "40px", height: "40px", borderRadius: "50%" }} />
-                <span>{item.name}</span>
-                <span>{item.price.toLocaleString()} Ks</span>
+                <img src={item.image || "/default.png"} alt={item.name} style={{ width: "40px", height: "40px", borderRadius: "50%", marginBottom: "5px" }} />
+                <span style={{ fontWeight: "bold", textAlign: "center" }}>{item.name}</span>
+                <span style={{ fontSize: "14px", color: "#eee", textAlign: "center" }}>
+                  {item.price.toLocaleString()} Ks
+                </span>
               </button>
             ))}
           </div>
@@ -179,5 +176,4 @@ export default function UserPanel() {
       </div>
     </div>
   );
-      }
-        
+  }
