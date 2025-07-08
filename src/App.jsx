@@ -1,6 +1,5 @@
-
 import React, { useState, useEffect } from "react";
-import { Routes, Route, Navigate } from "react-router-dom";
+import { HashRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import UserPanel from "./pages/UserPanel";
 import AdminPanel from "./pages/AdminPanel";
 import AdminLogin from "./pages/AdminLogin";
@@ -53,7 +52,7 @@ export default function App() {
   }
 
   return (
-    <>
+    <Router>
       <Toaster />
       <Routes>
         <Route path="/" element={<Navigate to="/pick-table" replace />} />
@@ -80,7 +79,7 @@ export default function App() {
           }
         />
       </Routes>
-    </>
+    </Router>
   );
 }
 
@@ -101,4 +100,3 @@ const inputStyle = {
 const buttonStyle = {
   padding: "8px 16px",
 };
-                                                            
