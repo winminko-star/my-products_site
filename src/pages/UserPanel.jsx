@@ -86,7 +86,7 @@ export default function UserPanel() {
     localStorage.setItem(`checkout_done_table_${tableId}`, "true");
     setCheckedOut(true);
     setShowThankYou(true);
-    setTimeout(() => setShowThankYou(false), 5000);
+    setTimeout(() => setShowThankYou(false), 15000);
   };
 
   const handleResetTable = () => {
