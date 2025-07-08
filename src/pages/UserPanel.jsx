@@ -108,12 +108,12 @@ export default function UserPanel() {
     <div className="user-panel-container">
       {showThankYou && (
         <div style={{ position: "fixed", top: "50%", left: "50%", transform: "translate(-50%, -50%)", zIndex: 9999 }}>
-          <img src="/images/thankyou.jpg" alt="Thank You" style={{ width: "250px", borderRadius: "12px" }} />
+          <img src="/images/thankyou.jpg" alt="" style={{ width: "250px", borderRadius: "12px" }} />
         </div>
       )}
 
       <div className="rainbow-header">
-        <img src="/logo.png" alt="Logo" style={{ width: "41px", height: "41px", borderRadius: "50%" }} />
+        <img src="/logo.png" alt="" style={{ width: "41px", height: "41px", borderRadius: "50%" }} />
         <h1>Win Min Thuzar – Table {tableId}</h1>
       </div>
 
@@ -123,7 +123,7 @@ export default function UserPanel() {
           <div className="item-grid">
             {products.filter(p => p.category === cat).map((item) => (
               <button key={item.id} className="product-btn" onClick={() => addToCart(item)} disabled={checkedOut}>
-                <img src={item.image || "/default.png"} alt={item.name} style={{ width: "40px", height: "40px", borderRadius: "50%", marginBottom: "5px" }} />
+                <img src={item.image || "/default.png"} alt="" style={{ width: "40px", height: "40px", borderRadius: "50%", marginBottom: "5px" }} />
                 <span style={{ fontWeight: "bold", textAlign: "center" }}>{item.name}</span>
                 <span style={{ fontSize: "14px", color: "#eee", textAlign: "center" }}>
                   {item.price.toLocaleString()} Ks
@@ -176,4 +176,4 @@ export default function UserPanel() {
       </div>
     </div>
   );
-  }
+               }
