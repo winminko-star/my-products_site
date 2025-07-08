@@ -8,6 +8,7 @@ export default function AdminPanel() {
   const navigate = useNavigate();
   const [orders, setOrders] = useState({});
   const [lastUpdated, setLastUpdated] = useState(null);
+  const [checkedOutTables, setCheckedOutTables] = useState([]);
 
   useEffect(() => {
     loadOrders();
@@ -15,20 +16,27 @@ export default function AdminPanel() {
       if (!localStorage.getItem("editLock")) {
         loadOrders();
       }
-    }, 60000);
+    }, 30000); // ✅ Changed to 30 seconds
     return () => clearInterval(interval);
   }, []);
 
   const loadOrders = () => {
     const allOrders = {};
+    const checked = [];
+
     for (let i = 1; i <= 30; i++) {
       const key = `orders_table_${i}`;
       const data = JSON.parse(localStorage.getItem(key));
       if (data && data.length > 0) {
         allOrders[i] = data;
       }
+      if (localStorage.getItem(`checkout_done_table_${i}`) === "true") {
+        checked.push(i);
+      }
     }
+
     setOrders(allOrders);
+    setCheckedOutTables(checked);
     setLastUpdated(new Date());
   };
 
@@ -47,6 +55,12 @@ export default function AdminPanel() {
     loadOrders();
   };
 
+  const handleClearCheckout = (tableId) => {
+    localStorage.removeItem(`checkout_done_table_${tableId}`);
+    toast.success(`Checkout cleared for Table ${tableId}`);
+    loadOrders();
+  };
+
   const formatTime = (date) => {
     if (!date) return "";
     return date.toLocaleTimeString([], {
@@ -60,6 +74,32 @@ export default function AdminPanel() {
     <div className="admin-container">
       <h1 className="rainbow-title">Admin Panel</h1>
       <p className="updated-text">Last updated: {formatTime(lastUpdated)}</p>
+
+      {/* ✅ Checkout Tables Scroll */}
+      {checkedOutTables.length > 0 && (
+        <div style={{ overflowX: "auto", whiteSpace: "nowrap", marginBottom: "20px" }}>
+          {checkedOutTables.map((id) => (
+            <span
+              key={id}
+              style={{
+                display: "inline-block",
+                backgroundColor: "#4caf50",
+                color: "white",
+                padding: "10px 16px",
+                borderRadius: "12px",
+                marginRight: "10px",
+                fontWeight: "bold",
+                boxShadow: "0 2px 6px rgba(0,0,0,0.2)",
+                cursor: "pointer"
+              }}
+              title="Click to clear"
+              onClick={() => handleClearCheckout(id)}
+            >
+              ✔ Table {id}
+            </span>
+          ))}
+        </div>
+      )}
 
       <button
         onClick={() => navigate("/pick-table")}
@@ -127,5 +167,5 @@ export default function AdminPanel() {
       </div>
     </div>
   );
-  }
-  
+    }
+              
