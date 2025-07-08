@@ -107,7 +107,10 @@ export default function UserPanel() {
   return (
     <div className="user-panel-container">
       {showThankYou && (
-        <div style={{ position: "fixed", top: "50%", left: "50%", transform: "translate(-50%, -50%)", zIndex: 9999 }}>
+        <div style={{
+          position: "fixed", top: "50%", left: "50%",
+          transform: "translate(-50%, -50%)", zIndex: 9999
+        }}>
           <img src="/images/thankyou.jpg" alt="" style={{ width: "250px", borderRadius: "12px" }} />
         </div>
       )}
@@ -122,10 +125,28 @@ export default function UserPanel() {
           <h2 className="category-title">{cat}</h2>
           <div className="item-grid">
             {products.filter(p => p.category === cat).map((item) => (
-              <button key={item.id} className="product-btn" onClick={() => addToCart(item)} disabled={checkedOut}>
-                <img src={item.image || "/default.png"} alt="" style={{ width: "40px", height: "40px", borderRadius: "50%", marginBottom: "5px" }} />
-                <span style={{ fontWeight: "bold", textAlign: "center" }}>{item.name}</span>
-                <span style={{ fontSize: "14px", color: "#eee", textAlign: "center" }}>
+              <button
+                key={item.id}
+                className="product-btn"
+                onClick={() => addToCart(item)}
+                disabled={checkedOut}
+              >
+                <img
+                  src={item.image || "/default.png"}
+                  alt=""
+                  onError={(e) => (e.target.src = "/default.png")}
+                  style={{
+                    width: "50px",
+                    height: "50px",
+                    borderRadius: "50%",
+                    objectFit: "cover",
+                    marginBottom: "6px"
+                  }}
+                />
+                <span style={{ fontWeight: "bold", fontSize: "14px", textAlign: "center" }}>
+                  {item.name}
+                </span>
+                <span style={{ fontSize: "13px", color: "#eee", textAlign: "center" }}>
                   {item.price.toLocaleString()} Ks
                 </span>
               </button>
@@ -135,7 +156,12 @@ export default function UserPanel() {
       ))}
 
       <div className="note-area">
-        <textarea value={note} placeholder="Note (e.g., Take away)" onChange={(e) => setNote(e.target.value)} disabled={checkedOut} />
+        <textarea
+          value={note}
+          placeholder="Note (e.g., Take away)"
+          onChange={(e) => setNote(e.target.value)}
+          disabled={checkedOut}
+        />
       </div>
 
       <div className="cart-table">
@@ -148,9 +174,21 @@ export default function UserPanel() {
               <tr key={item.id}>
                 <td>{item.name}</td>
                 <td>{item.unit}</td>
-                <td><input type="number" value={item.qty} min="1" onChange={(e) => updateQty(item.id, parseInt(e.target.value))} disabled={checkedOut} /></td>
+                <td>
+                  <input
+                    type="number"
+                    value={item.qty}
+                    min="1"
+                    onChange={(e) => updateQty(item.id, parseInt(e.target.value))}
+                    disabled={checkedOut}
+                  />
+                </td>
                 <td>{(item.qty * item.price).toLocaleString()} Ks</td>
-                <td><button onClick={() => removeFromCart(item.id)} disabled={checkedOut}>❌</button></td>
+                <td>
+                  <button onClick={() => removeFromCart(item.id)} disabled={checkedOut}>
+                    ❌
+                  </button>
+                </td>
               </tr>
             ))}
           </tbody>
@@ -160,20 +198,36 @@ export default function UserPanel() {
         </div>
       </div>
 
-      <button onClick={placeOrder} className="place-order-btn" disabled={checkedOut}>Place Order</button>
+      <button
+        onClick={placeOrder}
+        className="place-order-btn"
+        disabled={checkedOut}
+      >
+        Place Order
+      </button>
 
-      <button onClick={handleCheckout} disabled={checkedOut} style={{
-        background: "linear-gradient(to right, #4caf50, #81c784)", color: "white",
-        padding: "12px 24px", border: "none", borderRadius: "12px", fontSize: "18px",
-        fontWeight: "bold", marginTop: "15px", cursor: "pointer"
-      }}>
+      <button
+        onClick={handleCheckout}
+        disabled={checkedOut}
+        style={{
+          background: "linear-gradient(to right, #4caf50, #81c784)",
+          color: "white",
+          padding: "12px 24px",
+          border: "none",
+          borderRadius: "12px",
+          fontSize: "18px",
+          fontWeight: "bold",
+          marginTop: "15px",
+          cursor: "pointer"
+        }}
+      >
         🧾 ငွေရှင်းမည်
       </button>
 
-      <div style={{ marginTop: "30px", display: "flex", justifyContent: "center", gap: "10px" }}>
+      <div className="bottom-buttons">
         <button onClick={handleResetTable}>Reset Table</button>
         <button onClick={goToAdmin}>Admin</button>
       </div>
     </div>
   );
-               }
+    }
