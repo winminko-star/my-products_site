@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
@@ -19,7 +18,8 @@ export default function UserPanel() {
       navigate("/pick-table", { replace: true });
     } else {
       setTableId(id);
-      setCheckedOut(localStorage.getItem(`checkout_done_table_${id}`) === "true");
+      const isDone = localStorage.getItem(`checkout_done_table_${id}`) === "true";
+      setCheckedOut(isDone);
     }
 
     const handleBack = (e) => {
@@ -101,15 +101,21 @@ export default function UserPanel() {
     }
   };
 
-  const goToAdmin = () => navigate("/admin-login");
+  const goToAdmin = () => {
+    navigate("/admin-login");
+  };
 
   const categories = ["Food", "Soup", "Drink", "Others"];
 
   return (
     <div className="user-panel-container">
       {showThankYou && (
-        <div style={{ position: "fixed", top: "50%", left: "50%", transform: "translate(-50%, -50%)", zIndex: 9999 }}>
-          <img src="/images/thankyou.jpg" alt="Thank You" style={{ width: "250px", borderRadius: "12px" }} />
+        <div style={{
+          position: "fixed", top: "50%", left: "50%",
+          transform: "translate(-50%, -50%)", zIndex: 9999
+        }}>
+          <img src="/images/thankyou.jpg" alt="Thank You"
+               style={{ width: "250px", borderRadius: "12px" }} />
         </div>
       )}
 
@@ -122,7 +128,7 @@ export default function UserPanel() {
         <div key={cat}>
           <h2 className="category-title">{cat}</h2>
           <div className="item-grid">
-            {products.filter(p => p.category === cat).map((item) => (
+            {products.filter((item) => item.category === cat).map((item) => (
               <button key={item.id} className="product-btn" onClick={() => addToCart(item)} disabled={checkedOut}>
                 <img src={item.image || "/default.png"} alt={item.name} style={{ width: "40px", height: "40px", borderRadius: "50%" }} />
                 <span>{item.name}</span>
@@ -183,5 +189,4 @@ export default function UserPanel() {
       </div>
     </div>
   );
-  }
-  
+      }
