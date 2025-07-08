@@ -1,2 +1,1 @@
-/*  
-  Content-Security-Policy: default-src * data: blob: 'unsafe-inline' 'unsafe-eval'; connect-src *; img-src * data:;
+Content-Security-Policy: default-src * data: blob: 'unsafe-inline' 'unsafe-eval'; connect-src *; img-src * data:;
