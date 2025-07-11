@@ -378,3 +378,88 @@ button {
   background: #ffebee;
   color: #b71c1c;
   }
+
+
+/* === Custom Background Animation === */
+.animated-background {
+  background: linear-gradient(-45deg, #ff9a9e, #fad0c4, #fbc2eb, #a18cd1);
+  background-size: 400% 400%;
+  animation: gradientBG 15s ease infinite;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+@keyframes gradientBG {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* === Rainbow Circle === */
+.rainbow-circle {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  border: 4px solid;
+  border-image: linear-gradient(45deg, red, orange, yellow, green, blue, indigo, violet) 1;
+  display: inline-block;
+  animation: spin 2s linear infinite;
+  text-align: center;
+  line-height: 35px;
+  font-weight: bold;
+  color: black;
+  margin-left: 8px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* === Fancy Buttons Layout === */
+.fancy-button-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 20px;
+  align-items: center;
+}
+
+.fancy-btn {
+  padding: 12px 24px;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 20px;
+  background: linear-gradient(135deg, #ff758c, #ff7eb3, #65c7f7);
+  color: white;
+  border: none;
+  box-shadow: 4px 4px 12px rgba(0,0,0,0.2);
+  width: 220px;
+  transition: all 0.3s ease;
+  text-align: center;
+}
+
+.fancy-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 15px rgba(255, 118, 140, 0.7);
+}
+
+/* === Button Layout Grid (based on chalk sketch) === */
+.custom-button-layout {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  margin-top: 30px;
+}
+
+.row-two {
+  display: flex;
+  gap: 24px;
+  justify-content: center;
+}
+
+.row-one {
+  display: flex;
+  justify-content: center;
+    }
