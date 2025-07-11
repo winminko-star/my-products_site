@@ -1,165 +1,69 @@
-/* === General Styles === */
-body {
-  margin: 0;
-  font-family: sans-serif;
-  background-color: #f5f5f5;
-}
-input, button {
-  outline: none;
-}
-button {
-  cursor: pointer;
-}
+/* === General Styles === */ body { margin: 0; font-family: sans-serif; background-color: #f5f5f5; }
 
-/* === Animated Background === */
-.animated-background {
-  background: linear-gradient(-45deg, #ff9a9e, #fad0c4, #fbc2eb, #a18cd1);
-  background-size: 400% 400%;
-  animation: gradientBG 15s ease infinite;
-}
-@keyframes gradientBG {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
+input, button { outline: none; }
 
-/* === Rainbow Title === */
-.rainbow-title {
-  font-size: 36px;
-  font-weight: bold;
-  text-align: center;
-  text-shadow: 2px 2px 10px rgba(0,0,0,0.2);
-  background: linear-gradient(90deg, red, orange, yellow, green, blue, indigo, violet);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  margin-bottom: 30px;
-}
+button { cursor: pointer; }
 
-/* === User Panel === */
-.user-panel-container {
-  background: linear-gradient(to bottom right, #ffe0f0, #fff0f5);
-  min-height: 100vh;
-  padding: 20px;
-}
-.user-panel-inner {
-  background: #ffc0cb;
-  padding: 20px;
-  border-radius: 20px;
-  max-width: 900px;
-  margin: 0 auto;
-}
-.circle-logo {
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
-}
-.rainbow-title-name {
-  font-size: 24px;
-  font-weight: bold;
-  margin-top: 10px;
-  background: linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-.rainbow-circle {
-  display: inline-block;
-  background: linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet);
-  color: white;
-  padding: 6px 12px;
-  border-radius: 50%;
-  font-weight: bold;
-}
+img { display: block; max-width: 100%; }
 
-/* === Category Titles === */
-.category-title {
-  font-size: 24px;
-  font-weight: bold;
-  background: linear-gradient(to right, #ff758c, #65c7f7);
-  color: white;
-  padding: 10px;
-  border-radius: 20px;
-  margin-top: 30px;
-  margin-bottom: 10px;
-}
+/* === Animated Background === */ .animated-background { background: linear-gradient(-45deg, #ff9a9e, #fad0c4, #fbc2eb, #a18cd1); background-size: 400% 400%; animation: gradientBG 15s ease infinite; }
 
-/* === Product Buttons === */
-.item-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-  gap: 15px;
-}
-.product-btn {
-  background: #ffffffaa;
-  padding: 10px;
-  border-radius: 15px;
-  text-align: center;
-  border: 2px solid #ddd;
-  transition: transform 0.2s;
-}
-.product-btn:hover {
-  transform: scale(1.05);
-}
+@keyframes gradientBG { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
 
-/* === Cart Table === */
-.cart-table table {
-  width: 100%;
-  margin-top: 20px;
-  border-collapse: collapse;
-}
-.cart-table th, .cart-table td {
-  border: 1px solid #999;
-  padding: 8px;
-  font-size: 14px;
-}
+/* === Rainbow Title === */ .rainbow-title-name { font-size: 24px; text-align: center; margin-top: 10px; font-weight: bold; }
 
-/* === Note Area === */
-.note-area {
-  margin-top: 20px;
-}
-.note-area textarea {
-  width: 100%;
-  padding: 10px;
-  border-radius: 10px;
-  font-size: 14px;
-}
+.rainbow-circle { display: inline-block; padding: 4px 10px; border-radius: 50%; background: linear-gradient(135deg, #ff758c, #ff7eb3, #65c7f7); color: white; }
 
-/* === Button Layout === */
-.custom-button-layout {
-  margin-top: 20px;
-}
-.custom-button-layout .row-one,
-.custom-button-layout .row-two {
-  display: flex;
-  justify-content: center;
-  gap: 15px;
-  flex-wrap: wrap;
-}
-.fancy-btn {
-  padding: 10px 20px;
-  background: linear-gradient(to right, #ff758c, #65c7f7);
-  border: none;
-  border-radius: 30px;
-  font-weight: bold;
-  color: white;
-  box-shadow: 2px 2px 8px rgba(0,0,0,0.2);
-  min-width: 180px;
-}
+.circle-logo { width: 60px; height: 60px; border-radius: 50%; object-fit: cover; border: 3px solid white; }
 
-/* === Teddy Banner === */
-.marquee-banner-box {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-.marquee-banner p {
-  font-weight: bold;
-  color: #222;
-}
-.teddy-bear {
-  height: 80px;
-  animation: wave 2s infinite;
-}
-@keyframes wave {
-  0%, 100% { transform: rotate(0deg); }
-  50% { transform: rotate(8deg); }
-    }
+/* === Marquee Banner === */ .marquee-banner-box { display: flex; justify-content: space-between; align-items: center; background-color: #fff3cd; padding: 5px 10px; border-radius: 8px; margin-bottom: 15px; }
+
+.marquee-banner { flex: 1; overflow: hidden; }
+
+.marquee-banner p { white-space: nowrap; animation: scrollText 12s linear infinite; font-weight: bold; color: #b45309; }
+
+@keyframes scrollText { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
+
+.teddy-bear { width: 60px; height: auto; }
+
+/* === Category & Product === */ .category-title { font-size: 20px; margin-top: 20px; margin-bottom: 10px; font-weight: bold; text-align: left; background: linear-gradient(to right, #ff9a9e, #fad0c4); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+
+.item-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 12px; }
+
+.product-btn { background-color: rgba(255, 255, 255, 0.15); border-radius: 15px; border: 2px solid #ccc; padding: 10px; text-align: center; color: white; font-weight: bold; }
+
+.product-img { width: 50px; height: 50px; border-radius: 50%; object-fit: cover; margin-bottom: 6px; }
+
+/* === Cart Table === */ .cart-table { margin-top: 20px; overflow-x: auto; }
+
+.cart-table table { width: 100%; border-collapse: collapse; background: white; border-radius: 10px; overflow: hidden; }
+
+.cart-table th, .cart-table td { border: 1px solid #ddd; padding: 10px; text-align: center; color: #333; }
+
+.cart-table th { background-color: #ffe0e0; font-weight: bold; }
+
+.cart-img { width: 32px; height: 32px; border-radius: 50%; }
+
+.cart-total { text-align: right; margin-top: 10px; font-weight: bold; font-size: 18px; }
+
+.remove-btn { background: transparent; border: none; color: red; font-size: 16px; cursor: pointer; }
+
+/* === Buttons === */ .fancy-btn { padding: 10px 16px; font-size: 14px; font-weight: bold; border-radius: 20px; background: linear-gradient(135deg, #ff758c, #ff7eb3, #65c7f7); color: white; border: none; box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.2); min-width: 120px; margin: 5px; text-align: center; }
+
+.fancy-btn:hover { transform: scale(1.05); box-shadow: 0 0 15px rgba(255, 118, 140, 0.7); }
+
+.custom-button-layout { margin-top: 20px; text-align: center; }
+
+.row-one, .row-two { margin-bottom: 10px; }
+
+.note-area textarea { width: 100%; height: 60px; border-radius: 8px; padding: 10px; font-size: 14px; }
+
+/* === Modal === */ .modal-backdrop { position: fixed; top: 0; left: 0; height: 100vh; width: 100vw; background-color: rgba(0, 0, 0, 0.5); display: flex; justify-content: center; align-items: center; z-index: 10000; }
+
+.modal { background: white; padding: 20px; border-radius: 12px; text-align: center; max-width: 300px; width: 90%; }
+
+.modal-actions button { margin: 5px; padding: 8px 12px; border: none; background-color: #4caf50; color: white; border-radius: 8px; }
+
+.modal-actions button:last-child { background-color: #ccc; color: black; }
+
+                                                  
