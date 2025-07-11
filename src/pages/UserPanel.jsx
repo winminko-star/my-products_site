@@ -145,7 +145,8 @@ const [tableId, setTableId] = useState("1");
             </div>
           </div>
       {showPasswordModal && (
-  <div className="modal-backdrop">
+  <>
+      <div className="modal-backdrop">
     <div className="modal">
       <h3>🔒 Reset Table</h3>
       <p>Please enter reset password:</p>
@@ -161,6 +162,7 @@ const [tableId, setTableId] = useState("1");
       </div>
     </div>
   </div>
+  </>
 )}
         ))}
 
