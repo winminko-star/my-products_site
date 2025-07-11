@@ -18,15 +18,9 @@ button {
   animation: gradientBG 15s ease infinite;
 }
 @keyframes gradientBG {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 
 /* === Rainbow Title === */
@@ -41,129 +35,131 @@ button {
   margin-bottom: 30px;
 }
 
-/* === Table Picker Layout === */
-.table-picker-container {
+/* === User Panel === */
+.user-panel-container {
+  background: linear-gradient(to bottom right, #ffe0f0, #fff0f5);
   min-height: 100vh;
   padding: 20px;
-  text-align: center;
-  background: linear-gradient(to right, #ffe6f0, #ffd9ec);
 }
-.title {
-  font-size: 32px;
-  font-weight: bold;
-  margin-bottom: 30px;
-  color: transparent;
-  background: linear-gradient(to right, #ff00cc, #3333ff);
-  -webkit-background-clip: text;
-}
-.table-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-  gap: 20px;
-  max-width: 700px;
+.user-panel-inner {
+  background: #ffc0cb;
+  padding: 20px;
+  border-radius: 20px;
+  max-width: 900px;
   margin: 0 auto;
 }
-.table-btn {
-  padding: 14px 20px;
-  font-size: 16px;
-  font-weight: bold;
-  background: linear-gradient(to right, #ff758c, #ff7eb3, #65c7f7);
-  color: white;
-  border: none;
-  border-radius: 30px;
-  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
-  transition: all 0.3s ease;
+.circle-logo {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
 }
-.table-btn:hover {
-  transform: scale(1.05);
-}
-.admin-btn {
-  margin-top: 30px;
-  padding: 12px 24px;
-  background: linear-gradient(to right, #ff758c, #65c7f7);
-  color: white;
-  font-size: 16px;
+.rainbow-title-name {
+  font-size: 24px;
   font-weight: bold;
-  border: none;
-  border-radius: 30px;
-  box-shadow: 3px 3px 10px rgba(0,0,0,0.2);
+  margin-top: 10px;
+  background: linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.rainbow-circle {
+  display: inline-block;
+  background: linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet);
+  color: white;
+  padding: 6px 12px;
+  border-radius: 50%;
+  font-weight: bold;
 }
 
-/* === AdminPanel & KitchenPanel Shared === */
-.admin-container, .kitchen-container {
-  min-height: 100vh;
-  padding: 20px;
-  background: linear-gradient(135deg, #fceabb, #f8b500, #e3f2fd, #d1c4e9, #fceabb);
-  background-size: 600% 600%;
-  animation: rainbowBG 20s ease infinite;
-}
-@keyframes rainbowBG {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
-}
-.table-box {
-  border-radius: 15px;
-  padding: 15px;
-  text-align: left;
+/* === Category Titles === */
+.category-title {
+  font-size: 24px;
   font-weight: bold;
-  font-size: 18px;
-  position: relative;
-  box-shadow: 2px 2px 10px rgba(0,0,0,0.2);
-  transition: transform 0.2s;
+  background: linear-gradient(to right, #ff758c, #65c7f7);
   color: white;
+  padding: 10px;
+  border-radius: 20px;
+  margin-top: 30px;
+  margin-bottom: 10px;
 }
-.table-box:hover {
-  transform: scale(1.03);
+
+/* === Product Buttons === */
+.item-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 15px;
 }
-.table-box.blue { background-color: #2196f3; }
-.table-box.red { background-color: #f44336; }
-.table-box.green { background-color: #4caf50; }
-.order-count {
-  position: absolute;
-  top: 10px;
-  right: 15px;
+.product-btn {
+  background: #ffffffaa;
+  padding: 10px;
+  border-radius: 15px;
+  text-align: center;
+  border: 2px solid #ddd;
+  transition: transform 0.2s;
+}
+.product-btn:hover {
+  transform: scale(1.05);
+}
+
+/* === Cart Table === */
+.cart-table table {
+  width: 100%;
+  margin-top: 20px;
+  border-collapse: collapse;
+}
+.cart-table th, .cart-table td {
+  border: 1px solid #999;
+  padding: 8px;
   font-size: 14px;
-  background: white;
-  color: black;
-  padding: 4px 8px;
-  border-radius: 12px;
 }
-.order-box {
-  background: rgba(255, 255, 255, 0.15);
-  margin-top: 10px;
+
+/* === Note Area === */
+.note-area {
+  margin-top: 20px;
+}
+.note-area textarea {
+  width: 100%;
   padding: 10px;
   border-radius: 10px;
+  font-size: 14px;
 }
-.order-btn {
-  margin-top: 5px;
-  margin-right: 5px;
-  padding: 6px 10px;
+
+/* === Button Layout === */
+.custom-button-layout {
+  margin-top: 20px;
+}
+.custom-button-layout .row-one,
+.custom-button-layout .row-two {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+.fancy-btn {
+  padding: 10px 20px;
+  background: linear-gradient(to right, #ff758c, #65c7f7);
   border: none;
-  border-radius: 8px;
-  background: white;
-  color: black;
-  cursor: pointer;
-  font-size: 14px;
-}
-.order-btn.delete {
-  background: #ffebee;
-  color: #b71c1c;
-}
-.refresh-btn {
-  margin-bottom: 15px;
-  padding: 8px 16px;
-  font-size: 14px;
+  border-radius: 30px;
   font-weight: bold;
-  border-radius: 8px;
-  background-color: #333;
   color: white;
-  border: none;
-  cursor: pointer;
+  box-shadow: 2px 2px 8px rgba(0,0,0,0.2);
+  min-width: 180px;
 }
+
+/* === Teddy Banner === */
+.marquee-banner-box {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.marquee-banner p {
+  font-weight: bold;
+  color: #222;
+}
+.teddy-bear {
+  height: 80px;
+  animation: wave 2s infinite;
+}
+@keyframes wave {
+  0%, 100% { transform: rotate(0deg); }
+  50% { transform: rotate(8deg); }
+    }
