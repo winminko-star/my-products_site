@@ -105,6 +105,8 @@ export default function UserPanel() {
 
   return (
     <div className="animated-background">
+  <div className="user-panel-container">
+    <div className="user-panel-inner">
       <div className="user-panel-inner">
         <h1 style={{ textAlign: "center", fontWeight: "bold" }}>
           TABLE <span className="rainbow-circle">{tableId}</span>
@@ -220,7 +222,9 @@ export default function UserPanel() {
           </div>
         </div>
       </div>
-    </div>
+        </div>
+  </div>
+</div>
   );
-    }
-        
+                               }
+    
