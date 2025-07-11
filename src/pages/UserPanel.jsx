@@ -164,7 +164,7 @@ const [tableId, setTableId] = useState("1");
   </div>
   </>
 )}
-        ))}
+        
 
         <div className="note-area">
           <textarea placeholder="Note (e.g., Take away)" value={note} onChange={(e) => setNote(e.target.value)} disabled={checkedOut} />
