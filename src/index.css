@@ -1,3 +1,4 @@
+
 /* === General Styles === */
 body {
   margin: 0;
@@ -379,7 +380,7 @@ button {
   }
 
 
-/* === Extra Animated Background === */
+/* === Animated Gradient Background === */
 .animated-background {
   background: linear-gradient(-45deg, #ff9a9e, #fad0c4, #fbc2eb, #a18cd1);
   background-size: 400% 400%;
@@ -391,7 +392,7 @@ button {
   100% { background-position: 0% 50%; }
 }
 
-/* === Rainbow Circle for Table Number === */
+/* === Rainbow Circle === */
 .rainbow-circle {
   width: 45px;
   height: 45px;
@@ -403,7 +404,7 @@ button {
   align-items: center;
   animation: spin 2s linear infinite;
   font-weight: bold;
-  font-size: 16px;
+  font-size: 20px;
   color: black;
   margin-left: 10px;
 }
@@ -412,7 +413,7 @@ button {
   100% { transform: rotate(360deg); }
 }
 
-/* === Fancy 3D Myanmar Buttons Layout === */
+/* === Myanmar Fancy Button Layout === */
 .custom-button-layout {
   display: flex;
   flex-direction: column;
