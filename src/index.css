@@ -1,14 +1,169 @@
-/* === General Styles === */ body { margin: 0; font-family: sans-serif; background-color: #f5f5f5; } input, button { outline: none; } button { cursor: pointer; }
+/* === General Styles === */
+body {
+  margin: 0;
+  font-family: sans-serif;
+  background-color: #f5f5f5;
+}
+input, button {
+  outline: none;
+}
+button {
+  cursor: pointer;
+}
 
-/* === Animated Background === */ .animated-background { background: linear-gradient(-45deg, #ff9a9e, #fad0c4, #fbc2eb, #a18cd1); background-size: 400% 400%; animation: gradientBG 15s ease infinite; } @keyframes gradientBG { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+/* === Animated Background === */
+.animated-background {
+  background: linear-gradient(-45deg, #ff9a9e, #fad0c4, #fbc2eb, #a18cd1);
+  background-size: 400% 400%;
+  animation: gradientBG 15s ease infinite;
+}
+@keyframes gradientBG {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
 
-/* === Rainbow Title === */ .rainbow-title { font-size: 36px; font-weight: bold; text-align: center; text-shadow: 2px 2px 10px rgba(0,0,0,0.2); background: linear-gradient(90deg, red, orange, yellow, green, blue, indigo, violet); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 30px; }
+/* === Rainbow Title === */
+.rainbow-title {
+  font-size: 36px;
+  font-weight: bold;
+  text-align: center;
+  text-shadow: 2px 2px 10px rgba(0,0,0,0.2);
+  background: linear-gradient(90deg, red, orange, yellow, green, blue, indigo, violet);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 30px;
+}
 
-/* === TablePicker === */ .table-picker-container { min-height: 100vh; padding: 20px; text-align: center; } .table-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 15px; max-width: 600px; margin: 0 auto; margin-top: 20px; }
+/* === Table Picker Layout === */
+.table-picker-container {
+  min-height: 100vh;
+  padding: 20px;
+  text-align: center;
+  background: linear-gradient(to right, #ffe6f0, #ffd9ec);
+}
+.title {
+  font-size: 32px;
+  font-weight: bold;
+  margin-bottom: 30px;
+  color: transparent;
+  background: linear-gradient(to right, #ff00cc, #3333ff);
+  -webkit-background-clip: text;
+}
+.table-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 20px;
+  max-width: 700px;
+  margin: 0 auto;
+}
+.table-btn {
+  padding: 14px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  background: linear-gradient(to right, #ff758c, #ff7eb3, #65c7f7);
+  color: white;
+  border: none;
+  border-radius: 30px;
+  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+}
+.table-btn:hover {
+  transform: scale(1.05);
+}
+.admin-btn {
+  margin-top: 30px;
+  padding: 12px 24px;
+  background: linear-gradient(to right, #ff758c, #65c7f7);
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  border-radius: 30px;
+  box-shadow: 3px 3px 10px rgba(0,0,0,0.2);
+}
 
-/* === Summary Page === */ .summary-page { background-color: #fff0f5; padding: 20px; min-height: 100vh; } .summary-table-block { background: white; padding: 20px; margin-bottom: 30px; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); } .summary-table { width: 100%; border-collapse: collapse; margin-top: 10px; } .summary-table th, .summary-table td { border: 1px solid #999; padding: 10px; text-align: center; font-weight: bold; color: #000; }
-
-/* === Fancy Buttons === */ .fancy-btn { padding: 12px 24px; font-size: 16px; font-weight: bold; border-radius: 20px; background: linear-gradient(135deg, #ff758c, #ff7eb3, #65c7f7); color: white; border: none; box-shadow: 4px 4px 12px rgba(0,0,0,0.2); width: 220px; transition: all 0.3s ease; text-align: center; } .fancy-btn:hover { transform: scale(1.05); box-shadow: 0 0 15px rgba(255, 118, 140, 0.7); }
-
-/* === AdminPanel & KitchenPanel Shared === */ .admin-container, .kitchen-container { min-height: 100vh; padding: 20px; background: linear-gradient(135deg, #fceabb, #f8b500, #e3f2fd, #d1c4e9, #fceabb); background-size: 600% 600%; animation: rainbowBG 20s ease infinite; } @keyframes rainbowBG { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } } .table-box { border-radius: 15px; padding: 15px; text-align: left; font-weight: bold; font-size: 18px; position: relative; box-shadow: 2px 2px 10px rgba(0,0,0,0.2); transition: transform 0.2s; color: white; } .table-box:hover { transform: scale(1.03); } .table-box.blue { background-color: #2196f3; } .table-box.red { background-color: #f44336; } .table-box.green { background-color: #4caf50; } .order-count { position: absolute; top: 10px; right: 15px; font-size: 14px; background: white; color: black; padding: 4px 8px; border-radius: 12px; } .order-box { background: rgba(255, 255, 255, 0.15); margin-top: 10px; padding: 10px; border-radius: 10px; } .order-btn { margin-top: 5px; margin-right: 5px; padding: 6px 10px; border: none; border-radius: 8px; background: white; color: black; cursor: pointer; font-size: 14px; } .order-btn.delete { background: #ffebee; color: #b71c1c; } .refresh-btn { margin-bottom: 15px; padding: 8px 16px; font-size: 14px; font-weight: bold; border-radius: 8px; background-color: #333; color: white; border: none; cursor: pointer; }
-
+/* === AdminPanel & KitchenPanel Shared === */
+.admin-container, .kitchen-container {
+  min-height: 100vh;
+  padding: 20px;
+  background: linear-gradient(135deg, #fceabb, #f8b500, #e3f2fd, #d1c4e9, #fceabb);
+  background-size: 600% 600%;
+  animation: rainbowBG 20s ease infinite;
+}
+@keyframes rainbowBG {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+.table-box {
+  border-radius: 15px;
+  padding: 15px;
+  text-align: left;
+  font-weight: bold;
+  font-size: 18px;
+  position: relative;
+  box-shadow: 2px 2px 10px rgba(0,0,0,0.2);
+  transition: transform 0.2s;
+  color: white;
+}
+.table-box:hover {
+  transform: scale(1.03);
+}
+.table-box.blue { background-color: #2196f3; }
+.table-box.red { background-color: #f44336; }
+.table-box.green { background-color: #4caf50; }
+.order-count {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 14px;
+  background: white;
+  color: black;
+  padding: 4px 8px;
+  border-radius: 12px;
+}
+.order-box {
+  background: rgba(255, 255, 255, 0.15);
+  margin-top: 10px;
+  padding: 10px;
+  border-radius: 10px;
+}
+.order-btn {
+  margin-top: 5px;
+  margin-right: 5px;
+  padding: 6px 10px;
+  border: none;
+  border-radius: 8px;
+  background: white;
+  color: black;
+  cursor: pointer;
+  font-size: 14px;
+}
+.order-btn.delete {
+  background: #ffebee;
+  color: #b71c1c;
+}
+.refresh-btn {
+  margin-bottom: 15px;
+  padding: 8px 16px;
+  font-size: 14px;
+  font-weight: bold;
+  border-radius: 8px;
+  background-color: #333;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
