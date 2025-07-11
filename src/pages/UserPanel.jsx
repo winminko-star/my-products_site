@@ -191,33 +191,9 @@ export default function UserPanel() {
           </div>
         </div>
 
-        <button onClick={placeOrder} className="place-order-btn" style={{ marginTop: "20px" }} disabled={checkedOut}>
-          Place Order
-        </button>
-
-        <button onClick={handleCheckout} disabled={checkedOut} style={{
-          background: "linear-gradient(to right, #4caf50, #81c784)", color: "white",
-          padding: "12px 24px", border: "none", borderRadius: "12px", fontSize: "18px",
-          fontWeight: "bold", marginTop: "15px", cursor: "pointer"
-        }}>
-          🧾 ငွေရှင်းမည်
-        </button>
-
-        <div style={{ marginTop: "10px", textAlign: "center" }}>
-          <button onClick={() => navigate("/summary")} style={{
-            backgroundColor: "#4caf50", color: "white",
-            padding: "8px 16px", border: "none", borderRadius: "8px",
-            cursor: "pointer"
-          }}>
-            📄 View My Orders
-          </button>
-        </div>
-
-        <div className="bottom-buttons">
-          <button onClick={handleResetTable}>Reset Table</button>
-          <button onClick={goToAdmin}>Admin</button>
-        </div>
+        
       </div>
     </div>
   );
         }
+        
