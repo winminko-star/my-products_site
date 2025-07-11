@@ -1,69 +1,37 @@
-/* === General Styles === */ body { margin: 0; font-family: sans-serif; background-color: #f5f5f5; }
+/* === General Styles === */ body { margin: 0; font-family: sans-serif; background-color: #f5f5f5; } input, button { outline: none; } button { cursor: pointer; }
 
-input, button { outline: none; }
+/* === Animated Background === */ .animated-background { background: linear-gradient(-45deg, #ff9a9e, #fad0c4, #fbc2eb, #a18cd1); background-size: 400% 400%; animation: gradientBG 15s ease infinite; } @keyframes gradientBG { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
 
-button { cursor: pointer; }
+/* === Rainbow Title === */ .rainbow-title { font-size: 36px; font-weight: bold; text-align: center; text-shadow: 2px 2px 10px rgba(0,0,0,0.2); background: linear-gradient(90deg, red, orange, yellow, green, blue, indigo, violet); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 30px; }
 
-img { display: block; max-width: 100%; }
+.rainbow-title-name { font-size: 28px; font-weight: bold; text-align: center; background: linear-gradient(90deg, red, orange, yellow, green, blue, indigo, violet); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-top: 12px; margin-bottom: 20px; }
 
-/* === Animated Background === */ .animated-background { background: linear-gradient(-45deg, #ff9a9e, #fad0c4, #fbc2eb, #a18cd1); background-size: 400% 400%; animation: gradientBG 15s ease infinite; }
+.rainbow-circle { padding: 4px 12px; border-radius: 50%; background: white; color: black; font-weight: bold; box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.2); }
 
-@keyframes gradientBG { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+.circle-logo { width: 70px; height: 70px; border-radius: 50%; }
 
-/* === Rainbow Title === */ .rainbow-title-name { font-size: 24px; text-align: center; margin-top: 10px; font-weight: bold; }
+/* === TablePicker === */ .table-picker-container { min-height: 100vh; padding: 20px; text-align: center; background: linear-gradient(-45deg, #e3f2fd, #fceabb, #fad0c4); background-size: 300% 300%; animation: gradientBG 20s ease infinite; } .title { font-size: 32px; font-weight: bold; margin-bottom: 20px; } .table-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 15px; width: 100%; max-width: 600px; margin: 0 auto; } .table-btn { background: linear-gradient(145deg, #a64ca6, #7b3c7b); color: white; padding: 15px; border: none; border-radius: 15px; font-weight: bold; font-size: 16px; box-shadow: 5px 5px 10px #663366, -5px -5px 10px #993399; }
 
-.rainbow-circle { display: inline-block; padding: 4px 10px; border-radius: 50%; background: linear-gradient(135deg, #ff758c, #ff7eb3, #65c7f7); color: white; }
+.admin-btn { margin-top: 30px; background: #333; color: white; padding: 12px 20px; border-radius: 12px; border: none; font-size: 16px; font-weight: bold; }
 
-.circle-logo { width: 60px; height: 60px; border-radius: 50%; object-fit: cover; border: 3px solid white; }
+/* === Product Buttons === */ .product-btn { display: flex; flex-direction: column; align-items: center; justify-content: center; background: rgba(0,0,0,0.2); border-radius: 15px; padding: 10px; min-width: 100px; border: none; color: white; }
 
-/* === Marquee Banner === */ .marquee-banner-box { display: flex; justify-content: space-between; align-items: center; background-color: #fff3cd; padding: 5px 10px; border-radius: 8px; margin-bottom: 15px; }
+.item-grid { display: flex; flex-wrap: nowrap; overflow-x: auto; gap: 10px; padding-bottom: 10px; margin-bottom: 20px; }
 
-.marquee-banner { flex: 1; overflow: hidden; }
+/* === Thank You Overlay === */ .thankyou-overlay { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 9999; } .thankyou-image { width: 220px; border-radius: 12px; }
 
-.marquee-banner p { white-space: nowrap; animation: scrollText 12s linear infinite; font-weight: bold; color: #b45309; }
+/* === Teddy === */ .teddy-bear { width: 60px; margin-top: -20px; animation: floatTeddy 4s ease-in-out infinite; } @keyframes floatTeddy { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
 
-@keyframes scrollText { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
+/* === Note Area === */ .note-area textarea { width: 95%; padding: 10px; border-radius: 10px; margin: 10px auto; display: block; resize: none; font-size: 16px; }
 
-.teddy-bear { width: 60px; height: auto; }
+/* === Cart Table === */ .cart-table { overflow-x: auto; margin-bottom: 20px; } .cart-table table { width: 100%; border-collapse: collapse; background: white; } .cart-table th, .cart-table td { padding: 10px; text-align: center; border: 1px solid #ccc; }
 
-/* === Category & Product === */ .category-title { font-size: 20px; margin-top: 20px; margin-bottom: 10px; font-weight: bold; text-align: left; background: linear-gradient(to right, #ff9a9e, #fad0c4); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+/* === Custom Buttons Layout === */ .custom-button-layout { text-align: center; margin-top: 20px; } .row-two, .row-one { display: flex; justify-content: center; gap: 10px; margin-bottom: 10px; }
 
-.item-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 12px; }
+/* === Modal === */ .modal-backdrop { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); display: flex; justify-content: center; align-items: center; z-index: 9999; } .modal { background: white; padding: 20px; border-radius: 10px; max-width: 300px; text-align: center; } .modal-actions { margin-top: 15px; display: flex; justify-content: space-around; } .modal-actions button { padding: 8px 16px; border-radius: 6px; font-weight: bold; border: none; cursor: pointer; }
 
-.product-btn { background-color: rgba(255, 255, 255, 0.15); border-radius: 15px; border: 2px solid #ccc; padding: 10px; text-align: center; color: white; font-weight: bold; }
+/* === Category Title === */ .category-title { text-align: left; padding-left: 10px; margin-top: 10px; font-size: 18px; color: #222; font-weight: bold; }
 
-.product-img { width: 50px; height: 50px; border-radius: 50%; object-fit: cover; margin-bottom: 6px; }
+/* === Marquee Banner === */ .marquee-banner-box { position: relative; margin-top: 10px; } .marquee-banner { background: rgba(0, 0, 0, 0.6); color: white; padding: 6px 10px; font-size: 13px; font-weight: bold; white-space: nowrap; overflow: hidden; box-shadow: 1px 1px 5px rgba(0,0,0,0.3); } .marquee-banner p { display: inline-block; padding-left: 100%; animation: marqueeScroll 12s linear infinite; } @keyframes marqueeScroll { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
 
-/* === Cart Table === */ .cart-table { margin-top: 20px; overflow-x: auto; }
-
-.cart-table table { width: 100%; border-collapse: collapse; background: white; border-radius: 10px; overflow: hidden; }
-
-.cart-table th, .cart-table td { border: 1px solid #ddd; padding: 10px; text-align: center; color: #333; }
-
-.cart-table th { background-color: #ffe0e0; font-weight: bold; }
-
-.cart-img { width: 32px; height: 32px; border-radius: 50%; }
-
-.cart-total { text-align: right; margin-top: 10px; font-weight: bold; font-size: 18px; }
-
-.remove-btn { background: transparent; border: none; color: red; font-size: 16px; cursor: pointer; }
-
-/* === Buttons === */ .fancy-btn { padding: 10px 16px; font-size: 14px; font-weight: bold; border-radius: 20px; background: linear-gradient(135deg, #ff758c, #ff7eb3, #65c7f7); color: white; border: none; box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.2); min-width: 120px; margin: 5px; text-align: center; }
-
-.fancy-btn:hover { transform: scale(1.05); box-shadow: 0 0 15px rgba(255, 118, 140, 0.7); }
-
-.custom-button-layout { margin-top: 20px; text-align: center; }
-
-.row-one, .row-two { margin-bottom: 10px; }
-
-.note-area textarea { width: 100%; height: 60px; border-radius: 8px; padding: 10px; font-size: 14px; }
-
-/* === Modal === */ .modal-backdrop { position: fixed; top: 0; left: 0; height: 100vh; width: 100vw; background-color: rgba(0, 0, 0, 0.5); display: flex; justify-content: center; align-items: center; z-index: 10000; }
-
-.modal { background: white; padding: 20px; border-radius: 12px; text-align: center; max-width: 300px; width: 90%; }
-
-.modal-actions button { margin: 5px; padding: 8px 12px; border: none; background-color: #4caf50; color: white; border-radius: 8px; }
-
-.modal-actions button:last-child { background-color: #ccc; color: black; }
-
-                                                  
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
