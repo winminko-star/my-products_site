@@ -385,39 +385,35 @@ button {
   background: linear-gradient(-45deg, #ff9a9e, #fad0c4, #fbc2eb, #a18cd1);
   background-size: 400% 400%;
   animation: gradientBG 15s ease infinite;
-  min-height: 100vh;
-  padding: 20px;
 }
-
 @keyframes gradientBG {
   0% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
   100% { background-position: 0% 50%; }
 }
 
-/* === Rainbow Circle === */
+/* === Rainbow Circle for Table Number === */
 .rainbow-circle {
   width: 45px;
   height: 45px;
   border-radius: 50%;
   border: 4px solid;
   border-image: linear-gradient(45deg, red, orange, yellow, green, blue, indigo, violet) 1;
-  display: inline-block;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
   animation: spin 2s linear infinite;
-  text-align: center;
-  line-height: 35px;
   font-weight: bold;
+  font-size: 16px;
   color: black;
-  margin-left: 8px;
+  margin-left: 10px;
 }
-
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
 
-/* === Fancy 3D Buttons === */
-.fancy-button-container,
+/* === Fancy 3D Button Layout === */
 .custom-button-layout {
   display: flex;
   flex-direction: column;
@@ -452,8 +448,7 @@ button {
   box-shadow: 0 0 15px rgba(255, 118, 140, 0.7);
 }
 
-
-/* === Wrapper Layout to Prevent Layout Collapse === */
+/* === Layout Wrapper Fix === */
 .user-panel-container {
   display: flex;
   justify-content: center;
@@ -461,7 +456,6 @@ button {
   padding: 20px;
   overflow-x: hidden;
 }
-
 .user-panel-inner {
   max-width: 500px;
   width: 100%;
