@@ -6,7 +6,9 @@ import "../index.css";
 
 export default function UserPanel() {
   const navigate = useNavigate();
-  const [tableId, setTableId] = useState("1");
+const [showPasswordModal, setShowPasswordModal] = useState(false);
+const [passwordInput, setPasswordInput] = useState("");
+const [tableId, setTableId] = useState("1");
   const [cart, setCart] = useState([]);
   const [note, setNote] = useState("");
   const [showThankYou, setShowThankYou] = useState(false);
@@ -142,6 +144,24 @@ export default function UserPanel() {
               ))}
             </div>
           </div>
+      {showPasswordModal && (
+  <div className="modal-backdrop">
+    <div className="modal">
+      <h3>🔒 Reset Table</h3>
+      <p>Please enter reset password:</p>
+      <input
+        type="password"
+        value={passwordInput}
+        onChange={(e) => setPasswordInput(e.target.value)}
+        autoFocus
+      />
+      <div className="modal-actions">
+        <button onClick={confirmResetPassword}>OK</button>
+        <button onClick={() => setShowPasswordModal(false)}>Cancel</button>
+      </div>
+    </div>
+  </div>
+)}
         ))}
 
         <div className="note-area">
