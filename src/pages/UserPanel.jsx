@@ -100,11 +100,10 @@ export default function UserPanel() {
     }
   };
 
-  const goToAdmin = () => navigate("/admin-login");
-  const categories = ["Food", "Soup", "Drink", "Others"];
+    const categories = ["Food", "Soup", "Drink", "Others"];
 
   return (
-    <div className="user-panel-container">
+    <div className="user-panel-container animated-background">
       {showThankYou && (
         <div style={{
           position: "fixed", top: "50%", left: "50%",
@@ -125,7 +124,7 @@ export default function UserPanel() {
 
         <div className="rainbow-header">
           <img src="/logo.png" alt="Logo" style={{ width: "41px", height: "41px", borderRadius: "50%" }} />
-          <h1>Win Min Thuzar – TABLE <span className="rainbow-circle">{tableId}</span></h1>
+          <h1>Win Min Thuzar – TABLE <span className="rainbow-circle" style={{fontSize:"20px"}}>{tableId}</span></h1>
         </div>
 
         {categories.map((cat) => (
@@ -188,7 +187,20 @@ export default function UserPanel() {
           </table>
           <div style={{ textAlign: "right", marginTop: "10px", fontWeight: "bold", fontSize: "18px" }}>
             Total: {totalAmount.toLocaleString()} Ks
-          </div>
+          
+    <div className="custom-button-layout">
+      <div className="row-two">
+        <button className="fancy-btn" onClick={placeOrder}>Orderမှာမည်။</button>
+        <button className="fancy-btn" onClick={handleCheckout}>ငွေရှင်းမည်။</button>
+      </div>
+      <div className="row-one">
+        <button className="fancy-btn" onClick={() => navigate("/summary")}>Orderစာရင်းကြည့်မည်။</button>
+      </div>
+      <div className="row-one">
+        <button className="fancy-btn" onClick={handleResetTable}>Tableပြောင်းမည်။</button>
+      </div>
+    </div>
+    </div>
         </div>
 
         
