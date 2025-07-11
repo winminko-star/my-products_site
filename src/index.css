@@ -450,4 +450,20 @@ button {
 .fancy-btn:hover {
   transform: scale(1.05);
   box-shadow: 0 0 15px rgba(255, 118, 140, 0.7);
+}
+
+
+/* === Wrapper Layout to Prevent Layout Collapse === */
+.user-panel-container {
+  display: flex;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 20px;
+  overflow-x: hidden;
+}
+
+.user-panel-inner {
+  max-width: 500px;
+  width: 100%;
+  box-sizing: border-box;
   }
