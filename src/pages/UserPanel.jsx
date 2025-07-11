@@ -49,61 +49,32 @@ const handleResetTable = () => { const input = prompt("Enter reset password:"); 
 
 const categories = ["Food", "Soup", "Drink", "Others"];
 
-return ( <div className="user-panel-container animated-background"> {showThankYou && ( <div style={{ position: "fixed", top: "50%", left: "50%", transform: "translate(-50%, -50%)", zIndex: 9999, }} > <img src="/images/thankyou.jpg" alt="Thank You" style={{ width: "250px", borderRadius: "12px" }} /> </div> )}
+return ( <div className="user-panel-container animated-background"> {showThankYou && ( <div style={{ position: "fixed", top: "50%", left: "50%", transform: "translate(-50%, -50%)", zIndex: 9999 }}> <img src="/images/thankyou.jpg" alt="Thank You" style={{ width: "250px", borderRadius: "12px" }} /> </div> )}
 
 <div className="user-panel-inner">
     <div className="marquee-banner-box">
       <div className="marquee-banner">
-        <p>
-          အခုလိုလာရောက်အားပေးခြင်းကိုအထူးကျေးဇူးတင်ပါသည်။ 7.7.2027 တွင်
-          အထူးပရိုမိုးရှင်းပွဲရှိပါသည်။
-        </p>
+        <p>အခုလိုလာရောက်အားပေးခြင်းကိုအထူးကျေးဇူးတင်ပါသည်။ 7.7.2027 တွင် အထူးပရိုမိုးရှင်းပွဲရှိပါသည်။</p>
       </div>
       <img src="/images/teddy_bear.png" alt="Teddy" className="teddy-bear" />
     </div>
 
     <div className="rainbow-header">
-      <img
-        src="/logo.png"
-        alt="Logo"
-        style={{ width: "41px", height: "41px", borderRadius: "50%" }}
-      />
-      <h1>
-        Win Min Thuzar – TABLE
-        <span className="rainbow-circle" style={{ fontSize: "20px" }}>{tableId}</span>
-      </h1>
+      <img src="/logo.png" alt="Logo" style={{ width: "41px", height: "41px", borderRadius: "50%" }} />
+      <h1>Win Min Thuzar – TABLE <span className="rainbow-circle" style={{ fontSize: "20px" }}>{tableId}</span></h1>
     </div>
 
     {categories.map((cat) => (
       <div key={cat}>
         <h2 className="category-title">{cat}</h2>
         <div className="item-grid">
-          {products
-            .filter((item) => item.category === cat)
-            .map((item) => (
-              <button
-                key={item.id}
-                className="product-btn"
-                onClick={() => addToCart(item)}
-                disabled={checkedOut}
-              >
-                <img
-                  src={item.image || "/default.png"}
-                  alt={item.name}
-                  style={{
-                    width: "50px",
-                    height: "50px",
-                    borderRadius: "50%",
-                    objectFit: "cover",
-                    marginBottom: "6px",
-                  }}
-                />
-                <span style={{ fontWeight: "bold", textAlign: "center" }}>{item.name}</span>
-                <span style={{ fontSize: "14px", color: "#eee", textAlign: "center" }}>
-                  {item.price.toLocaleString()} Ks
-                </span>
-              </button>
-            ))}
+          {products.filter((item) => item.category === cat).map((item) => (
+            <button key={item.id} className="product-btn" onClick={() => addToCart(item)} disabled={checkedOut}>
+              <img src={item.image || "/default.png"} alt={item.name} style={{ width: "50px", height: "50px", borderRadius: "50%", objectFit: "cover", marginBottom: "6px" }} />
+              <span style={{ fontWeight: "bold", textAlign: "center" }}>{item.name}</span>
+              <span style={{ fontSize: "14px", color: "#eee", textAlign: "center" }}>{item.price.toLocaleString()} Ks</span>
+            </button>
+          ))}
         </div>
       </div>
     ))}
@@ -120,52 +91,22 @@ return ( <div className="user-panel-container animated-background"> {showThankYo
     <div className="cart-table">
       <table>
         <thead>
-          <tr>
-            <th>Item</th>
-            <th>Unit</th>
-            <th>Qty</th>
-            <th>Price</th>
-            <th>Action</th>
-          </tr>
+          <tr><th>Item</th><th>Unit</th><th>Qty</th><th>Price</th><th>Action</th></tr>
         </thead>
         <tbody>
           {cart.map((item) => (
             <tr key={item.id}>
               <td style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-                <img
-                  src={item.image || "/default.png"}
-                  alt={item.name}
-                  style={{ width: "32px", height: "32px", borderRadius: "50%" }}
-                />
+                <img src={item.image || "/default.png"} alt={item.name} style={{ width: "32px", height: "32px", borderRadius: "50%" }} />
                 {item.name}
               </td>
               <td>{item.unit}</td>
               <td>
-                <input
-                  type="number"
-                  min="1"
-                  value={item.qty}
-                  onChange={(e) => updateQty(item.id, parseInt(e.target.value))}
-                  style={{ width: "50px" }}
-                  disabled={checkedOut}
-                />
+                <input type="number" min="1" value={item.qty} onChange={(e) => updateQty(item.id, parseInt(e.target.value))} style={{ width: "50px" }} disabled={checkedOut} />
               </td>
               <td>{(item.qty * item.price).toLocaleString()} Ks</td>
               <td>
-                <button
-                  onClick={() => removeFromCart(item.id)}
-                  style={{
-                    background: "transparent",
-                    border: "none",
-                    color: "red",
-                    fontSize: "16px",
-                    cursor: "pointer",
-                  }}
-                  title="Remove"
-                  disabled={checkedOut}
-                >
-                  ❌
-                </button>
+                <button onClick={() => removeFromCart(item.id)} style={{ background: "transparent", border: "none", color: "red", fontSize: "16px", cursor: "pointer" }} title="Remove" disabled={checkedOut}>❌</button>
               </td>
             </tr>
           ))}
@@ -193,4 +134,3 @@ return ( <div className="user-panel-container animated-background"> {showThankYo
 
 ); }
 
-  
