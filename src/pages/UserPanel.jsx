@@ -125,7 +125,7 @@ export default function UserPanel() {
           </h1>
         </div>
 
-)}
+
 
         {categories.map((cat) => (
           <div key={cat}>
