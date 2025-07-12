@@ -4,7 +4,25 @@ export default function AdminPanel() { const navigate = useNavigate(); const [or
 
 useEffect(() => { loadOrders(); const interval = setInterval(() => { if (!editing) { loadOrders(); } }, 30000); setRefreshInterval(interval); return () => clearInterval(interval); }, []);
 
-const loadOrders = () => { const data = {}; const checkedOut = []; for (let i = 1; i <= 30; i++) { const raw = localStorage.getItem(`orders_table_${i}`); if (raw) { data[i] = JSON.parse(raw); } const done = localStorage.getItem(`checkout_done_table_${i}`) === "true"; if (done) { checkedOut.push(i); } } setOrders(data); setCheckedOutTables(checkedOut); };
+const loadOrders = () => {
+  const data = {};
+  const checkedOut = [];
+
+  for (let i = 1; i <= 30; i++) {
+    const raw = localStorage.getItem(`orders_table_${i}`);
+    if (raw) {
+      data[i] = JSON.parse(raw);
+    }
+
+    const done = localStorage.getItem(`checkout_done_table_${i}`) === "true";
+    if (done) {
+      checkedOut.push(i); // ✅ Checked out table IDs များကို စုစည်း
+    }
+  }
+
+  setOrders(data);                // ✅ Order data တွေထည့်
+  setCheckedOutTables(checkedOut); // ✅ Checked out Table List တွေထည့်
+};
 
 const getTableColor = (tableId) => { const checkedOut = localStorage.getItem(`checkout_done_table_${tableId}`) === "true"; const orderCount = orders[tableId]?.length || 0; if (checkedOut) return "yellow"; if (orderCount >= 2) return "green"; if (orderCount === 1) return "red"; return "blue"; };
 
