@@ -150,16 +150,7 @@ setCheckedOutTables(checkedOut);
 <div style={{ textAlign: "right", marginTop: "8px", fontWeight: "bold", color: "#000" }}>
   Total: {order.items.reduce((sum, item) => sum + item.qty * item.price, 0).toLocaleString()} Ks
 </div>
-  {/* Item List */}
-  <ul>
-    {order.items.map((item, idx) => (
-      <li key={idx}>
-        {item.qty} x {item.name} ({item.unit}) – {(item.qty * item.price).toLocaleString()} Ks
-      </li>
-    ))}
-  </ul>
-
-  {/* Total */}
+   {/* Total */}
   <div style={{ textAlign: "right", marginTop: "8px", fontWeight: "bold", color: "#000" }}>
     Total: {order.items.reduce((sum, item) => sum + item.qty * item.price, 0).toLocaleString()} Ks
   </div> 
