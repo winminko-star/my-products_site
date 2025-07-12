@@ -147,10 +147,7 @@ setCheckedOutTables(checkedOut);
     </li>
   ))}
 </ul>
-<div style={{ textAlign: "right", marginTop: "8px", fontWeight: "bold", color: "#000" }}>
-  Total: {order.items.reduce((sum, item) => sum + item.qty * item.price, 0).toLocaleString()} Ks
-</div>
-   {/* Total */}
+ {/* Total */}
   <div style={{ textAlign: "right", marginTop: "8px", fontWeight: "bold", color: "#000" }}>
     Total: {order.items.reduce((sum, item) => sum + item.qty * item.price, 0).toLocaleString()} Ks
   </div> 
@@ -175,10 +172,10 @@ setCheckedOutTables(checkedOut);
               {ordersForTable.length > 0 && (
                 <button className="order-btn delete" onClick={() => handleClear(tableId)}>Clear All</button>
               )}
-            </div>
-          );
-        })}
-      </div>
-    </div>
-  );
-      }
+            
+          
+        
+      
+    
+  
+      
