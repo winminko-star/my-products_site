@@ -364,7 +364,9 @@ button {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   animation: rainbowMove 3s linear infinite;
-  font-weight: bold;
+   font-weight: 900;      /* စာလုံးထူအောင် */
+  font-size: 24px;       /* စာလုံးကြီးအောင် */
+  text-align: center;
 }
 
 @keyframes rainbowMove {
