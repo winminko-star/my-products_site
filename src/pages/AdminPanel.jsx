@@ -71,7 +71,7 @@ export default function AdminPanel() {
       <h1 className="rainbow-title">Admin Panel</h1>
       <button className="refresh-btn" onClick={loadOrders}>🔄 Refresh</button>
 
-      <div className="table-grid">
+      <div className="admin-table-grid">
         {Array.from({ length: 30 }, (_, i) => {
           const tableId = i + 1;
           const color = getTableColor(tableId);
