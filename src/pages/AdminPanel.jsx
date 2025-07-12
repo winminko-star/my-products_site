@@ -150,28 +150,6 @@ setCheckedOutTables(checkedOut);
 <div style={{ textAlign: "right", marginTop: "8px", fontWeight: "bold", color: "#000" }}>
   Total: {order.items.reduce((sum, item) => sum + item.qty * item.price, 0).toLocaleString()} Ks
 </div>
- <div
-  key={index}
-  style={{
-    background: "white",
-    color: "#000",
-    margin: "10px 0",
-    padding: "12px",
-    borderRadius: "12px",
-    boxShadow: "0 2px 6px rgba(0,0,0,0.2)",
-    width: "100%"
-  }}
->
-  {/* Date + Note */}
-  <div style={{ fontSize: "14px", marginBottom: "6px" }}>
-    📅 {order.timestamp?.split("T")[0]} 🕒 {order.timestamp?.split("T")[1]?.slice(0, 5)}
-  </div>
-  {order.note && (
-    <div style={{ fontStyle: "italic", color: "#444" }}>
-      📝 {order.note}
-    </div>
-  )}
-
   {/* Item List */}
   <ul>
     {order.items.map((item, idx) => (
