@@ -45,12 +45,12 @@ export default function TablePicker() {
       </div>
 
       <button
-        className="fancy-btn"
-        style={{ marginTop: "30px", backgroundColor: "#222" }}
-        onClick={handleAdmin}
-      >
-        Admin
-      </button>
+  className="fancy-btn admin-btn"
+  style={{ marginTop: "30px" }}
+  onClick={handleAdmin}
+>
+  Admin
+</button>
     </div>
   );
       }
