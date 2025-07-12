@@ -110,10 +110,8 @@ export default function UserPanel() {
       {showThankYou && (
         <div className="thankyou-overlay">
           <img src="/images/thankyou.jpg" alt="Thank You" className="thankyou-image" />
-        </div>
-      
-
-      <div className="user-panel-inner">
+        </div> )}
+        <div className="user-panel-inner">
         <div className="marquee-banner-box improved-banner">
   <marquee behavior="scroll" direction="left" scrollamount="5">
     🎉 <span className="highlight-text">အထူးပရိုမိုးရှင်း</span> 7.7.2027 တွင်ရှိမည် — ကျေးဇူးအထူးတင်ပါတယ်! 🎉
