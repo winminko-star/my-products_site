@@ -278,7 +278,13 @@ button {
   background-color: #333;
   color: white;
   border: none;
-  cursor: pointer;
+  cursor: pointer;}
+  .admin-table-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  margin-top: 20px;
+  
 }
 /* Step 3: Marquee Banner Style */
 .improved-banner {
