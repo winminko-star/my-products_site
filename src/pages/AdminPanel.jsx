@@ -8,9 +8,18 @@ export default function AdminPanel() {
   const [orders, setOrders] = useState({});
   const [editing, setEditing] = useState(false);
   const [refreshInterval, setRefreshInterval] = useState(null);
+  const [checkedOutTables, setCheckedOutTables] = useState([]);
 
   useEffect(() => {
     loadOrders();
+    const checkedOut = [];
+for (let i = 1; i <= 30; i++) {
+  const done = localStorage.getItem(`checkout_done_table_${i}`) === "true";
+  if (done) {
+    checkedOut.push(i);
+  }
+}
+setCheckedOutTables(checkedOut);
     const interval = setInterval(() => {
       if (!editing) {
         loadOrders();
@@ -58,17 +67,43 @@ export default function AdminPanel() {
   };
 
   const handleClear = (tableId) => {
-    const confirm = window.confirm("Clear all orders for this table?");
-    if (confirm) {
-      localStorage.removeItem(`orders_table_${tableId}`);
-      localStorage.removeItem(`checkout_done_table_${tableId}`);
-      loadOrders();
-    }
-  };
-
-  return (
+  const confirm = window.confirm("Clear all orders for this table?");
+  if (confirm) {
+    localStorage.removeItem(`orders_table_${tableId}`);
+    localStorage.removeItem(`checkout_done_table_${tableId}`);
+    setCheckedOutTables((prev) => prev.filter((id) => id !== tableId)); // ✅ CheckedOut UI မှဖျတ်
+    loadOrders();
+  }
+};
     <div className="admin-container">
       <h1 className="rainbow-title">Admin Panel</h1>
+      {checkedOutTables.length > 0 && (
+  <div style={{
+    overflowX: "auto",
+    display: "flex",
+    gap: "10px",
+    margin: "10px 0",
+    padding: "10px",
+    borderRadius: "12px",
+    backgroundColor: "rgba(255, 255, 255, 0.6)",
+    boxShadow: "0 2px 5px rgba(0,0,0,0.1)"
+  }}>
+    {checkedOutTables.map((tableId) => (
+      <div key={tableId} style={{
+        backgroundColor: "#4caf50",
+        color: "white",
+        padding: "10px 16px",
+        borderRadius: "20px",
+        fontWeight: "bold",
+        fontSize: "14px",
+        whiteSpace: "nowrap",
+        boxShadow: "0 1px 3px rgba(0,0,0,0.2)"
+      }}>
+        ✔ Table {tableId}
+      </div>
+    ))}
+  </div>
+)}
       <button className="refresh-btn" onClick={loadOrders}>🔄 Refresh</button>
 
       <div className="admin-table-grid">
