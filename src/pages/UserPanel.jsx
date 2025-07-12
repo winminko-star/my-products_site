@@ -84,7 +84,7 @@ return ( <div className="user-panel-container animated-background"> {showThankYo
     {showPasswordModal && (
       <div className="modal-backdrop">
         <div className="modal">
-          <h3>🔒 Reset Table</h3>
+          <h3>🔐 Reset Table</h3>
           <p>Please enter reset password:</p>
           <input
             type="password"
@@ -159,14 +159,14 @@ return ( <div className="user-panel-container animated-background"> {showThankYo
 
     <div className="custom-button-layout">
       <div className="row-two">
-        <button className="fancy-btn" onClick={placeOrder}>Orderမှာမည်။</button>
-        <button className="fancy-btn" onClick={handleCheckout}>ငွေရှင်းမည်။</button>
+        <button className="fancy-btn" onClick={placeOrder}>Orderမားမစ္တိး၊</button>
+        <button className="fancy-btn" onClick={handleCheckout}>ဂွီရှရှးမစ္တိး၊</button>
       </div>
       <div className="row-one">
-        <button className="fancy-btn" onClick={() => navigate("/summary")}>Orderစာရင်းကြည့်မည်။</button>
+        <button className="fancy-btn" onClick={() => navigate("/summary")}>Orderစာရင့်ကြင့်မစ္တိး၊</button>
       </div>
       <div className="row-one">
-        <button className="fancy-btn" onClick={handleResetTable}>Tableပြောင်းမည်။</button>
+        <button className="fancy-btn" onClick={handleResetTable}>Tableပြရွမစ္တိး၊</button>
       </div>
     </div>
   </div>
