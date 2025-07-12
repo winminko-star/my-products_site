@@ -4,15 +4,15 @@ export default function AdminPanel() { const navigate = useNavigate(); const [or
 
 useEffect(() => { loadOrders(); const interval = setInterval(() => { if (!editing) { loadOrders(); } }, 30000); setRefreshInterval(interval); return () => clearInterval(interval); }, []);
 
-const loadOrders = () => { const data = {}; const checkedOut = []; for (let i = 1; i <= 30; i++) { const raw = localStorage.getItem(orders_table_${i}`); if (raw) { data[i] = JSON.parse(raw); } const done = localStorage.getItem(checkout_done_table_${i}`) === "true"; if (done) { checkedOut.push(i); } } setOrders(data); setCheckedOutTables(checkedOut); };
+const loadOrders = () => { const data = {}; const checkedOut = []; for (let i = 1; i <= 30; i++) { const raw = localStorage.getItem(`orders_table_${i}`); if (raw) { data[i] = JSON.parse(raw); } const done = localStorage.getItem(`checkout_done_table_${i}`) === "true"; if (done) { checkedOut.push(i); } } setOrders(data); setCheckedOutTables(checkedOut); };
 
-const getTableColor = (tableId) => { const checkedOut = localStorage.getItem(checkout_done_table_${tableId}`) === "true"; const orderCount = orders[tableId]?.length || 0; if (checkedOut) return "yellow"; if (orderCount >= 2) return "green"; if (orderCount === 1) return "red"; return "blue"; };
+const getTableColor = (tableId) => { const checkedOut = localStorage.getItem(`checkout_done_table_${tableId}`) === "true"; const orderCount = orders[tableId]?.length || 0; if (checkedOut) return "yellow"; if (orderCount >= 2) return "green"; if (orderCount === 1) return "red"; return "blue"; };
 
-const handleEdit = (tableId, index) => { setEditing(true); clearInterval(refreshInterval); navigate(/edit/${tableId}`/${index}`); };
+const handleEdit = (tableId, index) => { setEditing(true); clearInterval(refreshInterval); navigate(`/edit/${tableId}/${index}`); };
 
-const handleDelete = (tableId, index) => { const confirm = window.confirm("Are you sure you want to delete this order?"); if (confirm) { const updated = [...orders[tableId]]; updated.splice(index, 1); localStorage.setItem(orders_table_${tableId}`, JSON.stringify(updated)); loadOrders(); } };
+const handleDelete = (tableId, index) => { const confirm = window.confirm("Are you sure you want to delete this order?"); if (confirm) { const updated = [...orders[tableId]]; updated.splice(index, 1); localStorage.setItem(`orders_table_${tableId}`, JSON.stringify(updated)); loadOrders(); } };
 
-const handleClear = (tableId) => { const confirm = window.confirm("Clear all orders for this table?"); if (confirm) { localStorage.removeItem(orders_table_${tableId}`); localStorage.removeItem(checkout_done_table_${tableId}`); setCheckedOutTables((prev) => prev.filter((id) => id !== tableId)); loadOrders(); } };
+const handleClear = (tableId) => { const confirm = window.confirm("Clear all orders for this table?"); if (confirm) { localStorage.removeItem(`orders_table_${tableId}`); localStorage.removeItem(`checkout_done_table_${tableId}`); setCheckedOutTables((prev) => prev.filter((id) => id !== tableId)); loadOrders(); } };
 
 return ( <div className="admin-container"> <h1 className="rainbow-title">Admin Panel</h1>
 
