@@ -126,14 +126,7 @@ export default function UserPanel() {
             Win Min Thuzar – TABLE <span className="rainbow-circle">{tableId}</span>
           </h1>
         </div>
-        {showThankYou && (
-  <div className="thankyou-overlay">
-    <img
-      src="/images/thankyou.jpg"
-      alt="Thank You"
-      className="thankyou-image"
-    />
-  </div>
+
 )}
 
         {categories.map((cat) => (
