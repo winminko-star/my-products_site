@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react"; import { useNavigate } from 
 
 export default function UserPanel() { const navigate = useNavigate(); const [showPasswordModal, setShowPasswordModal] = useState(false); const [passwordInput, setPasswordInput] = useState(""); const [tableId, setTableId] = useState("1"); const [cart, setCart] = useState([]); const [note, setNote] = useState(""); const [showThankYou, setShowThankYou] = useState(false); const [checkedOut, setCheckedOut] = useState(false);
 
-useEffect(() => { const id = localStorage.getItem("assignedTable"); if (!id) { navigate("/pick-table", { replace: true }); } else { setTableId(id); const done = localStorage.getItem(checkout_done_table_${id}) === "true"; setCheckedOut(done); }
+useEffect(() => { const id = localStorage.getItem("assignedTable"); if (!id) { navigate("/pick-table", { replace: true }); } else { setTableId(id); const done = localStorage.getItem(`checkout_done_table_${id}`) === "true"; setCheckedOut(done); }
 
 const handleBack = (e) => {
   e.preventDefault();
