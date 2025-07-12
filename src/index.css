@@ -304,3 +304,16 @@ button {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-8px); }
   }
+.item-name {
+  font-weight: bold;
+  color: #5c2e00; /* dark brown */
+  display: block;
+  text-align: center;
+}
+
+.item-price {
+  font-size: 14px;
+  color: #006400; /* dark green */
+  display: block;
+  text-align: center;
+}
