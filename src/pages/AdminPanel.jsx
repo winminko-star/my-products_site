@@ -12,32 +12,37 @@ const handleEdit = (tableId, index) => { setEditing(true); clearInterval(refresh
 
 const handleDelete = (tableId, index) => { const confirm = window.confirm("Are you sure you want to delete this order?"); if (confirm) { const updated = [...orders[tableId]]; updated.splice(index, 1); localStorage.setItem(orders_table_${tableId}, JSON.stringify(updated)); loadOrders(); } };
 
-const handleClear = (tableId) => { const confirm = window.confirm("Clear all orders for this table?"); if (confirm) { localStorage.removeItem(orders_table_${tableId}); localStorage.removeItem(checkout_done_table_${tableId}); loadOrders(); } };
+const handleClear = (tableId) => { const confirm = window.confirm("Clear all orders for this table?"); if (confirm) { localStorage.removeItem(orders_table_${tableId}); localStorage.removeItem(checkout_done_table_${tableId}); setCheckedOutTables((prev) => prev.filter((id) => id !== tableId)); loadOrders(); } };
 
 return ( <div className="admin-container"> <h1 className="rainbow-title">Admin Panel</h1>
 
 {checkedOutTables.length > 0 && (
-    <div style={{
-      overflowX: "auto",
-      display: "flex",
-      gap: "10px",
-      margin: "10px 0",
-      padding: "10px",
-      borderRadius: "12px",
-      backgroundColor: "rgba(255, 255, 255, 0.6)",
-      boxShadow: "0 2px 5px rgba(0,0,0,0.1)"
-    }}>
+    <div
+      style={{
+        overflowX: "auto",
+        display: "flex",
+        gap: "10px",
+        margin: "10px 0",
+        padding: "10px",
+        borderRadius: "12px",
+        backgroundColor: "rgba(255, 255, 255, 0.6)",
+        boxShadow: "0 2px 5px rgba(0,0,0,0.1)",
+      }}
+    >
       {checkedOutTables.map((tableId) => (
-        <div key={tableId} style={{
-          backgroundColor: "#4caf50",
-          color: "white",
-          padding: "10px 16px",
-          borderRadius: "20px",
-          fontWeight: "bold",
-          fontSize: "14px",
-          whiteSpace: "nowrap",
-          boxShadow: "0 1px 3px rgba(0,0,0,0.2)"
-        }}>
+        <div
+          key={tableId}
+          style={{
+            backgroundColor: "#4caf50",
+            color: "white",
+            padding: "10px 16px",
+            borderRadius: "20px",
+            fontWeight: "bold",
+            fontSize: "14px",
+            whiteSpace: "nowrap",
+            boxShadow: "0 1px 3px rgba(0,0,0,0.2)",
+          }}
+        >
           ✔ Table {tableId}
         </div>
       ))}
@@ -67,7 +72,7 @@ return ( <div className="admin-container"> <h1 className="rainbow-title">Admin P
                 padding: "12px",
                 borderRadius: "12px",
                 boxShadow: "0 2px 6px rgba(0,0,0,0.2)",
-                width: "100%"
+                width: "100%",
               }}
             >
               <div style={{ fontSize: "14px", marginBottom: "6px" }}>
@@ -88,22 +93,38 @@ return ( <div className="admin-container"> <h1 className="rainbow-title">Admin P
                 ))}
               </ul>
 
-              <div style={{ textAlign: "right", marginTop: "8px", fontWeight: "bold", color: "#000" }}>
+              <div
+                style={{
+                  textAlign: "right",
+                  marginTop: "8px",
+                  fontWeight: "bold",
+                  color: "#000",
+                }}
+              >
                 Total: {order.items.reduce((sum, item) => sum + item.qty * item.price, 0).toLocaleString()} Ks
               </div>
 
               <div style={{ marginTop: "8px", display: "flex", gap: "10px" }}>
-                <button className="order-btn" onClick={() => handleEdit(tableId, index)}>
+                <button
+                  className="order-btn"
+                  onClick={() => handleEdit(tableId, index)}
+                >
                   ✏️ Edit
                 </button>
-                <button className="order-btn delete" onClick={() => handleDelete(tableId, index)}>
+                <button
+                  className="order-btn delete"
+                  onClick={() => handleDelete(tableId, index)}
+                >
                   🗑️ Delete
                 </button>
               </div>
             </div>
           ))}
           {ordersForTable.length > 0 && (
-            <button className="order-btn delete" onClick={() => handleClear(tableId)}>
+            <button
+              className="order-btn delete"
+              onClick={() => handleClear(tableId)}
+            >
               Clear All
             </button>
           )}
