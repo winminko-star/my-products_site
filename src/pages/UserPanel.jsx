@@ -131,7 +131,7 @@ export default function UserPanel() {
 
         {categories.map((cat) => (
           <div key={cat}>
-            <h2 className="category-title">{cat}</h2>
+            <h2 className="category-title rainbow-text">{cat}</h2>
             <div className="item-grid">
               {products
                 .filter((item) => item.category === cat)
