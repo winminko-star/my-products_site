@@ -1,90 +1,11 @@
+import React, { useEffect, useState } from "react"; import { useNavigate } from "react-router-dom"; import "../index.css";
 
-import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import "../index.css";
+export default function KitchenPanel() { const navigate = useNavigate(); const [orders, setOrders] = useState({});
 
-export default function KitchenPanel() {
-  const navigate = useNavigate();
-  const [orders, setOrders] = useState({});
-  const [lastUpdated, setLastUpdated] = useState(null);
+useEffect(() => { loadOrders(); const interval = setInterval(loadOrders, 30000); return () => clearInterval(interval); }, []);
 
-  useEffect(() => {
-    const access = localStorage.getItem("kitchenAccess");
-    if (access !== "true") {
-      navigate("/kitchen-login");
-    }
+const loadOrders = () => { const data = {}; for (let i = 1; i <= 30; i++) { const raw = localStorage.getItem(orders_table_${i}); if (raw) { data[i] = JSON.parse(raw); } } setOrders(data); };
 
-    loadOrders();
-    const interval = setInterval(() => {
-      loadOrders();
-    }, 30000);
+return ( <div className="kitchen-container"> <h1 className="rainbow-title">🍽️ Kitchen Panel</h1> <div className="table-grid"> {Array.from({ length: 30 }, (_, i) => { const tableId = i + 1; const ordersForTable = orders[tableId] || []; return ( <div key={tableId} className="table-box"> <div>Table {tableId}</div> {ordersForTable.length > 0 && ( <span className="order-count">{ordersForTable.length}</span> )} {ordersForTable.map((order, index) => ( <div key={index} className="order-box"> <div style={{ fontSize: "14px", marginBottom: "4px" }}> 🧾 {order.timestamp?.split("T")[0]} <br /> 🕒 {order.timestamp?.split("T")[1]?.slice(0, 5)} </div> {order.note && ( <div style={{ fontStyle: "italic", color: "#fff" }}>📝 {order.note}</div> )} <ul> {order.items.map((item, idx) => ( <li key={idx}> {item.qty} x {item.name} ({item.unit}) </li> ))} </ul> </div> ))} </div> ); })} </div> </div> ); }
 
-    return () => clearInterval(interval);
-  }, [navigate]);
-
-  const loadOrders = () => {
-    const allOrders = {};
-    for (let i = 1; i <= 30; i++) {
-      const key = `orders_table_${i}`;
-      const data = JSON.parse(localStorage.getItem(key));
-      if (data && data.length > 0) {
-        allOrders[i] = data;
-      }
-    }
-    setOrders(allOrders);
-    setLastUpdated(new Date());
-  };
-
-  const formatTime = (date) => {
-    if (!date) return "";
-    return date.toLocaleTimeString([], {
-      hour: "2-digit",
-      minute: "2-digit",
-      second: "2-digit",
-    });
-  };
-
-  return (
-    <div className="admin-container">
-      <h1 className="rainbow-title">Kitchen Panel</h1>
-      <p className="updated-text">Auto updated: {formatTime(lastUpdated)}</p>
-      <div className="table-grid">
-        {[...Array(30)].map((_, i) => {
-          const tableId = i + 1;
-          const orderList = orders[tableId] || [];
-          let colorClass = "table-box";
-          if (orderList.length === 1) colorClass += " red";
-          else if (orderList.length >= 2) colorClass += " green";
-          else colorClass += " blue";
-
-          return (
-            <div key={tableId} className={colorClass}>
-              <strong>Table {tableId}</strong>
-              {orderList.length > 0 && (
-                <span className="order-count">{orderList.length}</span>
-              )}
-              {orderList.length > 0 &&
-                orderList.map((order, index) => (
-                  <div key={index} className="order-box">
-                    <ul>
-                      {order.items.map((item, idx) => (
-                        <li key={idx}>
-                          {item.name} x {item.qty}
-                        </li>
-                      ))}
-                    </ul>
-                    {order.note && (
-                      <p style={{ fontStyle: "italic", color: "#fff", fontSize: "13px" }}>
-                        <strong>Note:</strong> {order.note}
-                      </p>
-                    )}
-                  </div>
-                ))}
-            </div>
-          );
-        })}
-      </div>
-    </div>
-  );
-            }
-        
+                                                                                                                                                                                                                                                                                                                                                                                                                                            
