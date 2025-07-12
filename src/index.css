@@ -155,10 +155,10 @@ button {
 }
 .item-grid {
   display: flex;
-  flex-wrap: nowrap;
-  gap: 15px;
-  overflow-x: auto;
-  padding-bottom: 15px;
+  flex-wrap: wrap; /* ← ဒီလို wrap ပြောင်း */
+  justify-content: center;
+  gap: 16px;
+  padding: 10px;
 }
 .product-btn {
   background: #fff8f0;
