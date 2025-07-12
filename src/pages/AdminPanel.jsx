@@ -83,13 +83,37 @@ export default function AdminPanel() {
                 <span className="order-count">{ordersForTable.length}</span>
               )}
               {ordersForTable.map((order, index) => (
-                <div key={index} className="order-box">
-                  <div>{order.timestamp?.split("T")[0]}</div>
-                  <div>🧾 {order.items.length} item(s)</div>
-                  <button className="order-btn" onClick={() => handleEdit(tableId, index)}>Edit</button>
-                  <button className="order-btn delete" onClick={() => handleDelete(tableId, index)}>Delete</button>
-                </div>
-              ))}
+  <div
+    key={index}
+    style={{
+      background: "white",
+      color: "#000",
+      margin: "10px 0",
+      padding: "12px",
+      borderRadius: "12px",
+      boxShadow: "0 2px 6px rgba(0,0,0,0.2)",
+      width: "100%" // Full width
+    }}
+  >
+    <div style={{ fontSize: "14px", marginBottom: "6px" }}>
+      📅 {order.timestamp?.split("T")[0]} 🕒 {order.timestamp?.split("T")[1]?.slice(0, 5)}
+    </div>
+
+    {order.note && (
+      <div style={{ fontStyle: "italic", color: "#444" }}>
+        📝 {order.note}
+      </div>
+    )}
+
+    <ul>
+      {order.items.map((item, idx) => (
+        <li key={idx}>
+          {item.qty} x {item.name} ({item.unit})
+        </li>
+      ))}
+    </ul>
+  </div>
+))}
               {ordersForTable.length > 0 && (
                 <button className="order-btn delete" onClick={() => handleClear(tableId)}>Clear All</button>
               )}
