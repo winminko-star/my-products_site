@@ -114,15 +114,12 @@ export default function UserPanel() {
       )}
 
       <div className="user-panel-inner">
-        <div className="marquee-banner-box">
-          <div className="marquee-banner">
-            <p>
-              အခုလိုလာရောက်အားပေးခြင်းကိုအထူးကျေးဇူးတင်ပါသည်။ 7.7.2027 တွင် အထူးပရိုမိုးရှင်းပွဲရှိပါသည်။
-            </p>
-          </div>
-          <img src="/images/teddy_bear.png" alt="Teddy" className="teddy-bear" />
-        </div>
-
+        <div className="marquee-banner-box improved-banner">
+  <marquee behavior="scroll" direction="left" scrollamount="5">
+    🎉 <span className="highlight-text">အထူးပရိုမိုးရှင်း</span> 7.7.2027 တွင်ရှိမည် — ကျေးဇူးအထူးတင်ပါတယ်! 🎉
+  </marquee>
+  <img src="/images/teddy_bear.png" alt="Teddy" className="teddy-bear bounce" />
+</div>  
         <div className="rainbow-header-column">
           <img src="/logo.png" alt="Logo" className="circle-logo" />
           <h1 className="rainbow-title-name">
