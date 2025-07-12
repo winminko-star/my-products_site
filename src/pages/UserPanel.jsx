@@ -2,20 +2,26 @@ import React, { useState, useEffect } from "react"; import { useNavigate } from 
 
 export default function UserPanel() { const navigate = useNavigate(); const [showPasswordModal, setShowPasswordModal] = useState(false); const [passwordInput, setPasswordInput] = useState(""); const [tableId, setTableId] = useState("1"); const [cart, setCart] = useState([]); const [note, setNote] = useState(""); const [showThankYou, setShowThankYou] = useState(false); const [checkedOut, setCheckedOut] = useState(false);
 
-useEffect(() => { const id = localStorage.getItem("assignedTable"); if (!id) { navigate("/pick-table", { replace: true }); } else { setTableId(id); const done = localStorage.getItem(`checkout_done_table_${id}`) === "true"; setCheckedOut(done); }
+ useEffect(() => {
+  const id = localStorage.getItem("assignedTable");
+  if (!id) {
+    navigate("/pick-table", { replace: true });
+  } else {
+    setTableId(id);
+    const done = localStorage.getItem(`checkout_done_table_${id}`) === "true";
+    setCheckedOut(done);
+  }
 
-const handleBack = (e) => {
-  e.preventDefault();
-  toast("Back is blocked. Please use Reset Table.");
+  const handleBack = (e) => {
+    e.preventDefault();
+    toast("Back is blocked. Please use Reset Table.");
+    window.history.pushState(null, "", window.location.pathname);
+  };
+
   window.history.pushState(null, "", window.location.pathname);
-};
-
-window.history.pushState(null, "", window.location.pathname);
-window.addEventListener("popstate", handleBack);
-return () => window.removeEventListener("popstate", handleBack);
-
-}, [navigate]);
-
+  window.addEventListener("popstate", handleBack);
+  return () => window.removeEventListener("popstate", handleBack);
+}, [navigate]);   T
 const addToCart = (item) => { if (checkedOut) return; const exists = cart.find((i) => i.id === item.id); if (exists) { setCart(cart.map((i) => (i.id === item.id ? { ...i, qty: i.qty + 1 } : i))); } else { setCart([...cart, { ...item, qty: 1 }]); } };
 
 const updateQty = (id, qty) => { if (checkedOut) return; if (qty < 1) { setCart(cart.filter((i) => i.id !== id)); } else { setCart(cart.map((i) => (i.id === id ? { ...i, qty } : i))); } };
