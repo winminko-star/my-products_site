@@ -86,6 +86,7 @@ export default function UserPanel() {
     localStorage.setItem(`checkout_done_table_${tableId}`, "true");
     setCheckedOut(true);
     setShowThankYou(true);
+    document.getElementById("notifySound")?.play();
     setTimeout(() => setShowThankYou(false), 15000);
   };
 
