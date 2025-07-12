@@ -111,7 +111,7 @@ export default function UserPanel() {
         <div className="thankyou-overlay">
           <img src="/images/thankyou.jpg" alt="Thank You" className="thankyou-image" />
         </div>
-      )}
+      
 
       <div className="user-panel-inner">
         <div className="marquee-banner-box improved-banner">
