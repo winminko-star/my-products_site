@@ -10,7 +10,7 @@ export default function TablePicker() {
     if (assigned) {
       navigate("/user", { replace: true });
     }
-  }, []);
+  }, [navigate]);
 
   const handleTableSelect = (tableId) => {
     localStorage.setItem("assignedTable", tableId);
@@ -30,10 +30,7 @@ export default function TablePicker() {
 
   return (
     <div className="table-picker-container animated-background">
-      <h1 className="rainbow-title" style={{ fontSize: "32px", marginBottom: "20px" }}>
-        🪑 <span style={{ fontWeight: "bold" }}>Table</span>{" "}
-        <span style={{ fontFamily: "'Noto Sans Myanmar', sans-serif" }}>ရွေးပါ</span>
-      </h1>
+      <h1 className="rainbow-title">🪑 Table ရွေးပါ</h1>
 
       <div className="table-grid">
         {Array.from({ length: 30 }, (_, i) => (
@@ -47,11 +44,13 @@ export default function TablePicker() {
         ))}
       </div>
 
-      <div style={{ marginTop: "30px" }}>
-        <button className="fancy-btn" onClick={handleAdmin}>
-          Admin
-        </button>
-      </div>
+      <button
+        className="fancy-btn"
+        style={{ marginTop: "30px", backgroundColor: "#222" }}
+        onClick={handleAdmin}
+      >
+        Admin
+      </button>
     </div>
   );
-}
+      }
