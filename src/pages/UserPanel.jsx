@@ -30,7 +30,7 @@ const removeFromCart = (id) => { if (checkedOut) return; setCart(cart.filter((it
 
 const totalAmount = cart.reduce((sum, item) => sum + item.qty * item.price, 0);
 
-const placeOrder = () => { if (checkedOut) return; if (cart.length === 0) { toast.error("Cart is empty"); return; } const newOrder = { table: tableId, items: cart, note: note.trim(), timestamp: new Date().toISOString(), }; const existing = JSON.parse(localStorage.getItem(orders_table_${tableId}`)) || []; existing.push(newOrder); localStorage.setItem(orders_table_${tableId}, JSON.stringify(existing)); toast.success("Order placed!"); setCart([]); setNote(""); navigate("/summary"); };
+const placeOrder = () => { if (checkedOut) return; if (cart.length === 0) { toast.error("Cart is empty"); return; } const newOrder = { table: tableId, items: cart, note: note.trim(), timestamp: new Date().toISOString(), }; const existing = JSON.parse(localStorage.getItem(`orders_table_${tableId}`) || []; existing.push(newOrder); localStorage.setItem(orders_table_${tableId}, JSON.stringify(existing)); toast.success("Order placed!"); setCart([]); setNote(""); navigate("/summary"); };
 
 const handleCheckout = () => { localStorage.setItem(checkout_done_table_${tableId}`, "true"); setCheckedOut(true); setShowThankYou(true); setTimeout(() => setShowThankYou(false), 15000); };
 
