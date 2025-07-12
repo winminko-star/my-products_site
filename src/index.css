@@ -57,11 +57,12 @@ button {
 }
 .table-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-  gap: 15px;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 16px;
+  width: 100%;
   max-width: 600px;
   margin: 0 auto;
-  margin-top: 20px;
+  padding: 10px;
 }
 
 /* === Summary Page === */
@@ -92,18 +93,23 @@ button {
 
 /* === Fancy Buttons === */
 .fancy-btn {
-  padding: 12px 24px;
-  font-size: 16px;
+  padding: 12px;
   font-weight: bold;
-  border-radius: 20px;
-  background: linear-gradient(135deg, #ff758c, #ff7eb3, #65c7f7);
+  border-radius: 50px;
+  background: linear-gradient(to right, #ff7eb3, #ff758c);
   color: white;
   border: none;
-  box-shadow: 4px 4px 12px rgba(0,0,0,0.2);
-  width: 220px;
-  transition: all 0.3s ease;
-  text-align: center;
+  width: 100%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
+.admin-btn {
+  width: 200px !important;
+  background-color: #000 !important;
+  color: white !important;
+  border-radius: 25px !important;
+}
+
+
 .fancy-btn:hover {
   transform: scale(1.05);
   box-shadow: 0 0 15px rgba(255, 118, 140, 0.7);
