@@ -170,7 +170,7 @@ setCheckedOutTables(checkedOut);
     </button>
   </div>
 </div>   
-  </div>
+  
 ))}
               {ordersForTable.length > 0 && (
                 <button className="order-btn delete" onClick={() => handleClear(tableId)}>Clear All</button>
